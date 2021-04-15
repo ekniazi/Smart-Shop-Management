@@ -1,0 +1,59 @@
+ion-select {
+    border: 1px solid black;
+    color: black;
+    font-family: "Noto Sans JP", sans-serif;
+}
+.btn {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    border-radius: 24px;
+    width: 80%;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
+
+h2 {
+    font-family: "Noto Sans JP", sans-serif;
+}
+ion-input {
+    border: 1px solid black;
+    min-height: 2em;
+    font-family: "Noto Sans JP";
+    font-size: 18px;
+    color: black;
+}
+
+.line-input {
+    margin-bottom: 10px !important;
+    ion-item {
+        --border-color: transparent !important;
+        --highlight-height: 0;
+        border: 1px solid black;
+        border-radius: 4px;
+
+        &.item-has-focus {
+            border: 1px solid var(--ion-color-primary);
+        }
+
+        ion-label {
+            color: #807e7e !important;
+            font-weight: 300;
+            font-size: 1rem !important;
+        }
+        ion-input{
+            font-family: "Noto Sans JP";
+        }
+    }
+}

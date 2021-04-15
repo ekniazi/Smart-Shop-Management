@@ -1,0 +1,21 @@
+{
+    "ViewOne": {
+        "headinOne": "SMARTSHOP",
+        "subheadOne": "MANAGEMENT",
+        "headinTwo": "CHOOSE A LANGUAGE",
+        "headinthree": "SELECT A DEFUALT LANGUAGE SUITABLE FOR YOU"
+    },
+    "ViewTwo": {
+        "headinOne": "WELCOME",
+        "headinTwo": "Sign In To Use Our Services",
+        "headinthree": "ENTER PHONE NUMBER TO GET OTP",
+        "headinfour": "  On proceeding you agree to accept our",
+        "headinfive": "terms & condtions"
+    },
+    "ViewThree": {
+        "headinOne": "ENTER 6-DIGIT OTP",
+        "headinTwo": "We sent you a 6 digit code on",
+        "headinthree": "to verify your phone number",
+        "headinfour": "Didn't recieved yet?"
+    }
+}
