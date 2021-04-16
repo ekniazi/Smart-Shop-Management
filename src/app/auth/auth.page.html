@@ -4,13 +4,14 @@
 
 
   <div *ngIf="currentDiv=='one'" class="wrapper" style="height:100%">
-    <div style="text-align: center;position: relative;top: 150px;">
+    <div class="fade-in one" style="text-align: center;position: relative;top: 150px;">
 
       <img style="height: 10em;" src="../../assets/logo.png" alt="">
       <h2 style="color: black;font-size: 30px;font-weight: bold;"><span style="color: rgb(231, 170, 57);;">
           SMARTSHOP</span>
-          <br>
-        MANAGEMENT </h2>
+        <br>
+        MANAGEMENT
+      </h2>
 
 
       <div style="padding:15px;position: relative;top: 1.5em;display: flex;flex-direction: column;">
@@ -19,11 +20,15 @@
           {{ 'ViewOne.headinTwo' | translate:params}}
         </h2>
 
-        <ion-select [(ngModel)]="selectedLanguage" (ionChange)="languageChanged(selectedLanguage)"
-          style="margin-top: 1em;" placeholder="Select prefered language" interface="popover">
-          <ion-select-option *ngFor="let item of languages" value="{{item}}">{{item}}</ion-select-option>
+        <ion-list class="line-input">
+          <ion-item color="none">
+            <ion-select [(ngModel)]="selectedLanguage" (ionChange)="languageChanged(selectedLanguage)"
+              style="margin-top: 1em;" placeholder="Select prefered language" interface="popover">
+              <ion-select-option *ngFor="let item of languages" value="{{item}}">{{item}}</ion-select-option>
 
-        </ion-select>
+            </ion-select>
+          </ion-item>
+        </ion-list>
 
 
         <ion-label
@@ -47,7 +52,7 @@
   <div class="wrapper" style="position: relative;top: 150px;
 " *ngIf="currentDiv=='two'">
 
-    <div style="position: relative;text-align: center;">
+    <div class="fade-in one" style="position: relative;text-align: center;">
       <img style="height: 10em;" src="../../assets/logo.png" alt="">
       <h1 style="color: black;font-size: 40px;font-weight: bold;text-align: left;padding-left: 20px;"> {{
         'ViewTwo.headinOne' | translate:params}},</h1>
@@ -64,13 +69,23 @@
       <div style="display: flex;padding: 20px;margin-top: 1.5em;">
 
         <div style="width: 30%;">
-          <ion-input [(ngModel)]="c_code" placeholder="+91"></ion-input>
+          <ion-list class="line-input">
+            <ion-item color="none">
+              <ion-input [(ngModel)]="c_code" placeholder="+91"></ion-input>
+            </ion-item>
+          </ion-list>
         </div>
         <div style="width: 5%;">
 
         </div>
         <div style="width: 65%;">
-          <ion-input [(ngModel)]="num" placeholder="32566898520"></ion-input>
+
+          <ion-list class="line-input">
+            <ion-item color="none">
+              <ion-input [(ngModel)]="num" placeholder="32566898520"></ion-input>
+            </ion-item>
+          </ion-list>
+
         </div>
 
 
@@ -107,63 +122,92 @@
 
   <div class="wrapper" style="position: relative;top: 150px;
   " *ngIf="currentDiv=='three'">
+    <div class="fade-in one">
 
-    <div style="text-align: center;">
-      <img style="height: 10em;" src="../../assets/logo.png" alt="">
-    </div>
-    <h1 style="text-align: center;color: black;font-weight: bold;">
-      {{ 'ViewThree.headinOne' | translate:params}}
-    </h1>
-
-    <p style="text-align: center;  font-family: 'Noto Sans JP';font-size: 12px;color: black;">
-      {{ 'ViewThree.headinTwo' | translate:params}}
-      <span (click)="changeView('two')" style="color: rgb(231, 170, 57);">+912356689852
-        <ion-icon name="create-outline"></ion-icon>
-
-      </span>
-      {{ 'ViewThree.headinthree' | translate:params}}.
-    </p>
-    <div style="display: flex;padding: 10px;justify-content: center;margin-top: 1em;">
-      <div style="width: 15%;padding-right: 6px;">
-        <ion-input (keyup)="onKeyUp($event,1)" type="number" placeholder="1" maxlength="1" #passcode1></ion-input>
+      <div style="text-align: center;">
+        <img style="height: 10em;" src="../../assets/logo.png" alt="">
       </div>
+      <h1 style="text-align: center;color: black;font-weight: bold;">
+        {{ 'ViewThree.headinOne' | translate:params}}
+      </h1>
 
-      <div style="width: 15%;padding-right: 6px;">
-        <ion-input (keyup)="onKeyUp($event,2)" type="number" placeholder="1" maxlength="1" #passcode2></ion-input>
-      </div>
+      <p style="text-align: center;  font-family: 'Noto Sans JP';font-size: 12px;color: black;">
+        {{ 'ViewThree.headinTwo' | translate:params}}
+        <span (click)="changeView('two')" style="color: rgb(231, 170, 57);">+912356689852
+          <ion-icon name="create-outline"></ion-icon>
 
-      <div style="width: 15%;padding-right: 6px;">
-        <ion-input (keyup)="onKeyUp($event,3)" type="number" placeholder="1" maxlength="1" #passcode3></ion-input>
-      </div>
-
-      <div style="width: 15%;padding-right: 6px;">
-        <ion-input (keyup)="onKeyUp($event,4)" type="number" placeholder="1" maxlength="1" #passcode4></ion-input>
-      </div>
-
-      <div style="width: 15%;padding-right: 6px;">
-        <ion-input (keyup)="onKeyUp($event,5)" type="number" placeholder="1" maxlength="1" #passcode5></ion-input>
-      </div>
-
-      <div style="width: 15%;padding-right: 6px;">
-        <ion-input (keyup)="onKeyUp($event,6)" (input)="submit($event)" type="number" placeholder="1" maxlength="1"
-          #passcode6></ion-input>
-      </div>
-
-
-
-    </div>
-
-    <div style="display: flex;justify-content: center;flex-direction: column;">
-      <p style="text-align: center; color: rgb(231, 170, 57);; font-family: 'Noto Sans JP';font-size: 12px;">{{
-        'ViewThree.headinfour' | translate:params}}
-        <span style="font-style: italic;">RESEND</span>
+        </span>
+        {{ 'ViewThree.headinthree' | translate:params}}.
       </p>
-      <ion-button (click)="changeView('two')" fill="clear" style="margin-top: 0.6em;font-size: 14px;" mode="ios"
-        color="danger" expand="large">
-        <p style="color: red;font-size: 18px;  font-family: 'Noto Sans JP', sans-serif;font-weight: bold;">BACK
+      <div style="display: flex;padding: 10px;justify-content: center;margin-top: 1em;">
+        <div style="width: 15%;padding-right: 6px;">
+          <ion-list class="line-input">
+            <ion-item color="none">
+              <ion-input (keyup)="onKeyUp($event,1)" type="number" placeholder="1" maxlength="1" #passcode1></ion-input>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <div style="width: 15%;padding-right: 6px;">
+          <ion-list class="line-input">
+            <ion-item color="none">
+              <ion-input (keyup)="onKeyUp($event,2)" type="number" placeholder="1" maxlength="1" #passcode2></ion-input>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <div style="width: 15%;padding-right: 6px;">
+          <ion-list class="line-input">
+            <ion-item color="none">
+              <ion-input (keyup)="onKeyUp($event,3)" type="number" placeholder="1" maxlength="1" #passcode3></ion-input>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <div style="width: 15%;padding-right: 6px;">
+          <ion-list class="line-input">
+            <ion-item color="none">
+              <ion-input (keyup)="onKeyUp($event,4)" type="number" placeholder="1" maxlength="1" #passcode4></ion-input>
+            </ion-item>
+          </ion-list>
+
+        </div>
+
+        <div style="width: 15%;padding-right: 6px;">
+          <ion-list class="line-input">
+            <ion-item color="none">
+              <ion-input (keyup)="onKeyUp($event,5)" type="number" placeholder="1" maxlength="1" #passcode5></ion-input>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <div style="width: 15%;padding-right: 6px;">
+          <ion-list class="line-input">
+            <ion-item color="none">
+              <ion-input (keyup)="onKeyUp($event,6)" (input)="submit($event)" type="number" placeholder="1"
+                maxlength="1" #passcode6></ion-input>
+            </ion-item>
+
+          </ion-list>
+        </div>
+
+
+
+      </div>
+
+      <div style="display: flex;justify-content: center;flex-direction: column;">
+        <p style="text-align: center; color: rgb(231, 170, 57);; font-family: 'Noto Sans JP';font-size: 12px;">{{
+          'ViewThree.headinfour' | translate:params}}
+          <span style="font-style: italic;">RESEND</span>
         </p>
-        <ion-icon slot="start" name="caret-back"></ion-icon>
-      </ion-button>
+        <ion-button (click)="changeView('two')" fill="clear" style="margin-top: 0.6em;font-size: 14px;" mode="ios"
+          color="danger" expand="large">
+          <p style="color: red;font-size: 18px;  font-family: 'Noto Sans JP', sans-serif;font-weight: bold;">BACK
+          </p>
+          <ion-icon slot="start" name="caret-back"></ion-icon>
+        </ion-button>
+
+      </div>
 
     </div>
   </div>
@@ -172,35 +216,46 @@
   <div class="wrapper" style="position: relative;height:100%;top: 150px;
   " *ngIf="currentDiv=='four'">
 
-    <div style="text-align: center;">
-      <img style="height: 10em;" src="../../assets/logo.png" alt="">
-    </div>
+    <div class="fade-in one">
+      <div style="text-align: center;">
+        <img style="height: 10em;" src="../../assets/logo.png" alt="">
+      </div>
 
-    <div
-      style="display: flex;justify-content: center;align-items: center;position: relative;top: 50px;flex-direction: column;text-align: left;">
-      <ion-label style="text-align: left;color: green;display: flex;">To Proceed Further Fill Out Necessary Fields
-      </ion-label>
-      <div style="width: 90%;display: flex;justify-content: center;flex-direction: column;margin-top: 5px;">
-        <ion-list class="line-input">
-          <ion-item>
-            <ion-input [(ngModel)]="name" style="border: none;" type="email" placeholder="Enter your name"></ion-input>
-          </ion-item>
-        </ion-list>
+      <div
+        style="display: flex;justify-content: center;align-items: center;position: relative;top: 50px;flex-direction: column;text-align: left;">
+        <ion-label style="text-align: left;color: green;display: flex;">To Proceed Further Fill Out Necessary Fields
+        </ion-label>
+        <div style="width: 90%;display: flex;justify-content: center;flex-direction: column;margin-top: 5px;">
 
-        <ion-list class="line-input">
-          <ion-item>
-            <ion-input [(ngModel)]="adress" style="border: none;" type="text" placeholder="Enter your adress">
-            </ion-input>
-          </ion-item>
-        </ion-list>
+          <ion-list class="line-input">
+            <ion-item color="none">
+              <ion-input [(ngModel)]="name" style="border: none;" type="email" placeholder="Enter your name">
+              </ion-input>
+            </ion-item>
+          </ion-list>
 
-        <ion-list class="line-input">
-          <ion-item>
-            <ion-input [(ngModel)]="referal" style="border: none;" type="text" placeholder="Referal if any"></ion-input>
-          </ion-item>
-        </ion-list>
+          <div style="margin-top: 5px;">
+            <ion-list class="line-input">
+              <ion-item color="none">
+                <ion-input [(ngModel)]="adress" style="border: none;" type="text" placeholder="Enter your adress">
+                </ion-input>
+              </ion-item>
+            </ion-list>
 
-        <ion-button (click)="saveData()" mode='ios' color="success" expand="block">I'm in</ion-button>
+          </div>
+
+          <div style="margin-top: 5px;margin-bottom: 5px;">
+            <ion-list class="line-input">
+              <ion-item color="none">
+                <ion-input [(ngModel)]="referal" style="border: none;" type="text" placeholder="Referal if any">
+                </ion-input>
+              </ion-item>
+            </ion-list>
+          </div>
+
+          <ion-button (click)="saveData()" mode='ios' color="success" expand="block">I'm in</ion-button>
+        </div>
+
       </div>
 
     </div>

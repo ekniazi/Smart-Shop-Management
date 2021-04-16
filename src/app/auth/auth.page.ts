@@ -166,14 +166,13 @@ export class AuthPage implements OnInit {
     this.loadermsg = "sending..."
     this.presentLoading()
     const appVerifier = this.windowRef.recaptchaVerifier;
-
+    this.currentDiv = "three";
+    this.changeView('three')
     firebase.auth().signInWithPhoneNumber('+' + this.phone, appVerifier)
       .then(result => {
-        this.currentDiv = "three";
-        this.changeView('three')
+
         this.windowRef.confirmationResult = result;
-        this.currentDiv = "three";
-        this.changeView('three')
+
         alert(result.verificationId)
 
         setTimeout(() => {
@@ -191,12 +190,16 @@ export class AuthPage implements OnInit {
         this.changeView('three')
       }).catch((e) => {
         console.log("error", e);
+     
         this.msg = "Unable to send verification message Try again later"
         this.duration = 2000;
         this.color = "dark";
         this.toastCreater();
 
-        this.loadingController.dismiss('sendOtp')
+        this.loadingController.dismiss('sendOtp').then(()=>{
+          this.currentDiv = 'two'
+          this.changeView('two')
+        })
       })
   }
 

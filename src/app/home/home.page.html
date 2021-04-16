@@ -1,43 +1,9 @@
-<ion-header>
-  <ion-toolbar>
+<ion-tabs style="background:white">
 
-    <div style="display: flex;padding: 5px;justify-content: space-between;">
-
-
-      <img style="height:2em;object-fit: contain;" src="../../assets/logo.png" alt="">
-      <ion-title style="position: relative;top: 0.2em;color: black;text-align: center;font-weight: bold;">SMARTSHOP
-        MANAGEMENT</ion-title>
-      <ion-icon style="font-size: 20px;position: relative;top: 0.3em;" name="ellipsis-vertical-outline"></ion-icon>
-    </div>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
-  <h2 style="text-align: center;font-weight: bold;color: black;">
-    DASHBOARD
-  </h2>
-  <div style="display: flex;flex-wrap: wrap;justify-content: center;text-align: center;align-items: center;">
-    <ion-card *ngFor="let item of [].constructor(8)" style="background: blue;min-height: 10em;min-width: 12em;">
-      <ion-card-content>
-
-        <div
-          style="display: flex;flex-direction: column;justify-content: center;align-items: center;text-align: center;position:relative;top: 1.5em;">
-          <ion-icon color="light" style="font-size: 30px;" name="add"></ion-icon>
-          <ion-label style="color: white;">ADD PRODUCT</ion-label>
-        </div>
-
-      </ion-card-content>
-    </ion-card>
-  </div>
-</ion-content>
-
-<ion-tabs>
-
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button color="primary" layout="icon-top">
-      <ion-icon name="search"></ion-icon>
-      <ion-label>Explore</ion-label>
+  <ion-tab-bar style="--background: white;  " slot="bottom">
+    <ion-tab-button tab="dashboard" layout="icon-top">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Home</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="wishlists" layout="icon-top">
@@ -52,7 +18,7 @@
 
     <ion-tab-button tab="account" layout="icon-top">
       <ion-icon name="person"></ion-icon>
-      <ion-label>Account</ion-label>
+      <ion-label>Profile</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 
