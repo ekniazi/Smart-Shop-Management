@@ -10,11 +10,14 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+/////////////////EKNIAZI IMPORTS/////////////////////////////
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 /////////////////FOR MULTILANGUAGE SUPPORT/////////////////////////////
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateConfigService } from './translate-config.service';
+import { SharedModule } from './shared/shared.module';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -30,6 +33,7 @@ export function LanguageLoader(http: HttpClient) {
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     HttpClientModule,
+    SharedModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -42,6 +46,7 @@ export function LanguageLoader(http: HttpClient) {
   providers: [
     AngularFirestore,
     TranslateConfigService,
+    BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }
   ],
   bootstrap: [AppComponent],

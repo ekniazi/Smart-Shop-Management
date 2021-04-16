@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Adding Supplier..</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-item>
+      <ion-input [(ngModel)]="name" placeholder="Enter name here..."></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="phone" placeholder="Enter phone# here..."></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="address" placeholder="Enter address here..."></ion-input>
+    </ion-item>
+  </ion-card>
+</ion-content>
+<ion-footer>
+  <ion-button size="block" *ngIf="name && phone && address" (click)="addSupplier()">Add Supplier</ion-button>
+</ion-footer>
