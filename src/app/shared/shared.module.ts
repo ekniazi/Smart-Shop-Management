@@ -5,14 +5,15 @@ import { IonicModule } from '@ionic/angular';
 import { AddItemPage } from '../add-item/add-item.page';
 import { AddItemPageModule } from '../add-item/add-item.module';
 import { AddSupplierPage } from '../add-supplier/add-supplier.page';
+import { SelectSupplierPage } from '../select-supplier/select-supplier.page';
 
 @NgModule({
-  declarations: [AddItemPage,AddSupplierPage],
+  declarations: [AddItemPage,AddSupplierPage,SelectSupplierPage],
   imports: [
     IonicModule,
     FormsModule,
     CommonModule,
   ],
-  exports: [AddItemPage,AddSupplierPage]
+  exports: [AddItemPage,AddSupplierPage,SelectSupplierPage]
 })
 export class SharedModule { }

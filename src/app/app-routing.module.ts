@@ -22,6 +22,14 @@ const routes: Routes = [
     path: 'add-supplier',
     loadChildren: () => import('./add-supplier/add-supplier.module').then( m => m.AddSupplierPageModule)
   },
+  {
+    path: 'select-supplier',
+    loadChildren: () => import('./select-supplier/select-supplier.module').then( m => m.SelectSupplierPageModule)
+  },
+  {
+    path: 'pos',
+    loadChildren: () => import('./pos/pos.module').then( m => m.POSPageModule)
+  },
 
 ];
 

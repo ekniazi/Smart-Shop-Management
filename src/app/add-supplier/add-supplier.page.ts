@@ -32,7 +32,6 @@ export class AddSupplierPage implements OnInit {
   getSuppliers() {
     if (window.localStorage.getItem('suppliers')) {
       this.suppliers = JSON.parse(window.localStorage.getItem('suppliers'));
-      alert(JSON.stringify(this.suppliers))
     } else {
       this.suppliers = [];
     }
@@ -47,7 +46,7 @@ export class AddSupplierPage implements OnInit {
     this.suppliers.push(data);
     window.localStorage.setItem('suppliers', JSON.stringify(this.suppliers));
     this.presentToast();
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss(data);
   }
   
   ngOnInit() {

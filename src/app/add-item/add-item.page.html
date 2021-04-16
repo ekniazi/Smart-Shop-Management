@@ -5,5 +5,26 @@
 </ion-header>
 
 <ion-content>
-<ion-button (click) = "scanBarcode()">Scan Barcode</ion-button>
+  <div *ngIf="barcode">
+    <ion-card>
+      <ion-item>
+        <ion-input [(ngModel)]="name" placeholder="Enter product name here..."></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input [(ngModel)]="rPrice" type = "number" placeholder="Enter retail price here.."></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input [(ngModel)]="pPrice" type = "number" placeholder="Enter purchase price here.."></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input [(ngModel)]="stock" type = "number" placeholder="Enter stock here.."></ion-input>
+      </ion-item>
+      <ion-item *ngIf = "supplier"><span style = "font-weight:bold;">Supplier:</span>{{supplier.name}}</ion-item>
+      <ion-button (click) = "openSuppliers()" *ngIf = "!supplier">Select Supplier</ion-button>
+    </ion-card>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-button size = "block" *ngIf = "name && rPrice && pPrice && stock && supplier" (click) = "addItem()">Add item</ion-button>
+</ion-footer>

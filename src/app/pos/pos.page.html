@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon name="arrow-back" slot="start" size="large" (click)="back()"></ion-icon>
+    <ion-title slot="start">POS</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let item of recipt">
+    <ion-item color="none" lines='none' color="none">
+      <div slot="start">
+        {{item.name}}</div>
+      <div slot="end">{{item.rPrice}}</div>
+    </ion-item>
+    <ion-item>
+      <div slot="end">x</div>
+      <div slot="end" style="width:50px;text-align: right;" slot="end">
+        <ion-input type="number" placeholder="{{item.quantity}}" [(noModel)]="item.quantity">
+        </ion-input>
+      </div>
+    </ion-item>
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf = "recipt && recipt.length > 0">
+    <ion-fab-button (click)="endSale()">
+      <ion-icon name="arrow-forward"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="scanBarcode()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

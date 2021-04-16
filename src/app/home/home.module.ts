@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { AddItemPage } from '../add-item/add-item.page';
 import { SharedModule } from '../shared/shared.module';
 import { AddSupplierPage } from '../add-supplier/add-supplier.page';
+import { SelectSupplierPage } from '../select-supplier/select-supplier.page';
 
 
 @NgModule({
@@ -19,6 +20,6 @@ import { AddSupplierPage } from '../add-supplier/add-supplier.page';
     SharedModule,
   ],
   declarations: [HomePage],
-  entryComponents: [AddItemPage,AddSupplierPage],
+  entryComponents: [AddItemPage,AddSupplierPage,SelectSupplierPage],
 })
 export class HomePageModule {}

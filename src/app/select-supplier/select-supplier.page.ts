@@ -1,21 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { AddItemPage } from 'src/app/add-item/add-item.page';
-import { AddSupplierPage } from 'src/app/add-supplier/add-supplier.page';
+import { AddSupplierPage } from '../add-supplier/add-supplier.page';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss'],
+  selector: 'app-select-supplier',
+  templateUrl: './select-supplier.page.html',
+  styleUrls: ['./select-supplier.page.scss'],
 })
-export class DashboardPage implements OnInit {
+export class SelectSupplierPage implements OnInit {
 
   constructor(
     public modalController: ModalController,
-    private router: Router,
   ) { }
 
+  suppliers: any[];
   ModalPage: any;
   returnDat:any;
 
@@ -29,19 +27,21 @@ export class DashboardPage implements OnInit {
       .then((event: any) => {
         if (event['data']) {
           this.returnDat = event['data'];
+          setTimeout(()=>{
+            this.selectSupplier(this.returnDat);
+          },600)
         }
       });
 
     return await modal.present();
   }
-  
-  openPOS(){
-    this.router.navigate(['pos']);
-  }
 
-  addItem(){
-    this.ModalPage = AddItemPage;
-    this.openModal();
+  getSuppliers() {
+    if (window.localStorage.getItem('suppliers')) {
+      this.suppliers = JSON.parse(window.localStorage.getItem('suppliers'));
+    } else {
+      this.suppliers = [];
+    }
   }
 
   addSupplier(){
@@ -49,7 +49,12 @@ export class DashboardPage implements OnInit {
     this.openModal();
   }
 
+  selectSupplier(boi){
+    this.modalController.dismiss(boi);
+  }
+
   ngOnInit() {
+    this.getSuppliers();
   }
 
 }
