@@ -1,34 +1,58 @@
+<ion-header>
+  <ion-toolbar style="--background:white">
+    <div style="display: flex;color: black;">
+      <img style="height: 3em;object-fit: contain;" src="../../../assets/logo.png" alt="">
+      <ion-title style="text-align: center;color: black;  font-family: 'Francois One', sans-serif;">SmartShop Management
+      </ion-title>
+      <ion-icon style="position: relative;top: 0.8em;font-size: 20px;" name="ellipsis-vertical"></ion-icon>
+    </div>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
 
   <div class="textalignleft">
 
-    <div class="header">
-      <div class="spacebetween">
+    <div style="display: flex;justify-content: center;margin-top: 0.3em;width: 100%;">
+      <div
+        style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.082);border-radius:14px;margin-top: 4px;width: 96%;background: rgba(0, 0, 139, 0.658);">
         <div>
-          <ion-title class="hello">
-            Hello,
+          <ion-title style="color: white;" class="hello">
+            Statistics
           </ion-title>
+          <div class="flex">
 
-          <br>
+            <ion-card style="width: 44%;background-color: white;" class="card">
+              <div style="color: rgb(0, 30, 128);">
+                <ion-icon color="none" style="font-size: 30px;" name="happy"></ion-icon>
+              </div>
+              <ion-label class="cardtxt">
+                26 Listed Products
+              </ion-label>
+            </ion-card>
 
-          <ion-title class="name">
-            Anna
-          </ion-title>
+            <ion-card style="width: 44%;background-color: white;" class="card">
+              <div style="color: lightsalmon;">
+                <ion-icon color="none" style="font-size: 30px;" name="walk"></ion-icon>
+              </div>
+              <ion-label class="cardtxt">
+                2 Helpers Active
+              </ion-label>
+            </ion-card>
+          </div>
 
         </div>
 
-        <div style="text-align: right;color: white; margin-top: 2em;padding-right: 10px;">
-          <ion-icon style="font-size: 100px;" name="person-circle"></ion-icon>
-        </div>
+
       </div>
     </div>
+
 
 
     <div class="flex">
 
       <ion-card class="card">
-        <div style="color: purple;">
-          <ion-icon color="none" style="font-size: 30px;" name="home"></ion-icon>
+        <div style="color: rgb(128, 47, 0);">
+          <ion-icon color="none" style="font-size: 30px;" name="add"></ion-icon>
         </div>
         <ion-label class="cardtxt">
           Add Item
@@ -36,8 +60,8 @@
       </ion-card>
 
       <ion-card class="card">
-        <div style="color: purple;">
-          <ion-icon color="none" style="font-size: 30px;" name="home"></ion-icon>
+        <div style="color: rgba(0, 128, 28, 0.555);">
+          <ion-icon color="none" style="font-size: 30px;" name="attach"></ion-icon>
         </div>
         <ion-label class="cardtxt">
           Upload Excel

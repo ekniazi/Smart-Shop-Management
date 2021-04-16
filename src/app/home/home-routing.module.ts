@@ -17,12 +17,20 @@ const routes: Routes = [
           }
         ]
       },
-
+      {
+        path: 'settings',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../home/settings/settings.module').then(m => m.SettingsPageModule)
+          }
+        ]
+      },
     ]
   },
   {
     path: '',
-    redirectTo: '/home/dashboard',
+    redirectTo: '/home/settings',
     pathMatch: 'full'
   },
 

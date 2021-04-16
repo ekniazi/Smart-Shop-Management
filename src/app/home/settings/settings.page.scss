@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Francois+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+
+.settings {
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+    color: white;
+   
+}
+ion-list {
+    background: none !important;
+}
+.robo {
+    font-family: "Roboto", sans-serif;
+}
+.h-divider {
+    margin: auto;
+    width: 80%;
+    position: relative;
+}
+
+.h-divider .shadow {
+    overflow: hidden;
+    height: 20px;
+}
+
+.h-divider .shadow:after {
+    content: "";
+    display: block;
+    margin: -25px auto 0;
+    width: 100%;
+    height: 25px;
+    border-radius: 125px/12px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.575);
+}
+
+.h-divider .text {
+    width: 100px;
+    height: 45px;
+    padding: 10px;
+    position: absolute;
+    bottom: 100%;
+    margin-bottom: -33px;
+    left: 50%;
+    margin-left: -60px;
+    border-radius: 100%;
+    box-shadow: 0 2px 4px #999;
+    background: white;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+.card {
+    min-height: 5em;
+    width: 45%;
+    background-color: rgba(255, 255, 255, 0.801);
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.061);
+    transition: 0.3s;
+    border-radius: 25px;
+    padding-top: 25px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    .cardtxt {
+        padding-top: 10px;
+        color: rgba(0, 0, 0, 0.459);
+        padding-bottom: 10px;
+        padding-left: 5px;
+        font-weight: bold;
+        font-family: "Hammersmith One", sans-serif;
+    }
+}
