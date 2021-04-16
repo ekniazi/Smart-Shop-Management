@@ -1,4 +1,131 @@
-ion-toolbar {
-    --color: #ffffff;
-    --background: #0d2c6c;
+///hello font
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Francois+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
+.header {
+    border-bottom-right-radius: 50% 75px;
+    border-bottom-left-radius: 50% 75px;
+    background-color: rgba(128, 0, 0, 0.849);
+    min-height: 6em;
+    padding: 14px;
+}
+
+.textalignleft {
+    text-align: left;
+}
+.hello {
+    font-family: "Open Sans", sans-serif;
+    color: white;
+    font-weight: bold;
+    font-size: 35px;
+    margin-top: 1em;
+    letter-spacing: -2px;
+}
+.name {
+    font-family: "Francois One", sans-serif;
+    font-weight: bold;
+    color: white;
+    font-size: 46px;
+    position: relative;
+    top: -0.7em;
+}
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+.card {
+    min-height: 5em;
+    width: 45%;
+    background-color: rgba(255, 255, 255, 0.801);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.082);
+    transition: 0.3s;
+    border-radius: 25px;
+    padding-top: 25px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    .cardtxt {
+        padding-top: 10px;
+        color: rgba(0, 0, 0, 0.459);
+        padding-bottom: 10px;
+        padding-left: 5px;
+        font-weight: bold;
+        font-family: "Hammersmith One", sans-serif;
+    }
+}
+
+.todo {
+    font-family: "Open Sans", sans-serif;
+    color: black;
+    letter-spacing: -3px;
+    font-size: 33px;
+    word-spacing: -1px;
+    margin-top: 24px;
+}
+.spacebetween {
+    display: flex;
+    justify-content: space-between;
+}
+.viewall {
+    font-family: "Anton", sans-serif;
+    color: purple;
+    font-size: 12px;
+    text-align: right;
+    margin-top: 32px;
+}
+ion-list {
+    background: none !important ;
+}
+.listhead {
+    display: flex;
+    padding-left: 20px;
+    padding-top: 5px;
+}
+.icon1 {
+    border-radius: 50%;
+    background: rgba(128, 0, 128, 0.849);
+    height: 3.4em;
+    width: 3.4em;
+    text-align: center;
+    color: white;
+}
+.inline {
+    display: flex;
+    flex-direction: column;
+}
+.texthead {
+    color: rgba(0, 0, 0, 0.87);
+    position: relative;
+    top: -0.3em;
+    padding-left: 20px;
+    font-family: "Hammersmith One", sans-serif;
+    letter-spacing: -1px;
+}
+.textlabel {
+    color: rgba(0, 0, 0, 0.342);
+    position: relative;
+    top: -1.4em;
+    padding-left: 24px;
+    font-family: "Hammersmith One", sans-serif;
+    letter-spacing: -1px;
+    font-size: 15px;
+    font-weight: bold;
+}
+.icon2 {
+    border-radius: 50%;
+    background: skyblue;
+    height: 3.4em;
+    width: 3.4em;
+    text-align: center;
+    color: white;
+}
+.icon3 {
+    border-radius: 50%;
+    background: rgba(128, 0, 0, 0.466);
+    height: 3.4em;
+    width: 3.4em;
+    text-align: center;
+    color: white;
 }

@@ -173,7 +173,7 @@ export class AuthPage implements OnInit {
 
         this.windowRef.confirmationResult = result;
 
-        alert(result.verificationId)
+    
 
         setTimeout(() => {
           this.msg = "OTP Sent to your phone number"
