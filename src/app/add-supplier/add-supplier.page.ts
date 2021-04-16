@@ -13,7 +13,6 @@ export class AddSupplierPage implements OnInit {
     private modalCtrl: ModalController,
     public toastController: ToastController
   ) {
-    this.getSuppliers();
    }
 
   name: string;
@@ -52,6 +51,7 @@ export class AddSupplierPage implements OnInit {
   }
   
   ngOnInit() {
+    this.getSuppliers();
   }
 
 }
