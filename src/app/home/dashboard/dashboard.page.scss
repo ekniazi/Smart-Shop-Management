@@ -6,7 +6,7 @@
 
 .header {
     border-bottom-right-radius: 50% 75px;
-   
+
     background-color: rgba(128, 0, 0, 0.849);
     padding: 6px;
 }
@@ -19,7 +19,7 @@
     color: white;
     font-weight: bold;
     font-size: 35px;
-    margin-top: 1em;
+    margin-top: 0.6em;
     letter-spacing: -2px;
 }
 .name {
@@ -105,12 +105,11 @@ ion-list {
 .textlabel {
     color: rgba(0, 0, 0, 0.342);
     position: relative;
-    top: -1.4em;
+    top: -1em;
     padding-left: 24px;
     font-family: "Hammersmith One", sans-serif;
     letter-spacing: -1px;
     font-size: 15px;
-    font-weight: bold;
 }
 .icon2 {
     border-radius: 50%;
@@ -127,4 +126,178 @@ ion-list {
     width: 3.4em;
     text-align: center;
     color: white;
+}
+
+.right {
+    border: #ff6b00 solid 3px;
+    height: 120px;
+    width: 120px;
+    border-radius: 120px;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    position: absolute;
+    transform: rotate(-45deg);
+    animation: rota2 1000ms linear;
+    -moz-animation: rota2 1000ms linear;
+    -o-animation: rota2 1000ms linear;
+    -webkit-animation: rota2 1000ms linear;
+}
+
+@keyframes rota2 {
+    from {
+        transform: rotate(-225deg);
+    }
+    to {
+        transform: rotate(-45deg);
+    }
+}
+
+@-o-keyframes rota2 {
+    from {
+        transform: rotate(-225deg);
+    }
+    to {
+        transform: rotate(-45deg);
+    }
+}
+
+@-moz-keyframes rota2 {
+    from {
+        transform: rotate(-225deg);
+    }
+    to {
+        transform: rotate(-45deg);
+    }
+}
+@-webkit-keyframes rota2 {
+    from {
+        transform: rotate(-225deg);
+    }
+    to {
+        transform: rotate(-45deg);
+    }
+}
+
+.left {
+    border: #ff851bc0 solid 3px;
+    height: 120px;
+    width: 120px;
+    border-radius: 120px;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    transform: rotate(315deg);
+    animation: rota 2000ms linear;
+    -o-animation: rota 2000ms linear;
+    -moz-animation: rota 2000ms linear;
+    -webkit-animation: rota 2000ms linear;
+}
+@keyframes rota {
+    from {
+        transform: rotate(-45deg);
+    }
+    to {
+        transform: rotate(315deg);
+    }
+}
+@-o-keyframes rota {
+    from {
+        transform: rotate(-45deg);
+    }
+    to {
+        transform: rotate(315deg);
+    }
+}
+@moz-keyframes rota {
+    from {
+        transform: rotate(-45deg);
+    }
+    to {
+        transform: rotate(315deg);
+    }
+}
+@-webkit-keyframes rota {
+    from {
+        transform: rotate(-45deg);
+    }
+    to {
+        transform: rotate(315deg);
+    }
+}
+
+.middle {
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 150px;
+    position: relative;
+    z-index: 4;
+}
+
+@keyframes popover {
+    0% {
+        opacity: 1;
+    }
+    99% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-o-keyframes popover {
+    0% {
+        opacity: 1;
+    }
+    99% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes popover {
+    0% {
+        opacity: 1;
+    }
+    99% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes popover {
+    0% {
+        opacity: 1;
+    }
+    99% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.scrollwrapper {
+    width: auto;
+    overflow-x: scroll;
+    display: flex;
+    padding: 0px;
+}
+.cards {
+    min-width: 130px;
+    min-height: 80px;
+    border-radius: 16px;
+    box-shadow: -1rem 0 3rem transparent;
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    transition: 0.2s;
 }
