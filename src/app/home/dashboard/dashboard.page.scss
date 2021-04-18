@@ -18,7 +18,8 @@
     font-family: "Open Sans", sans-serif;
     color: white;
     font-weight: bold;
-    font-size: 35px;
+    text-align: center;
+    font-size: 25px;
     margin-top: 0.6em;
     letter-spacing: -2px;
 }
@@ -129,7 +130,7 @@ ion-list {
 }
 
 .right {
-    border: #ff6b00 solid 3px;
+    border: #ff9100 solid 5px;
     height: 120px;
     width: 120px;
     border-radius: 120px;
@@ -141,6 +142,7 @@ ion-list {
     -moz-animation: rota2 1000ms linear;
     -o-animation: rota2 1000ms linear;
     -webkit-animation: rota2 1000ms linear;
+    background: rgba(26, 25, 25, 0.527);
 }
 
 @keyframes rota2 {
@@ -226,6 +228,7 @@ ion-list {
 }
 
 .middle {
+    padding-top: 10px;
     color: white;
     font-size: 18px;
     display: flex;
@@ -298,6 +301,11 @@ ion-list {
     box-shadow: -1rem 0 3rem transparent;
     display: flex;
     flex-direction: column;
-    padding: 4px;
+    padding-top: 8px;
     transition: 0.2s;
+    --background: linear-gradient(
+        to bottom,
+        #581fc2d0,
+        rgba(30, 152, 201, 0.671)
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
