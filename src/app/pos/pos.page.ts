@@ -84,7 +84,6 @@ export class POSPage implements OnInit {
       let data = {
         recipt: this.recipt,
         total: this.total,
-        time: new Date(),
       }
       this.sales.push(data);
       window.localStorage.setItem('sales',JSON.stringify(this.sales));

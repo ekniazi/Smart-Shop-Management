@@ -15,89 +15,29 @@
 
   <div class="textalignleft">
 
-    <div style="display: flex;justify-content: center;width: 100%;background: url('../../../assets/header-back.png');background-size: 100% 100%;padding-bottom:45px;">
-      <div style="margin-top: 4px;width: 100%;background:rgba(255, 255, 255, 0);
+    <div style="display: flex;justify-content: center;margin-top: 0.3em;width: 100%;">
+      <div style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.082);border-radius:14px;margin-top: 4px;width: 96%;background: #0f0c29;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         ">
-        <ion-gird>
-          <ion-title style="color: white;" class="hello">
-            DAILY STATS
-          </ion-title>
-          <ion-row style="width: 100%;margin-top: 10px;" class="flex">
-
-            <ion-col style="text-align: center;">
-
-              <div class="right"></div>
-              <div class="left"></div>
-              <div class="middle">
-                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 30px;">294 <br />
-                </p>
-              </div>
-              <div
-                style="text-align:center;color: rgba(255, 255, 255, 0.959);font-family: 'Hammersmith One', sans-serif;font-size: 15px;padding-top: 20px;">
-                SALES</div>
-
-
-            </ion-col>
-
-            <ion-col style="text-align: center;">
-
-              <div class="right"></div>
-              <div class="left"></div>
-              <div class="middle">
-                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 30px;">100290<br />
-                </p>
-              </div>
-              <div
-                style="text-align:center;color: rgba(255, 255, 255, 0.959);font-family: 'Hammersmith One', sans-serif;font-size: 15px;padding-top: 20px;">
-                REVENUE</div>
-
-
-            </ion-col>
-
-            <ion-col style="text-align: center;">
-
-              <div class="right"></div>
-              <div class="left"></div>
-              <div class="middle">
-                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 30px;">20000 <br />
-                </p>
-              </div>
-              <div
-                style="text-align:center;color: rgba(255, 255, 255, 0.959);font-family: 'Hammersmith One', sans-serif;font-size: 15px;padding-top: 20px;">
-                PROFITS</div>
-
-
-            </ion-col>
-
-
-          </ion-row>
-
-        </ion-gird>
-
-
-      </div>
-    </div>
-    <div style="display: flex;justify-content: center;margin-top: -35px;width: 100%;">
-      <div style="margin-top: 4px;width: 100%;">
-        <ion-title  class="hello" style = "text-align: left;color: rgba(39, 39, 39, 0.788);">
-          Overview
+        <ion-title style="color: white;" class="hello">
+          OVERVIEW
         </ion-title>
 
         <div class="scrollwrapper">
-          <ion-card class="cards" *ngFor="let item of [].constructor(5)">
+          <ion-card class="cards" *ngFor="let item of [].constructor(10)">
 
             <ion-card-content
               style="display: flex;text-align: center;justify-content: center;align-items: center;flex-direction: column;margin: 0;padding: 0;">
               <ion-title
-                style="color: rgb(238, 238, 238);font-size: 15px;;font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;word-wrap: break-word;">
-                Total items</ion-title>
+                style="color: black;font-family: 'Hammersmith One', sans-serif;word-wrap: break-word;font-weight: bold;">
+                LISTED ITEMS</ion-title>
+              
+              <ion-title
+                style="color: #a84409;font-family: 'Hammersmith One', sans-serif;word-wrap: break-word;font-size: 36px;">45
+              </ion-title>
 
-              <div
-                style="color: #ffffff;font-family: 'Hammersmith One', sans-serif;word-wrap: break-word;font-size: 36px;">
-                1100
-              </div>
-
-              <div style = "color: rgb(226, 224, 224);">VIEW ALL</div>>
+              <ion-button fill="outline" color="success" mode="ios" shape="round">VIEW</ion-button>
             </ion-card-content>
           </ion-card>
         </div>
@@ -106,6 +46,70 @@
       </div>
     </div>
 
+    <div style="display: flex;justify-content: center;margin-top: 0.3em;width: 100%;min-height: 15em;">
+      <div style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.082);border-radius:14px;margin-top: 4px;width: 96%;background: #642B73;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #642B73, #C6426E);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #642B73, #C6426E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        ">
+        <div>
+          <ion-title style="color: white;" class="hello">
+            Statistics
+          </ion-title>
+          <div style="width: 110%;margin-top: 10px;" class="flex">
+
+            <div style="padding-left: 0.5em;width: 30%;">
+
+              <div class="right"></div>
+              <div class="left"></div>
+              <div class="middle">
+                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">294 <br />
+                </p>
+              </div>
+              <ion-label
+                style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 0.4em;font-size: 25px;padding-bottom: 10px;">
+                VENDORS</ion-label>
+
+
+            </div>
+
+            <div style="padding-left: 0.5em;width: 30%;">
+
+              <div class="right"></div>
+              <div class="left"></div>
+              <div class="middle">
+                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">24 <br />
+                </p>
+              </div>
+              <ion-label
+                style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 0.5em;font-size: 25px;padding-bottom: 10px;">
+                PRODUCTS</ion-label>
+
+
+            </div>
+
+            <div style="padding-left: 0.5em;width: 30%;">
+
+              <div class="right"></div>
+              <div class="left"></div>
+              <div class="middle">
+                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">204 <br />
+                </p>
+              </div>
+              <ion-label
+                style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 0.7em;font-size: 25px;padding-bottom: 10px;">
+                HELPERS</ion-label>
+
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
 
 
     <div class="flex">
