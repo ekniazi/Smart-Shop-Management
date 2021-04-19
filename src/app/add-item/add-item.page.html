@@ -1,30 +1,115 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Adding Item</ion-title>
+  <ion-toolbar style="--background: #2b5876;  /* fallback for old browsers */
+  --background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
+  --background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ">
+    <div style="display: flex;color: white;">
+      <img style="height: 3em;object-fit: contain;" src="../../../assets/logo.png" alt="">
+      <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">ADD ITEM
+      </ion-title>
+      <ion-button style="padding-top: 5px;" fill='clear' color="primary">
+        <p style="color: white;font-family: Impact;">
+          EXIT
+        </p>
+      </ion-button>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div *ngIf="barcode">
+<!-- <ion-content>
+  <div >
     <ion-card>
       <ion-item>
         <ion-input [(ngModel)]="name" placeholder="Enter product name here..."></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input [(ngModel)]="rPrice" type = "number" placeholder="Enter retail price here.."></ion-input>
+        <ion-input [(ngModel)]="rPrice" type="number" placeholder="Enter retail price here.."></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input [(ngModel)]="pPrice" type = "number" placeholder="Enter purchase price here.."></ion-input>
+        <ion-input [(ngModel)]="pPrice" type="number" placeholder="Enter purchase price here.."></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input [(ngModel)]="stock" type = "number" placeholder="Enter stock here.."></ion-input>
+        <ion-input [(ngModel)]="stock" type="number" placeholder="Enter stock here.."></ion-input>
       </ion-item>
-      <ion-item *ngIf = "supplier"><span style = "font-weight:bold;">Supplier:</span>{{supplier.name}}</ion-item>
-      <ion-button (click) = "openSuppliers()" *ngIf = "!supplier">Select Supplier</ion-button>
+      <ion-item *ngIf="supplier"><span style="font-weight:bold;">Supplier:</span>{{supplier.name}}</ion-item>
+      <ion-button (click)="openSuppliers()" *ngIf="!supplier">Select Supplier</ion-button>
     </ion-card>
   </div>
+</ion-content> -->
+
+<ion-content>
+
+  <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+
+    <div
+      style="min-height: 4em;width: 80%;background: rgba(135, 207, 235, 0.397);margin-top: 2em;border-radius: 14px;padding: 10px;">
+      <p style="font-family: Impact;color: rgba(0, 0, 0, 0.507);">
+        Fill out the fields to list a new supplier. All the fields are mandatory make sure to fill out all.
+        After adding
+        the information re-check it and press continue to proceed.
+      </p>
+    </div>
+
+
+
+
+    <div
+      style="margin-top: 1em;width: 100%;display: flex;justify-content: center;align-items: center;flex-direction: column;">
+
+
+      <h2 style="font-family: 'Roboto Condensed', sans-serif;font-size:29px">
+        ADD AN ITEM
+      </h2>
+
+
+      <ion-item style="margin-top: 6px;" lines="none">
+
+        <ion-input placeholder="Enter name of item"></ion-input>
+      </ion-item>
+
+      <ion-item style="margin-top: 15px;" lines="none">
+
+        <ion-input placeholder="Enter retail price of item"></ion-input>
+      </ion-item>
+
+      <ion-item style="margin-top: 15px;" lines="none">
+
+        <ion-input placeholder="Enter stock of item"></ion-input>
+      </ion-item>
+
+      <ion-item style="margin-top: 15px;" lines="none">
+
+        <ion-input placeholder="Enter purchase price of item"></ion-input>
+      </ion-item>
+
+
+      <ion-item style="margin-top: 15px;display: flex;justify-content: space-between;" lines="none" color="none">
+        <ion-select placeholder="Select Supplier from available suppliers" interface="popover">
+          <ion-select-option></ion-select-option>
+
+        </ion-select>
+      </ion-item>
+
+
+
+      <div style="margin-top: 25px;width: 60%;">
+        <ion-button class="shadow-red" color="none" style="background: #2b5876;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #4e4376, #2b5876);" expand='block' mode='ios'>
+          <p style="font-family: Impact;color: rgba(255, 255, 255, 0.897);">
+            Continue
+          </p>
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+    </div>
+
+  </div>
+
 </ion-content>
 
 <ion-footer>
-  <ion-button size = "block" *ngIf = "name && rPrice && pPrice && stock && supplier" (click) = "addItem()">Add item</ion-button>
+  <ion-button size="block" *ngIf="name && rPrice && pPrice && stock && supplier" (click)="addItem()">Add item
+  </ion-button>
 </ion-footer>

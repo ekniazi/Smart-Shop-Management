@@ -74,7 +74,7 @@ export class AddItemPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.scanBarcode();
+  //  this.scanBarcode();
   }
 
   addItem() {

@@ -1,0 +1,14 @@
+ion-item {
+    background: white !important;
+    border: 1px solid black;
+    border-radius: 14px;
+    width: 70%;
+    &.item-has-focus {
+        border: 1px solid var(--ion-color-success, #0da02d);
+    }
+}
+.shadow-red {
+    border-radius: 10px;
+}
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
+
