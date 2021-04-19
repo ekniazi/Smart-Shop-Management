@@ -11,6 +11,7 @@
     </div>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
 
   <div class="textalignleft">
@@ -20,28 +21,33 @@
         background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         ">
-        <ion-title style="color: white;" class="hello">
+        <ion-title style="color: white;font-size: 28px;" class="hello">
           OVERVIEW
         </ion-title>
 
-        <div class="scrollwrapper">
-          <ion-card class="cards" *ngFor="let item of [].constructor(10)">
+        <div style="display: flex;flex-wrap: wrap;width: 100%;">
 
-            <ion-card-content
-              style="display: flex;text-align: center;justify-content: center;align-items: center;flex-direction: column;margin: 0;padding: 0;">
-              <ion-title
-                style="color: black;font-family: 'Hammersmith One', sans-serif;word-wrap: break-word;font-weight: bold;">
-                LISTED ITEMS</ion-title>
-              
-              <ion-title
-                style="color: #a84409;font-family: 'Hammersmith One', sans-serif;word-wrap: break-word;font-size: 36px;">45
-              </ion-title>
-
-              <ion-button fill="outline" color="success" mode="ios" shape="round">VIEW</ion-button>
-            </ion-card-content>
+          <ion-card style="background: white;width: 43%;" class="card">
+            <div style="color: purple;">
+              <ion-icon color="none" style="font-size: 30px;" name="albums"></ion-icon>
+            </div>
+            <ion-label class="cardtxt">
+              26 products
+            </ion-label>
           </ion-card>
-        </div>
 
+
+          <ion-card style="background: white;width: 43%;" class="card">
+            <div style="color: greenyellow;">
+              <ion-icon color="none" style="font-size: 30px;" name="accessibility"></ion-icon>
+            </div>
+            <ion-label class="cardtxt">
+              26 active helpers
+            </ion-label>
+          </ion-card>
+
+
+        </div>
 
       </div>
     </div>
@@ -52,7 +58,7 @@
         background: linear-gradient(to right, #642B73, #C6426E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         ">
         <div>
-          <ion-title style="color: white;" class="hello">
+          <ion-title style="color: white;font-size: 28px;" class="hello">
             Statistics
           </ion-title>
           <div style="width: 110%;margin-top: 10px;" class="flex">
@@ -66,7 +72,7 @@
                 </p>
               </div>
               <ion-label
-                style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 0.4em;font-size: 25px;padding-bottom: 10px;">
+                style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1.3em;font-size: 18px;padding-bottom: 10px;">
                 VENDORS</ion-label>
 
 
@@ -81,7 +87,7 @@
                 </p>
               </div>
               <ion-label
-                style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 0.5em;font-size: 25px;padding-bottom: 10px;">
+                style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1em;font-size: 18px;padding-bottom: 10px;">
                 PRODUCTS</ion-label>
 
 
@@ -96,7 +102,7 @@
                 </p>
               </div>
               <ion-label
-                style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 0.7em;font-size: 25px;padding-bottom: 10px;">
+                style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1.6em;font-size: 18px;padding-bottom: 10px;">
                 HELPERS</ion-label>
 
 
@@ -114,7 +120,7 @@
 
     <div class="flex">
 
-      <ion-card class="card" button (click)="addItem()">
+      <ion-card class="card" (click)="addItem()">
         <div style="color: purple;">
           <ion-icon color="none" style="font-size: 30px;" name="home"></ion-icon>
         </div>
@@ -133,9 +139,9 @@
       </ion-card>
 
 
-      <ion-card class="card" button (click)="addSupplier()">
+      <ion-card class="card" (click)="addSupplier()">
         <div style="color: purple;">
-          <ion-icon color="none" style="font-size: 30px;" name="home"></ion-icon>
+          <ion-icon color="none" style="font-size: 30px;font-weight: bold;" name="add-circle"></ion-icon>
         </div>
         <ion-label class="cardtxt">
           Add Supplier
@@ -143,7 +149,7 @@
       </ion-card>
 
 
-      <ion-card class="card" button (click)="openPOS()">
+      <ion-card class="card" (click)="openPOS()">
         <div style="color: purple;">
           <ion-icon color="none" style="font-size: 30px;" name="home"></ion-icon>
         </div>

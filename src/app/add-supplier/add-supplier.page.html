@@ -1,22 +1,85 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Adding Supplier..</ion-title>
+  <ion-toolbar style="--background: #2b5876;  /* fallback for old browsers */
+  --background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
+  --background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ">
+    <div style="display: flex;color: white;">
+      <img style="height: 3em;object-fit: contain;" src="../../../assets/logo.png" alt="">
+      <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">ADD SUPPLIER
+      </ion-title>
+      <ion-button (click)="close()" style="padding-top: 5px;" fill='clear' color="primary">
+        <p style="color: white;font-family: Impact;">
+          EXIT
+        </p>
+      </ion-button>
+    </div>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
-  <ion-card>
-    <ion-item>
-      <ion-input [(ngModel)]="name" placeholder="Enter name here..."></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input [(ngModel)]="phone" placeholder="Enter phone# here..."></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input [(ngModel)]="address" placeholder="Enter address here..."></ion-input>
-    </ion-item>
-  </ion-card>
+
+  <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+
+    <div
+      style="min-height: 4em;width: 80%;background: rgba(135, 207, 235, 0.397);margin-top: 2em;border-radius: 14px;padding: 10px;">
+      <p style="font-family: Impact;color: rgba(0, 0, 0, 0.507);">
+        Fill out the fields to list a new supplier. All the fields are mandatory make sure to fill out all.
+        After adding
+        the information re-check it and press continue to proceed.
+      </p>
+    </div>
+
+
+
+
+    <div
+      style="margin-top: 1em;width: 100%;display: flex;justify-content: center;align-items: center;flex-direction: column;">
+
+
+      <h2 style="font-family: 'Roboto Condensed', sans-serif;font-size:29px">
+        ADD A SUPPLIER
+      </h2>
+
+
+      <ion-item style="margin-top: 6px;" lines="none">
+
+        <ion-input placeholder="Enter email of supplier"></ion-input>
+      </ion-item>
+
+      <ion-item style="margin-top: 15px;" lines="none">
+
+        <ion-input placeholder="Enter name of supplier" [(ngModel)]="name"></ion-input>
+      </ion-item>
+
+      <ion-item style="margin-top: 15px;" lines="none">
+
+        <ion-input placeholder="Enter phone of supplier" [(ngModel)]="phone"></ion-input>
+      </ion-item>
+
+      <ion-item style="margin-top: 15px;" lines="none">
+
+        <ion-input placeholder="Enter adress of supplier" [(ngModel)]="address"></ion-input>
+      </ion-item>
+
+      <ion-item style="margin-top: 15px;" lines="none">
+
+        <ion-input placeholder="Enter website of supplier (NOT MANDATORY)" [(ngModel)]="phone"></ion-input>
+      </ion-item>
+
+      <div style="margin-top: 25px;width: 60%;">
+        <ion-button class="shadow-red" (click)="addSupplier()" color="none" style="background: #2b5876;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #4e4376, #2b5876);" expand='block' mode='ios'>
+          <p style="font-family: Impact;color: rgba(255, 255, 255, 0.897);">
+            Continue
+          </p>
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+    </div>
+
+  </div>
+
 </ion-content>
-<ion-footer>
-  <ion-button size="block" *ngIf="name && phone && address" (click)="addSupplier()">Add Supplier</ion-button>
-</ion-footer>

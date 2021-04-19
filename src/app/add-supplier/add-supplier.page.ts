@@ -13,13 +13,13 @@ export class AddSupplierPage implements OnInit {
     private modalCtrl: ModalController,
     public toastController: ToastController
   ) {
-   }
+  }
 
   name: string;
   phone: string;
   address: string;
   suppliers: any[];
-  
+
   async presentToast() {
     const toast = await this.toastController.create({
       message: 'Supplier Added!',
@@ -48,7 +48,11 @@ export class AddSupplierPage implements OnInit {
     this.presentToast();
     this.modalCtrl.dismiss(data);
   }
-  
+
+  close() {
+    this.modalCtrl.dismiss();
+  }
+
   ngOnInit() {
     this.getSuppliers();
   }
