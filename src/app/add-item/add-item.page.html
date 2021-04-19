@@ -7,7 +7,7 @@
       <img style="height: 3em;object-fit: contain;" src="../../../assets/logo.png" alt="">
       <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">ADD ITEM
       </ion-title>
-      <ion-button style="padding-top: 5px;" fill='clear' color="primary">
+      <ion-button (click)="close()" style="padding-top: 5px;" fill='clear' color="primary">
         <p style="color: white;font-family: Impact;">
           EXIT
         </p>
@@ -39,7 +39,7 @@
 
 <ion-content>
 
-  <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+  <div *ngIf="barcode" style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
 
     <div
       style="min-height: 4em;width: 80%;background: rgba(135, 207, 235, 0.397);margin-top: 2em;border-radius: 14px;padding: 10px;">
@@ -108,8 +108,3 @@
   </div>
 
 </ion-content>
-
-<ion-footer>
-  <ion-button size="block" *ngIf="name && rPrice && pPrice && stock && supplier" (click)="addItem()">Add item
-  </ion-button>
-</ion-footer>
