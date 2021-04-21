@@ -7,6 +7,8 @@ import { WindowserviceService } from '../windowservice.service';
 import { LoadingController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TranslateConfigService } from '../translate-config.service';
+import { AlertController } from '@ionic/angular';
+declare var SMSReceive: any;
 
 @Component({
   selector: 'app-auth',
@@ -29,8 +31,10 @@ export class AuthPage implements OnInit {
     private createtoast: ToastController,
     public firestore: AngularFirestore,
     public loadingController: LoadingController,
-    private platform: Platform,
     private translateConfigService: TranslateConfigService,
+    private platform: Platform,
+    public alertController: AlertController,
+
 
   ) {
     this.selectedLanguage = 'hindi'
@@ -48,6 +52,29 @@ export class AuthPage implements OnInit {
   windowRef: any;
   params: string;
 
+
+  async presentAlertConfirm(err: string) {
+    const alert = await this.alertController.create({
+      header: 'Something went wrong!!',
+      message: err,
+      mode: 'ios',
+      buttons: [
+        {
+          text: 'Retry',
+          handler: (blah) => {
+            this.sendLoginCode()
+          }
+        }, {
+          text: 'Edit',
+          handler: () => {
+            this.currentDiv = 'two';
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
   languageChanged(lang: string) {
 
@@ -107,7 +134,7 @@ export class AuthPage implements OnInit {
 
     event.stopPropagation();
   }
-  code: string;
+  code: any;
 
   //otp submission
   submit(e: Event) {
@@ -172,8 +199,8 @@ export class AuthPage implements OnInit {
       .then(result => {
 
         this.windowRef.confirmationResult = result;
+        this.start()
 
-    
 
         setTimeout(() => {
           this.msg = "OTP Sent to your phone number"
@@ -182,24 +209,25 @@ export class AuthPage implements OnInit {
           this.toastCreater();
           this.loadingController.dismiss('sendOtp')
 
-        }, 3000);
+        }, 2000);
 
 
 
       }).then(() => {
         this.changeView('three')
+
       }).catch((e) => {
         console.log("error", e);
-     
-        this.msg = "Unable to send verification message Try again later"
+
+        this.msg = JSON.stringify(e)
         this.duration = 2000;
         this.color = "dark";
         this.toastCreater();
-
-        this.loadingController.dismiss('sendOtp').then(()=>{
-          this.currentDiv = 'two'
-          this.changeView('two')
+        this.loadingController.dismiss('sendOtp').then(() => {
+          this.presentAlertConfirm(e)
         })
+
+
       })
   }
 
@@ -217,6 +245,7 @@ export class AuthPage implements OnInit {
         this.color = "dark";
         this.toastCreater();
         this.currentDiv = 'four'
+        this.changeView('four')
       })
       .catch(error => {
         this.loadingController.dismiss('verifyOtp')
@@ -224,6 +253,7 @@ export class AuthPage implements OnInit {
         this.duration = 2000;
         this.color = "dark";
         this.toastCreater();
+        this.presentAlertConfirm(JSON.stringify(error))
       });
   }
 
@@ -280,21 +310,84 @@ export class AuthPage implements OnInit {
     })
   }
 
+
+  start() {
+
+    if (SMSReceive) {
+      SMSReceive.startWatch(
+        () => {
+
+          this.loaderID = 'getotp'
+          this.loadermsg = 'Fetching OTP'
+          this.presentLoading()
+          document.addEventListener('onSMSArrive', (e: any) => {
+
+            var IncomingSMS = e.data;
+            alert(JSON.stringify(IncomingSMS))
+            this.processSMS(IncomingSMS);
+          });
+        },
+        (e) => {
+          console.log('watch start failed', e)
+          this.loadingController.dismiss('getotp')
+        }
+      )
+    }
+
+  }
+
+  stop() {
+    SMSReceive.stopWatch(
+      () => { console.log('watch stopped') },
+      () => { console.log('watch stop failed') }
+    )
+  }
+  a: string;
+  b: string;
+  c: string;
+  d: string;
+  e: string;
+  f: string;
+  processSMS(data) {
+    const message = data.body;
+    if (message) {
+      this.code = data.body.slice(0, 6);
+      alert(this.code)
+      this.a = this.ccode.slice(0, 1)
+      this.b = this.ccode.slice(1, 2)
+      this.c = this.ccode.slice(2, 3)
+      this.d = this.ccode.slice(3, 4)
+      this.e = this.ccode.slice(4, 5)
+      this.f = this.ccode.slice(5, 6)
+
+      this.stop();
+      this.loadingController.dismiss('getotp')
+      this.verifyLoginCode(this.code)
+    }
+    else {
+      alert('data was empty')
+    }
+  }
+
+  ccode: any = '123654'
   ngOnInit() {
     this.windowRef = this.win.windowRef
     this.windowRef.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { 'size': 'invisible' });
     this.windowRef.recaptchaVerifier.render()
 
-    const authSub = this.firebaseauth.authState.subscribe(user => {
-      if (user) {
-        if (user.uid) {
-          this.checkAuth(user.uid)
-        }
-        else {
+    // const authSub = this.firebaseauth.authState.subscribe(user => {
+    //   if (user) {
+    //     if (user.uid) {
+    //       this.checkAuth(user.uid)
+    //     }
+    //     else {
 
-        }
-      }
-    })
+    //     }
+    //   }
+    // })
+
+
+
   }
 
 }

@@ -21,7 +21,7 @@
         </h2>
 
         <ion-list class="line-input">
-          <ion-item color="none">
+          <ion-item lines="none" color="none">
             <ion-select [(ngModel)]="selectedLanguage" (ionChange)="languageChanged(selectedLanguage)"
               style="margin-top: 1em;" placeholder="Select prefered language" interface="popover">
               <ion-select-option *ngFor="let item of languages" value="{{item}}">{{item}}</ion-select-option>
@@ -73,7 +73,7 @@
 
         <div style="width: 30%;">
           <ion-list class="line-input">
-            <ion-item color="none">
+            <ion-item lines="none" color="none">
               <ion-input [(ngModel)]="c_code" placeholder="+91"></ion-input>
             </ion-item>
           </ion-list>
@@ -84,7 +84,7 @@
         <div style="width: 65%;">
 
           <ion-list class="line-input">
-            <ion-item color="none">
+            <ion-item lines="none" color="none">
               <ion-input [(ngModel)]="num" placeholder="32566898520"></ion-input>
             </ion-item>
           </ion-list>
@@ -145,32 +145,32 @@
       <div style="display: flex;padding: 10px;justify-content: center;margin-top: 1em;">
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
-            <ion-item color="none">
-              <ion-input (keyup)="onKeyUp($event,1)" type="number" placeholder="1" maxlength="1" #passcode1></ion-input>
+            <ion-item lines="none" color="none">
+              <ion-input [(ngModel)]="a" ></ion-input>
             </ion-item>
           </ion-list>
         </div>
 
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
-            <ion-item color="none">
-              <ion-input (keyup)="onKeyUp($event,2)" type="number" placeholder="1" maxlength="1" #passcode2></ion-input>
+            <ion-item lines="none" color="none">
+              <ion-input [(ngModel)]="b" ></ion-input>
             </ion-item>
           </ion-list>
         </div>
 
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
-            <ion-item color="none">
-              <ion-input (keyup)="onKeyUp($event,3)" type="number" placeholder="1" maxlength="1" #passcode3></ion-input>
+            <ion-item lines="none" color="none">
+              <ion-input [(ngModel)]="c" type="number"></ion-input>
             </ion-item>
           </ion-list>
         </div>
 
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
-            <ion-item color="none">
-              <ion-input (keyup)="onKeyUp($event,4)" type="number" placeholder="1" maxlength="1" #passcode4></ion-input>
+            <ion-item lines="none" color="none">
+              <ion-input [(ngModel)]="d" type="number" ></ion-input>
             </ion-item>
           </ion-list>
 
@@ -178,17 +178,16 @@
 
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
-            <ion-item color="none">
-              <ion-input (keyup)="onKeyUp($event,5)" type="number" placeholder="1" maxlength="1" #passcode5></ion-input>
+            <ion-item lines="none" color="none">
+              <ion-input [(ngModel)]="e" type="number" ></ion-input>
             </ion-item>
           </ion-list>
         </div>
 
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
-            <ion-item color="none">
-              <ion-input (keyup)="onKeyUp($event,6)" (input)="submit($event)" type="number" placeholder="1"
-                maxlength="1" #passcode6></ion-input>
+            <ion-item lines="none" color="none">
+              <ion-input [(ngModel)]="f" type="number"></ion-input>
             </ion-item>
 
           </ion-list>
@@ -231,7 +230,7 @@
         <div style="width: 90%;display: flex;justify-content: center;flex-direction: column;margin-top: 5px;">
 
           <ion-list class="line-input">
-            <ion-item color="none">
+            <ion-item lines="none" color="none">
               <ion-input [(ngModel)]="name" style="border: none;" type="email" placeholder="Enter your name">
               </ion-input>
             </ion-item>
@@ -239,7 +238,7 @@
 
           <div style="margin-top: 5px;">
             <ion-list class="line-input">
-              <ion-item color="none">
+              <ion-item lines="none" color="none">
                 <ion-input [(ngModel)]="adress" style="border: none;" type="text" placeholder="Enter your adress">
                 </ion-input>
               </ion-item>
@@ -249,7 +248,7 @@
 
           <div style="margin-top: 5px;margin-bottom: 5px;">
             <ion-list class="line-input">
-              <ion-item color="none">
+              <ion-item lines="none" color="none">
                 <ion-input [(ngModel)]="referal" style="border: none;" type="text" placeholder="Referal if any">
                 </ion-input>
               </ion-item>

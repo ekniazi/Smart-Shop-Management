@@ -1,3 +1,4 @@
+
 import { environment } from './../environments/environment';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,6 +10,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+
 
 /////////////////EKNIAZI IMPORTS/////////////////////////////
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
@@ -44,6 +46,7 @@ export function LanguageLoader(http: HttpClient) {
   ],
 
   providers: [
+
     AngularFirestore,
     TranslateConfigService,
     BarcodeScanner,
