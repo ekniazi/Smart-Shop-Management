@@ -189,47 +189,56 @@ export class AuthPage implements OnInit {
   //sending OTP
   sendLoginCode() {
 
-    this.loaderID = 'sendOtp'
-    this.loadermsg = "sending..."
-    this.presentLoading()
-    const appVerifier = this.windowRef.recaptchaVerifier;
-    this.currentDiv = "three";
-    this.changeView('three')
-    firebase.auth().signInWithPhoneNumber('+' + this.phone, appVerifier)
-      .then(result => {
+    if (!this.phone) {
+      this.msg = 'Field cannot be left blank'
+      this.toastCreater()
 
-        this.windowRef.confirmationResult = result;
-        this.start()
+    }
+    else {
+      this.loaderID = 'sendOtp'
+      this.loadermsg = "sending and fetching otp..."
+      this.presentLoading()
+      const appVerifier = this.windowRef.recaptchaVerifier;
+      this.currentDiv = "three";
+      this.changeView('three')
+      firebase.auth().signInWithPhoneNumber('+' + this.phone, appVerifier)
+        .then(result => {
+
+          this.windowRef.confirmationResult = result;
+          this.start()
 
 
-        setTimeout(() => {
-          this.msg = "OTP Sent to your phone number"
+          setTimeout(() => {
+            this.msg = "OTP Sent to your phone number"
+            this.duration = 2000;
+            this.color = "dark";
+            this.toastCreater();
+            this.loadingController.dismiss('sendOtp')
+
+          }, 2000);
+
+
+
+        }).then(() => {
+          this.changeView('three')
+
+        }).catch((e) => {
+          console.log("error", e);
+
+          this.msg = JSON.stringify(e)
           this.duration = 2000;
           this.color = "dark";
           this.toastCreater();
-          this.loadingController.dismiss('sendOtp')
+          this.loadingController.dismiss('sendOtp').then(() => {
+            this.presentAlertConfirm(e)
+          })
 
-        }, 2000);
 
-
-
-      }).then(() => {
-        this.changeView('three')
-
-      }).catch((e) => {
-        console.log("error", e);
-
-        this.msg = JSON.stringify(e)
-        this.duration = 2000;
-        this.color = "dark";
-        this.toastCreater();
-        this.loadingController.dismiss('sendOtp').then(() => {
-          this.presentAlertConfirm(e)
         })
-
-
-      })
+    }
   }
+
+  done: boolean = false;
 
   //verifying OTP
   verifyLoginCode(code: any) {
@@ -237,15 +246,18 @@ export class AuthPage implements OnInit {
     this.windowRef.confirmationResult
       .confirm(code)
       .then(result => {
-        console.log("code-->", code);
 
-        this.loadingController.dismiss('verifyOtp')
+        this.done = true;
+        this.stop();
+
         this.msg = "OTP Verified Successfully"
         this.duration = 2000;
         this.color = "dark";
         this.toastCreater();
-        this.currentDiv = 'four'
-        this.changeView('four')
+        setTimeout(() => {
+          this.loadingController.dismiss('getotp')
+          this.loadingController.dismiss('verifyOtp')
+        }, 2000);
       })
       .catch(error => {
         this.loadingController.dismiss('verifyOtp')
@@ -323,7 +335,7 @@ export class AuthPage implements OnInit {
           document.addEventListener('onSMSArrive', (e: any) => {
 
             var IncomingSMS = e.data;
-            alert(JSON.stringify(IncomingSMS))
+
             this.processSMS(IncomingSMS);
           });
         },
@@ -342,26 +354,24 @@ export class AuthPage implements OnInit {
       () => { console.log('watch stop failed') }
     )
   }
-  a: string;
-  b: string;
-  c: string;
-  d: string;
-  e: string;
-  f: string;
+  a: number;
+  b: number;
+  c: number;
+  d: number;
+  e: number;
+  f: number;
   processSMS(data) {
     const message = data.body;
     if (message) {
       this.code = data.body.slice(0, 6);
-      alert(this.code)
-      this.a = this.ccode.slice(0, 1)
-      this.b = this.ccode.slice(1, 2)
-      this.c = this.ccode.slice(2, 3)
-      this.d = this.ccode.slice(3, 4)
-      this.e = this.ccode.slice(4, 5)
-      this.f = this.ccode.slice(5, 6)
 
-      this.stop();
-      this.loadingController.dismiss('getotp')
+      this.a = this.code.slice(0, 1)
+      this.b = this.code.slice(1, 2)
+      this.c = this.code.slice(2, 3)
+      this.d = this.code.slice(3, 4)
+      this.e = this.code.slice(4, 5)
+      this.f = this.code.slice(5, 6)
+    
       this.verifyLoginCode(this.code)
     }
     else {
@@ -369,7 +379,7 @@ export class AuthPage implements OnInit {
     }
   }
 
-  ccode: any = '123654'
+
   ngOnInit() {
     this.windowRef = this.win.windowRef
     this.windowRef.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { 'size': 'invisible' });

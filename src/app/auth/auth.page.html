@@ -3,7 +3,7 @@
   <div style="display: none;" id="recaptcha-container"></div>
 
 
-  <div *ngIf="currentDiv=='one'" class="wrapper" style="height:100%">
+  <div *ngIf="currentDiv=='one' &&!done" class="wrapper" style="height:100%">
     <div class="fade-in one" style="text-align: center;position: relative;top: 150px;">
 
       <img style="height: 10em;" src="../../assets/logo.png" alt="">
@@ -53,7 +53,7 @@
 
 
   <div class="wrapper" style="position: relative;top: 150px;
-" *ngIf="currentDiv=='two'">
+" *ngIf="currentDiv=='two'  &&!done">
 
     <div class="fade-in one" style="position: relative;text-align: center;">
       <img style="height: 10em;" src="../../assets/logo.png" alt="">
@@ -124,7 +124,7 @@
   </div>
 
   <div class="wrapper" style="position: relative;top: 150px;
-  " *ngIf="currentDiv=='three'">
+  " *ngIf="currentDiv=='three'  &&!done">
     <div class="fade-in one">
 
       <div style="text-align: center;">
@@ -136,7 +136,7 @@
 
       <p style="text-align: center;  font-family: 'Noto Sans JP';font-size: 12px;color: black;">
         {{ 'ViewThree.headinTwo' | translate:params}}
-        <span (click)="changeView('two')" style="color: rgb(231, 170, 57);">+912356689852
+        <span (click)="changeView('two')" style="color: rgb(231, 170, 57);">+{{phone}}
           <ion-icon name="create-outline"></ion-icon>
 
         </span>
@@ -146,7 +146,7 @@
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
             <ion-item lines="none" color="none">
-              <ion-input [(ngModel)]="a" ></ion-input>
+              <ion-input [(ngModel)]="a"></ion-input>
             </ion-item>
           </ion-list>
         </div>
@@ -154,7 +154,7 @@
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
             <ion-item lines="none" color="none">
-              <ion-input [(ngModel)]="b" ></ion-input>
+              <ion-input [(ngModel)]="b"></ion-input>
             </ion-item>
           </ion-list>
         </div>
@@ -170,7 +170,7 @@
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
             <ion-item lines="none" color="none">
-              <ion-input [(ngModel)]="d" type="number" ></ion-input>
+              <ion-input [(ngModel)]="d" type="number"></ion-input>
             </ion-item>
           </ion-list>
 
@@ -179,7 +179,7 @@
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
             <ion-item lines="none" color="none">
-              <ion-input [(ngModel)]="e" type="number" ></ion-input>
+              <ion-input [(ngModel)]="e" type="number"></ion-input>
             </ion-item>
           </ion-list>
         </div>
@@ -216,7 +216,7 @@
 
 
   <div class="wrapper" style="position: relative;height:100%;top: 150px;
-  " *ngIf="currentDiv=='four'">
+  " *ngIf="done">
 
     <div class="fade-in one">
       <div style="text-align: center;">
