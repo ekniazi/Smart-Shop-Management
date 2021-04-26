@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { POSPageRoutingModule } from './pos-routing.module';
 
 import { POSPage } from './pos.page';
+import { SelectItemPage } from '../select-item/select-item.page';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { POSPage } from './pos.page';
     IonicModule,
     POSPageRoutingModule
   ],
-  declarations: [POSPage]
+  declarations: [POSPage],
+  entryComponents: [SelectItemPage]
 })
 export class POSPageModule {}

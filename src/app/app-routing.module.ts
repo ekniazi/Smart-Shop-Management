@@ -30,7 +30,11 @@ const routes: Routes = [
   {
     path: 'pos',
     loadChildren: () => import('./pos/pos.module').then( m => m.POSPageModule)
+  },  {
+    path: 'select-item',
+    loadChildren: () => import('./select-item/select-item.module').then( m => m.SelectItemPageModule)
   },
+
 
 ];
 

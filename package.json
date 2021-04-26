@@ -25,7 +25,6 @@
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "angularfire2": "^5.4.2",
-    "cordova-android": "9.1.0",
     "firebase": "^7.24.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
@@ -42,6 +41,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "cordova-android": "^9.1.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.2.1",
@@ -76,7 +76,6 @@
       },
       "cordova-plugin-ionic-keyboard": {},
       "phonegap-plugin-barcodescanner": {},
-      "cordova-plugin-dreamover-uid": {},
       "cordova-plugin-sms-receive": {}
     },
     "platforms": [

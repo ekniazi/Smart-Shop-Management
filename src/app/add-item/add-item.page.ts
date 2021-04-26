@@ -24,6 +24,9 @@ export class AddItemPage implements OnInit {
   pPrice: number;
   stock: number;
   supplier: any;
+  choice: string = "";
+  msg: string;
+  color: string;
 
   async openModal() {
     const modal = await this.modalController.create({
@@ -43,11 +46,15 @@ export class AddItemPage implements OnInit {
 
   async presentToast() {
     const toast = await this.toastController.create({
-      message: 'Item Added!',
+      message: this.msg,
       duration: 2000,
-      color: 'success',
+      color: this.color,
     });
     toast.present();
+  }
+
+  setChoice(choice: string) {
+    this.choice = choice;
   }
 
   getItems() {
@@ -63,6 +70,7 @@ export class AddItemPage implements OnInit {
   scanBarcode() {
     this.barcodeScanner.scan().then(barcodeData => {
       this.barcode = barcodeData.text;
+      this.choice = 'barcode';
     }).catch(err => {
       alert(err);
     });
@@ -74,25 +82,57 @@ export class AddItemPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.scanBarcode();
   }
+
   close() {
     this.modalController.dismiss()
   }
 
   addItem() {
-    let data = {
-      name: this.name,
-      rPrice: this.rPrice,
-      pPrice: this.pPrice,
-      stock: this.stock,
-      supplier: this.supplier,
-      barcode: this.barcode,
+    if (!this.name || this.name.length == 0) {
+      this.msg = "Invalid name!";
+      this.color = "warning"
+      this.presentToast();
+    } else if (!this.rPrice) {
+      this.msg = "Invalid purchase price!";
+      this.color = "warning"
+      this.presentToast();
+
+    } else if (!this.pPrice) {
+      this.msg = "Invalid retail price!";
+      this.color = "warning"
+      this.presentToast();
+
+    } else if (!this.stock) {
+      this.msg = "Invalid stock value!";
+      this.color = "warning"
+      this.presentToast();
+
+    } else if (!this.supplier) {
+      this.msg = "Please select supplier!";
+      this.color = "warning"
+      this.presentToast();
+
+    } else if (!this.barcode || this.barcode.length == 0) {
+      this.msg = "Invalid barcode!";
+      this.color = "warning"
+      this.presentToast();
+    } else {
+      let data = {
+        name: this.name,
+        rPrice: this.rPrice,
+        pPrice: this.pPrice,
+        stock: this.stock,
+        supplier: this.supplier,
+        barcode: this.barcode,
+      }
+      this.items.push(data);
+      window.localStorage.setItem('items', JSON.stringify(this.items));
+      this.msg = "Item added!";
+      this.color = "success"
+      this.presentToast();
+      this.modalController.dismiss(data);
     }
-    this.items.push(data);
-    window.localStorage.setItem('items', JSON.stringify(this.items));
-    this.presentToast();
-    this.modalController.dismiss(data);
   }
 
   ngOnInit() {

@@ -30,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/home/settings',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
 
