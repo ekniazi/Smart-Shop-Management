@@ -76,7 +76,11 @@
       },
       "cordova-plugin-ionic-keyboard": {},
       "phonegap-plugin-barcodescanner": {},
-      "cordova-plugin-sms-receive": {}
+      "cordova-plugin-sms-receive": {},
+      "cordova-plugin-androidx-adapter": {},
+      "cordova-plugin-androidx": {},
+      "cordova-plugin-x-socialsharing": {},
+      "mx.ferreyra.callnumber": {}
     },
     "platforms": [
       "android"
