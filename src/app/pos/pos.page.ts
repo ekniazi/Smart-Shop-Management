@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pos',
@@ -13,15 +14,21 @@ export class POSPage implements OnInit {
   constructor(
     private router: Router,
     private barcodeScanner: BarcodeScanner,
-    public toastController: ToastController
+    public toastController: ToastController,
+    public alertController: AlertController,
   ) { }
 
   items: any[];
   sales: any[];
+  lenders: any[];
   recipt: any[] = [];
   msg: string;
   color: string;
   total: number;
+  searchParam: string;
+  searchFound: any[] = [];
+  paid: number = 0;
+  cNum: string = "";
 
   async presentToast() {
     const toast = await this.toastController.create({
@@ -36,7 +43,6 @@ export class POSPage implements OnInit {
   getItems() {
     if (window.localStorage.getItem('items')) {
       this.items = JSON.parse(window.localStorage.getItem('items'));
-      alert(JSON.stringify(this.items));
     } else {
       this.items = [];
     }
@@ -45,6 +51,12 @@ export class POSPage implements OnInit {
       this.sales = JSON.parse(window.localStorage.getItem('sales'));
     } else {
       this.sales = [];
+    }
+
+    if (window.localStorage.getItem('lenders')) {
+      this.lenders = JSON.parse(window.localStorage.getItem('lenders'));
+    } else {
+      this.lenders = [];
     }
   }
 
@@ -75,25 +87,123 @@ export class POSPage implements OnInit {
     });
   }
 
+  addSearchItem(item) {
+    let data = item;
+    data.quantity = 1;
+    this.recipt.push(data);
+    this.msg = "Item added!"
+    this.color = "success";
+    this.presentToast();
+    this.searchParam = "";
+    this.searchFound = [];
+  }
+
+  searchItem() {
+    this.searchFound = [];
+    var found = 0;
+    if (this.searchParam != "") {
+      for (var k = 0; k < this.items.length; k++) {
+        if (this.items[k].name.toLowerCase().includes(this.searchParam.toLowerCase())) {
+          found = found + 1;
+          if (found < 8) {
+            this.searchFound.push(this.items[k]);
+            this.searchFound[this.searchFound.length - 1].index = k;
+          } else break
+        } else if (this.items[k].barcode.toLowerCase().includes(this.searchParam.toLowerCase())) {
+          found = found + 1;
+          if (found < 8) {
+            this.searchFound.push(this.items[k]);
+            this.searchFound[this.searchFound.length - 1].index = k;
+          } else break
+        }
+      }
+    }
+  }
+
+  async getAmount() {
+    const alert2 = await this.alertController.create({
+      header: "How much is the customer paying?",
+      subHeader: "TOTAL: " + this.total.toString(),
+      message: "Kindly provide exact figures to calculate the arrear money or update the borrowing table. If the customer is paying nothing enter 0.",
+      mode: 'ios',
+      inputs: [
+        {
+          name: 'input',
+          type: 'number',
+          id: 'name',
+          value: name,
+          placeholder: "Enter the amount here..",
+        },
+      ],
+      buttons: [{
+        text: 'Next',
+        handler: data => {
+          this.paid = data.input;
+          this.cNumber();
+        },
+      },
+      ]
+    });
+    await alert2.present();
+  }
+
+  async cNumber() {
+    const alert2 = await this.alertController.create({
+      header: "Would you wish to enter the customer's number?",
+      subHeader: "RETURN: "+ (this.paid-this.total),
+      message: "If the customer is not paying full it is mandatory to enter the customer's number for future tracking of borrowed money.",
+      mode: 'ios',
+      inputs: [
+        {
+          name: 'input',
+          type: 'number',
+          id: 'name',
+          value: name,
+          placeholder: "Enter the number here..",
+        },
+      ],
+      buttons: [{
+        text: 'Done',
+        handler: data => {
+          this.cNum = data.input;
+          this.endSale2();
+        },
+      },
+      ]
+    });
+    await alert2.present();
+
+  }
+
   endSale() {
     this.total = 0;
     for (var i = 0; i < this.recipt.length; i++) {
       this.items[this.recipt[i].index].stock = this.items[this.recipt[i].index].stock - this.recipt[i].quantity;
-      window.localStorage.setItem('items',JSON.stringify(this.items));
-      this.total = this.total + this.recipt[i].rPrice;
-      let data = {
-        recipt: this.recipt,
-        total: this.total,
-      }
-      this.sales.push(data);
-      window.localStorage.setItem('sales',JSON.stringify(this.sales));
-      this.msg = "Sale completed!";
-      this.color = "success";
-      alert("The total is: " + this.total);
-      this.presentToast();
-      this.back();
+      this.total = this.total + (this.recipt[i].rPrice * this.recipt[i].quantity);
     }
+    window.localStorage.setItem('items', JSON.stringify(this.items));
+    this.getAmount();
   }
+
+  endSale2() {
+    let data = {
+      recipt: this.recipt,
+      total: this.total,
+      paid: this.paid,
+      cNum: this.cNum,
+    }
+    if (this.paid < this.total) {
+      this.lenders.push(data);
+      window.localStorage.setItem('lenders', JSON.stringify(this.lenders));
+    }
+    this.sales.push(data);
+    window.localStorage.setItem('sales', JSON.stringify(this.sales));
+    this.msg = "Sale completed!";
+    this.color = "success";
+    this.presentToast();
+    this.back();
+  }
+
 
   back() {
     this.router.navigate(['home/dashboard']);

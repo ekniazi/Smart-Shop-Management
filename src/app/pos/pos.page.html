@@ -15,20 +15,33 @@
     <ion-item>
       <div slot="end">x</div>
       <div slot="end" style="width:50px;text-align: right;" slot="end">
-        <ion-input type="number" placeholder="{{item.quantity}}" [(noModel)]="item.quantity">
+        <ion-input type="number" placeholder="{{item.quantity}}" [(ngModel)]="item.quantity">
         </ion-input>
       </div>
     </ion-item>
   </ion-card>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf = "recipt && recipt.length > 0">
-    <ion-fab-button (click)="endSale()">
-      <ion-icon name="arrow-forward"></ion-icon>
+    <ion-fab-button (click)="endSale()" color = "success">
+      <ion-icon name="checkmark"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
     <ion-fab-button (click)="scanBarcode()">
-      <ion-icon name="add"></ion-icon>
+      <ion-icon name="scan"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+
+<ion-footer>
+  <div *ngIf = "searchFound && searchFound.length > 0">
+    <div *ngFor = "let item of searchFound">
+      <ion-item mode = "ios" button (click) = "addSearchItem(item)">
+        <ion-icon name = "search"></ion-icon>
+        <ion-label><span style = "font-weight: bold;">{{item.name}}</span>({{item.stock}})</ion-label>
+        <div slot = "end">{{item.barcode}}</div>
+      </ion-item>
+    </div>
+  </div>
+  <ion-input (ionChange) = "searchItem()" [(ngModel)] = "searchParam" placeholder = "Enter item name or barcode here..."></ion-input>
+</ion-footer>

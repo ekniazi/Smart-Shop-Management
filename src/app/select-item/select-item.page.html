@@ -1,9 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>select-item</ion-title>
+    <ion-title>Selecting Supplier..</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div *ngFor="let boi of suppliers">
+    <ion-item mode="ios" button (click)="selectSupplier(boi)">
+      {{boi.name}}
+    </ion-item>
+  </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add" (click) = "addSupplier()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
