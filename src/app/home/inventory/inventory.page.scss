@@ -1,0 +1,66 @@
+.flexdisp {
+    display: flex;
+}
+.centertext {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.scrollwrapper {
+    width: auto;
+    overflow-x: scroll;
+    display: flex;
+    padding: 5px;
+}
+.cards {
+    margin-left: 12px;
+    min-width: 160px;
+    min-height: 100px;
+    border-radius: 16px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.055), 0 3px 6px rgba(0, 0, 0, 0.13);
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    transition: 0.2s;
+    text-align: center;
+}
+.line-input {
+    margin: 0 !important;
+    background: none !important;
+    padding: 0 !important;
+    ion-item {
+        --border-color: transparent !important;
+        --highlight-height: 0;
+        border: 1px solid var(--ion-color-primary);
+        border-radius: 4px;
+
+        &.item-has-focus {
+            border: 1px solid var(--ion-color-success, #0da02d);
+        }
+
+        ion-label {
+            color: #807e7e !important;
+            font-weight: 300;
+            font-size: 1rem !important;
+        }
+        ion-input {
+            font-family: "Noto Sans JP", sans-serif;
+            color: black;
+        }
+    }
+}
+
+.prodcard {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16), 0 1px 2px rgba(128, 0, 128, 0.404);
+    min-height: 8em;
+    width: 90%;
+    margin-top: 14px;
+    padding-top:10px;
+    margin-left: 1.5em;
+}
+
+
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@500&display=swap");

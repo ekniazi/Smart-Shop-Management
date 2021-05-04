@@ -285,20 +285,4 @@ ion-list {
     }
 }
 
-.scrollwrapper {
-    width: auto;
-    overflow-x: scroll;
-    display: flex;
-    padding: 0px;
-}
-.cards {
-    min-width: 130px;
-    min-height: 80px;
-    border-radius: 16px;
-    box-shadow: -1rem 0 3rem transparent;
-    display: flex;
-    flex-direction: column;
-    padding: 4px;
-    transition: 0.2s;
-}
 

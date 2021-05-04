@@ -1,20 +1,21 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>inventory</ion-title>
+  <ion-toolbar style="--background: #2b5876;  /* fallback for old browsers */
+  --background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
+  --background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ">
+    <div style="display: flex;color: white;">
+      <img style="height: 3em;object-fit: contain;" src="../../../assets/logo.png" alt="">
+      <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">SmartShop Inventory
+      </ion-title>
+      <ion-icon style="position: relative;top: 0.3em;font-size: 30px;right: 3px;" name="add-circle"></ion-icon>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item>
-    <ion-input (ionChange)="searchItem()" [(ngModel)]="searchParam" placeholder="Enter item name or barcode here...">
-    </ion-input>
-  </ion-item>
-  <div>
-    <ion-chip color="medium">Low stock first<ion-icon name = "arrow-down"></ion-icon></ion-chip>
-    <ion-chip color="medium">Alphabetical</ion-chip>
-    <ion-chip color="medium">Price<ion-icon name = "arrow-down"></ion-icon></ion-chip>
-    <ion-chip color="medium">Price<ion-icon name = "arrow-up"></ion-icon></ion-chip>
-  </div>
+
+<!-- <ion-content>
+  
+  
   <div *ngIf="!searchFound || searchFound.length < 1">
     <div *ngFor="let item of items">
       <ion-item (click)="showOptions(item)" mode="ios" button>
@@ -31,10 +32,196 @@
       </ion-item>
     </div>
   </div>
+
   
-  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+</ion-content> -->
+
+<ion-content>
+
+  <div style="display: flex;justify-content: space-between;margin-top: 2px;padding: 9px;">
+
+    <div style="display: flex;">
+
+      <div style="background: skyblue;border-radius: 14px;color: white;width: 3.3em;height: 3.3em;text-align: center;">
+        <ion-label style="font-family: impact;font-size: 30px;position: relative;top: 0.34em;">
+          C
+        </ion-label>
+      </div>
+
+      <ion-title
+        style="font-weight: bold;font-family: impact;letter-spacing: -0.5px;font-family: 'Baloo Tammudu 2', cursive;">
+        Company Name</ion-title>
+
+    </div>
+
+    <div style="color: 4e4376;">
+      <ion-icon style="font-size: 3em;" color="none" name="laptop-outline"></ion-icon>
+    </div>
+
+  </div>
+
+  <div class="scrollwrapper">
+    <div class="cards">
+      <div class="flexdisp centertext">
+        <h3 style="font-size:15px;font-weight: light;font-family: 'Secular One', sans-serif;">TO COLLECT</h3>
+        <ion-icon style="color: green;position: relative;top: 0.2em;" name="arrow-down-outline"></ion-icon>
+      </div>
+
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(207, 16, 207, 0.753);">150
+      </ion-label>
+
+    </div>
+
+    <div class="cards">
+      <div class="flexdisp centertext">
+        <h3 style="font-size:15px;font-weight: light;font-family: 'Secular One', sans-serif;">LOW STOCK ITEMS</h3>
+
+      </div>
+
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(7, 245, 86, 0.753);">0 </ion-label>
+
+    </div>
+
+    <div class="cards">
+      <div class="flexdisp centertext">
+        <h3 style="font-size:15px;font-weight: light;font-family: 'Secular One', sans-serif;">STOCK VALUE</h3>
+
+      </div>
+
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(0, 0, 0, 0.753);">350000
+      </ion-label>
+
+    </div>
+
+    <div class="cards">
+      <div class="flexdisp centertext">
+        <h3 style="font-size:15px;font-weight: light;font-family: 'Secular One', sans-serif;">SALES</h3>
+
+      </div>
+
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(0, 0, 0, 0.753);">90000
+      </ion-label>
+
+    </div>
+
+    <div class="cards">
+      <div class="flexdisp centertext">
+        <h3 style="font-size:15px;font-weight: light;font-family: 'Secular One', sans-serif;">HIGH STOCK ITEMS</h3>
+
+      </div>
+
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(0, 0, 0, 0.753);">10 </ion-label>
+
+    </div>
+
+
+  </div>
+
+
+
+  <div style="margin-top: 1em;max-width: 100%;display: flex;justify-content: center;flex-direction: column;">
+
+    <ion-title
+      style="text-align: center;font-family:'Anton', sans-serif;letter-spacing: 0.6px;margin-top: 0.3em;font-size: 25px;">
+      SEARCH ITEM
+    </ion-title>
+
+    <div style="display: flex;justify-content: center;align-items: center;">
+
+      <ion-list style="width: 80%;position: relative;top: 1em;" class="line-input">
+        <ion-item lines="none" color="none">
+          <ion-input (ionChange)="searchItem()" [(ngModel)]="searchParam"
+            placeholder="Enter item name or barcode here...">
+          </ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div style="display: flex;justify-content:flex-end;margin-top: 22px;padding-right: 10px;">
+      <ion-button style="padding:2px" fill='outline' mode='ios'>
+
+        <ion-icon name="filter-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div style="margin-top: 0.2em;display: flex;justify-content: center;">
+      <ion-chip mode='ios' color="primary">Low stock first<ion-icon name="arrow-down"></ion-icon>
+      </ion-chip>
+      <ion-chip mode='ios' color="primary">Alphabetical</ion-chip>
+      <ion-chip mode='ios' color="primary">Price<ion-icon name="arrow-down"></ion-icon>
+      </ion-chip>
+      <ion-chip mode='ios' color="primary">Price<ion-icon name="arrow-up"></ion-icon>
+      </ion-chip>
+    </div>
+  </div>
+
+  <div style="display: flex;justify-content: center;margin-top: 0.5em;flex-direction: column;text-align: center;">
+
+    <div *ngFor="let item of [].constructor(10)" class="prodcard">
+
+      <div style="display: flex;justify-content: space-between;">
+        <ion-title style="text-align: left;font-family: 'Secular One', sans-serif;color: rgba(0, 0, 0, 0.836);">Sample
+          Party</ion-title>
+
+        <ion-icon (click)="showOptions()" style="margin-right: 2px;font-size: 20px;" name="ellipsis-vertical-outline">
+        </ion-icon>
+      </div>
+
+      <div style="display: flex;justify-content: space-between;margin-top: 4px;">
+
+        <div>
+          <ion-title
+            style="text-align: left;font-family: 'Secular One', sans-serif;color: rgba(0, 0, 0, 0.39);font-size: 18px;">
+            Supplier Name</ion-title>
+
+          <br>
+
+          <ion-title
+            style="text-align: left;font-family: 'Secular One', sans-serif;color: rgba(0, 0, 0, 0.315);font-size: 18px;">
+            27/April/2021</ion-title>
+        </div>
+
+        <div style="position: relative;top: 6px;">
+          <ion-label
+            style="display: flex;text-align: left;font-family: 'Secular One', sans-serif;color: palevioletred;font-size: 20px;padding: 10px;border-radius: 14px;margin-right: 10px;position: relative;top: 1em;">
+            <ion-icon style="position: relative;top: 2px;" name="card-outline"></ion-icon>
+
+            200
+
+
+
+          </ion-label>
+        </div>
+
+      </div>
+
+      <div style="display: flex;justify-content: center;align-content: center;margin-top: 10px;">
+        <div style="height: 1px;width: 90%;background: rgba(128, 0, 128, 0.404);">
+
+        </div>
+      </div>
+
+      <div style="display: flex;justify-content:flex-end;margin-top: 2px;padding-right: 10px;">
+
+
+
+        <ion-button color="success" style="padding:2px" fill='clear' mode='ios'>
+          <p style="font-family: helvetica;font-size: 17px;margin-right: 2px;">
+            Share
+          </p>
+          <ion-icon style="font-size: 17px;" name="arrow-redo-outline"></ion-icon>
+        </ion-button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="scanBarcode()">
       <ion-icon name="scan"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
 </ion-content>

@@ -59,7 +59,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home/dashboard',
+    redirectTo: 'home/inventory',
     pathMatch: 'full'
   },
  
