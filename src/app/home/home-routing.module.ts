@@ -26,13 +26,43 @@ const routes: Routes = [
           }
         ]
       },
+      {
+        path: 'inventory',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./inventory/inventory.module').then(m => m.InventoryPageModule)
+          }
+        ]
+      },
+
+      {
+        path: 'borrowers',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./borrowers/borrowers.module').then(m => m.BorrowersPageModule)
+          }
+        ]
+      },
+      {
+        path: 'suppliers',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./suppliers/suppliers.module').then(m => m.SuppliersPageModule)
+          }
+        ]
+      },
+
     ]
   },
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'home/dashboard',
     pathMatch: 'full'
   },
+ 
 
 
 ];
