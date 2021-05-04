@@ -122,8 +122,8 @@ export class POSPage implements OnInit {
 
   async getAmount() {
     const alert2 = await this.alertController.create({
-      header: "How much is the customer paying?",
-      subHeader: "TOTAL: " + this.total.toString(),
+      subHeader: "How much is the customer paying?",
+      header: "TOTAL: " + this.total.toString(),
       message: "Kindly provide exact figures to calculate the arrear money or update the borrowing table. If the customer is paying nothing enter 0.",
       mode: 'ios',
       inputs: [
