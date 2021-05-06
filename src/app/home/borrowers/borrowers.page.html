@@ -5,5 +5,11 @@
 </ion-header>
 
 <ion-content>
-
+  <div *ngIf="lenders">
+    <div *ngFor="let lender of lenders">
+      <ion-item mode = "ios" button (click) = "whatsappMsg(lender)">
+        <ion-label><span style="font: bold;">{{lender.cName}}</span>({{lender.total - lender.paid}})</ion-label>
+      </ion-item>
+    </div>
+  </div>
 </ion-content>

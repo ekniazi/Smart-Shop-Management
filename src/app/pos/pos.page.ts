@@ -29,6 +29,7 @@ export class POSPage implements OnInit {
   searchFound: any[] = [];
   paid: number = 0;
   cNum: string = "";
+  cName2: string = "";
 
   async presentToast() {
     const toast = await this.toastController.create({
@@ -126,6 +127,7 @@ export class POSPage implements OnInit {
       header: "TOTAL: " + this.total.toString(),
       message: "Kindly provide exact figures to calculate the arrear money or update the borrowing table. If the customer is paying nothing enter 0.",
       mode: 'ios',
+      backdropDismiss: false,
       inputs: [
         {
           name: 'input',
@@ -139,7 +141,7 @@ export class POSPage implements OnInit {
         text: 'Next',
         handler: data => {
           this.paid = data.input;
-          this.cNumber();
+          this.cName();
         },
       },
       ]
@@ -147,12 +149,41 @@ export class POSPage implements OnInit {
     await alert2.present();
   }
 
+  async cName() {
+    const alert2 = await this.alertController.create({
+      header: "Customer's name?",
+      subHeader: "You can leave it blank if the customer doesn't want to share name.",
+       mode: 'ios',
+       backdropDismiss: false,
+      inputs: [
+        {
+          name: 'input',
+          type: 'text',
+          id: 'name',
+          value: name,
+          placeholder: "Enter the name here..",
+        },
+      ],
+      buttons: [{
+        text: 'Done',
+        handler: data => {
+          this.cName2 = data.input;
+          this.cNumber();
+        },
+      },
+      ]
+    });
+    await alert2.present();
+
+  }
+
   async cNumber() {
     const alert2 = await this.alertController.create({
-      header: "Would you wish to enter the customer's number?",
-      subHeader: "RETURN: "+ (this.paid-this.total),
+      subHeader: "Would you wish to enter the customer's number?",
+      header: "RETURN: "+ (this.paid-this.total),
       message: "If the customer is not paying full it is mandatory to enter the customer's number for future tracking of borrowed money.",
       mode: 'ios',
+      backdropDismiss: false,
       inputs: [
         {
           name: 'input',
@@ -191,6 +222,7 @@ export class POSPage implements OnInit {
       total: this.total,
       paid: this.paid,
       cNum: this.cNum,
+      cName: this.cName2,
     }
     if (this.paid < this.total) {
       this.lenders.push(data);

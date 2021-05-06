@@ -14,6 +14,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 /////////////////EKNIAZI IMPORTS/////////////////////////////
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { CallNumber } from '@ionic-native/call-number/ngx';
 
 /////////////////FOR MULTILANGUAGE SUPPORT/////////////////////////////
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -50,6 +52,8 @@ export function LanguageLoader(http: HttpClient) {
     AngularFirestore,
     TranslateConfigService,
     BarcodeScanner,
+    SocialSharing,
+    CallNumber,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }
   ],
   bootstrap: [AppComponent],

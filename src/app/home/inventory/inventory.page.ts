@@ -3,6 +3,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { CallNumber } from '@ionic-native/call-number/ngx';
 
 @Component({
   selector: 'app-inventory',
@@ -16,6 +17,7 @@ export class InventoryPage implements OnInit {
     private barcodeScanner: BarcodeScanner,
     public toastController: ToastController,
     public alertController: AlertController,
+    private callNumber: CallNumber,
   ) { }
 
   items: any[];
@@ -182,6 +184,11 @@ export class InventoryPage implements OnInit {
     }
   }
 
+  call(boi) {
+    this.callNumber.callNumber(boi.phone, true)
+      .then(res => console.log('Launched dialer!', res))
+      .catch(err => console.log('Error launching dialer', err));
+  }
 
   getItems() {
     if (window.localStorage.getItem('items')) {

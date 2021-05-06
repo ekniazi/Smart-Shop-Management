@@ -5,5 +5,16 @@
 </ion-header>
 
 <ion-content>
-
+  <div *ngIf="suppliers">
+    <div *ngFor="let boi of suppliers">
+      <ion-item mode="ios" button (click)="call(boi)">
+        {{boi.name}}
+      </ion-item>
+    </div>
+  </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add" (click)="addSupplier()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
