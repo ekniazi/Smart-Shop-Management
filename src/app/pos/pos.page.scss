@@ -1,0 +1,208 @@
+@import url("https://fonts.googleapis.com/css2?family=Francois+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
+
+.card {
+    min-height: 8em;
+    width: 45%;
+    background-color: rgba(255, 255, 255, 0.801);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.082);
+    transition: 0.3s;
+    border-radius: 12px;
+    padding-top: 25px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    .cardtxt {
+        padding-top: 10px;
+        color: rgba(0, 0, 0, 0.459);
+        padding-bottom: 10px;
+        padding-left: 5px;
+        font-weight: bold;
+        font-family: "Hammersmith One", sans-serif;
+    }
+}
+
+.stats {
+    min-height: 20em;
+    width: 95%;
+    background-color: rgba(139, 53, 27, 0.096);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.082);
+    transition: 0.3s;
+    border-radius: 12px;
+    padding-top: 10px;
+    padding-left: 6px;
+}
+
+
+.right {
+    border: #c5097d solid 2px;
+    height: 120px;
+    width: 120px;
+    border-radius: 120px;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    position: absolute;
+    transform: rotate(-45deg);
+    animation: rota2 1000ms linear;
+    -moz-animation: rota2 1000ms linear;
+    -o-animation: rota2 1000ms linear;
+    -webkit-animation: rota2 1000ms linear;
+}
+
+@keyframes rota2 {
+    from {
+        transform: rotate(-225deg);
+    }
+    to {
+        transform: rotate(-45deg);
+    }
+}
+
+@-o-keyframes rota2 {
+    from {
+        transform: rotate(-225deg);
+    }
+    to {
+        transform: rotate(-45deg);
+    }
+}
+
+@-moz-keyframes rota2 {
+    from {
+        transform: rotate(-225deg);
+    }
+    to {
+        transform: rotate(-45deg);
+    }
+}
+@-webkit-keyframes rota2 {
+    from {
+        transform: rotate(-225deg);
+    }
+    to {
+        transform: rotate(-45deg);
+    }
+}
+
+.left {
+    border: #c5097d solid 2px;
+    height: 120px;
+    width: 120px;
+    border-radius: 120px;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    transform: rotate(315deg);
+    animation: rota 2000ms linear;
+    -o-animation: rota 2000ms linear;
+    -moz-animation: rota 2000ms linear;
+    -webkit-animation: rota 2000ms linear;
+}
+@keyframes rota {
+    from {
+        transform: rotate(-45deg);
+    }
+    to {
+        transform: rotate(315deg);
+    }
+}
+@-o-keyframes rota {
+    from {
+        transform: rotate(-45deg);
+    }
+    to {
+        transform: rotate(315deg);
+    }
+}
+@moz-keyframes rota {
+    from {
+        transform: rotate(-45deg);
+    }
+    to {
+        transform: rotate(315deg);
+    }
+}
+@-webkit-keyframes rota {
+    from {
+        transform: rotate(-45deg);
+    }
+    to {
+        transform: rotate(315deg);
+    }
+}
+
+.middle {
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 150px;
+    position: relative;
+    z-index: 4;
+}
+
+@keyframes popover {
+    0% {
+        opacity: 1;
+    }
+    99% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-o-keyframes popover {
+    0% {
+        opacity: 1;
+    }
+    99% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes popover {
+    0% {
+        opacity: 1;
+    }
+    99% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes popover {
+    0% {
+        opacity: 1;
+    }
+    99% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.hello {
+    font-family: "Open Sans", sans-serif;
+    color: white;
+    font-weight: bold;
+    font-size: 35px;
+    margin-top: 0.6em;
+    letter-spacing: -2px;
+}

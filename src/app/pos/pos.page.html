@@ -1,12 +1,5 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-icon name="arrow-back" slot="start" size="large" (click)="back()"></ion-icon>
-    <ion-title slot="start">POS</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <ion-card *ngFor="let item of recipt">
+  <!-- <ion-card *ngFor="let item of recipt">
     <ion-item color="none" lines='none' color="none">
       <div slot="start">
         {{item.name}}</div>
@@ -20,28 +13,183 @@
       </div>
     </ion-item>
   </ion-card>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf = "recipt && recipt.length > 0">
-    <ion-fab-button (click)="endSale()" color = "success">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="recipt && recipt.length > 0">
+    <ion-fab-button (click)="endSale()" color="success">
       <ion-icon name="checkmark"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
-  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="scanBarcode()">
       <ion-icon name="scan"></ion-icon>
     </ion-fab-button>
+  </ion-fab> -->
+
+  <div style="margin-top: 15px;">
+
+    <ion-searchbar mode='ios'></ion-searchbar>
+  </div>
+
+  <div style="display: flex;flex-wrap: wrap;margin-top: 20px;">
+    <ion-card class="card">
+      <div style="color: pink;">
+        <ion-icon color="none" style="font-size: 30px;" name="easel"></ion-icon>
+      </div>
+      <ion-label class="cardtxt">
+        Add Custom Sale
+      </ion-label>
+    </ion-card>
+
+    <ion-card class="card">
+      <div style="color: rgb(255, 228, 192);">
+        <ion-icon color="none" style="font-size: 30px;" name="cafe"></ion-icon>
+      </div>
+      <ion-label class="cardtxt">
+        Add Discount
+      </ion-label>
+    </ion-card>
+
+    <ion-card class="card">
+      <div style="color: rgb(86, 43, 136);">
+        <ion-icon color="none" style="font-size: 30px;" name="cart"></ion-icon>
+      </div>
+      <ion-label class="cardtxt">
+        View Cart
+      </ion-label>
+    </ion-card>
+
+    <ion-card class="card">
+      <div style="color: rgba(122, 11, 29, 0.849);">
+        <ion-icon color="none" style="font-size: 30px;" name="clipboard"></ion-icon>
+      </div>
+      <ion-label class="cardtxt">
+        Add Note
+      </ion-label>
+    </ion-card>
+
+    <ion-card class="card">
+      <div style="color: rgb(77, 52, 5);">
+        <ion-icon color="none" style="font-size: 30px;" name="refresh"></ion-icon>
+      </div>
+      <ion-label class="cardtxt">
+        RESET POS
+      </ion-label>
+    </ion-card>
+
+    <ion-card class="card">
+      <div style="color: rgba(5, 139, 45, 0.815);">
+        <ion-icon color="none" style="font-size: 30px;" name="card"></ion-icon>
+      </div>
+      <ion-label class="cardtxt">
+        Generate Bill
+      </ion-label>
+    </ion-card>
+
+  </div>
+
+
+
+  <div style="display: flex;justify-content: center;margin-top: 0.3em;width: 100%;min-height: 15em;flex-wrap: wrap;">
+    <div style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.082);border-radius:14px;margin-top: 4px;width: 96%; background-color: rgba(139, 53, 27, 0.096);
+      ">
+      <div>
+        <ion-title style="color:rgba(0, 0, 0, 0.767);font-size: 28px;" class="hello">
+          OVERVIEW
+        </ion-title>
+        <div style="width: 110%;margin-top: 10px;" class="flex">
+
+          <div style="padding-left: 0.5em;width: 30%;">
+
+            <div class="right"></div>
+            <div class="left"></div>
+            <div class="middle">
+              <p
+                style="color:rgba(0, 0, 0, 0.767); font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">
+                294 <br />
+              </p>
+            </div>
+            <ion-label
+              style="color:rgba(0, 0, 0, 0.767);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1.3em;font-size: 18px;padding-bottom: 10px;">
+              SALES TODAY</ion-label>
+
+
+          </div>
+
+          <div style="padding-left: 0.5em;width: 30%;">
+
+            <div class="right"></div>
+            <div class="left"></div>
+            <div class="middle">
+              <p
+                style="color:rgba(0, 0, 0, 0.767); font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">
+                24 <br />
+              </p>
+            </div>
+            <ion-label
+              style="color:rgba(0, 0, 0, 0.767);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1em;font-size: 18px;padding-bottom: 10px;">
+              REVENUE TODAY</ion-label>
+
+
+          </div>
+
+          <div style="padding-left: 0.5em;width: 30%;">
+
+            <div class="right"></div>
+            <div class="left"></div>
+            <div class="middle">
+              <p
+                style="color:rgba(0, 0, 0, 0.767); font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">
+                204 <br />
+              </p>
+            </div>
+            <ion-label
+              style="color:rgba(0, 0, 0, 0.767);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1.6em;font-size: 18px;padding-bottom: 10px;">
+              DISCOUNT</ion-label>
+
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button mode='ios' (click)="scanBarcode()">
+      <ion-icon name="scan"></ion-icon>
+    </ion-fab-button>
   </ion-fab>
+
 </ion-content>
 
-<ion-footer>
-  <div *ngIf = "searchFound && searchFound.length > 0">
-    <div *ngFor = "let item of searchFound">
-      <ion-item mode = "ios" button (click) = "addSearchItem(item)">
-        <ion-icon name = "search"></ion-icon>
-        <ion-label><span style = "font-weight: bold;">{{item.name}}</span>({{item.stock}})</ion-label>
-        <div slot = "end">{{item.barcode}}</div>
+<ion-footer style="background: #f8005fce;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #f8005fce, #fe0094d7);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #f8005fce, #fe0094d7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+;height: 3em;
+border-top-left-radius:25px;
+border-top-right-radius:25px;
+">
+  <!-- <div *ngIf="searchFound && searchFound.length > 0">
+    <div *ngFor="let item of searchFound">
+      <ion-item mode="ios" button (click)="addSearchItem(item)">
+        <ion-icon name="search"></ion-icon>
+        <ion-label><span style="font-weight: bold;">{{item.name}}</span>({{item.stock}})</ion-label>
+        <div slot="end">{{item.barcode}}</div>
       </ion-item>
     </div>
   </div>
-  <ion-input (ionChange) = "searchItem()" [(ngModel)] = "searchParam" placeholder = "Enter item name or barcode here..."></ion-input>
+  <ion-input (ionChange)="searchItem()" [(ngModel)]="searchParam" placeholder="Enter item name or barcode here...">
+  </ion-input> -->
+  <div style="display: flex;color: white;position: relative;top: 0.5em;">
+    <ion-icon (click)="back()" style="font-size: 25px;margin-left: 6px;" name="close-circle"></ion-icon>
+
+    <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">POINT OF SALE
+    </ion-title>
+
+  </div>
+
 </ion-footer>
