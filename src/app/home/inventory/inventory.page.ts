@@ -21,11 +21,19 @@ export class InventoryPage implements OnInit {
   ) { }
 
   items: any[];
+  toShow: any[];
+  lenders: any[];
+  sales: any[];
   searchParam: string;
   searchFound: any[] = [];
   msg: string;
   color: string;
   index: number;
+  toCollect: number = 0;
+  lowStock: number = 0;
+  highStock: number = 0;
+  stockValue: number = 0;
+  salesValue: number = 0;
 
   async presentToast() {
     const toast = await this.toastController.create({
@@ -38,7 +46,6 @@ export class InventoryPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getItems();
   }
 
   async changeStock(item) {
@@ -95,7 +102,7 @@ export class InventoryPage implements OnInit {
 
   findItemIndex(item) {
     for (var k = 0; k < this.items.length; k++) {
-      if (item.barcode == this.items[k].barcode) {
+      if (item == this.items[k]) {
         return k;
       }
     }
@@ -138,6 +145,9 @@ export class InventoryPage implements OnInit {
       }]
     });
     await actionSheet.present();
+    actionSheet.onDidDismiss().then(()=>{
+      this.getInfo();
+    })
   }
 
   scanBarcode() {
@@ -190,12 +200,69 @@ export class InventoryPage implements OnInit {
       .catch(err => console.log('Error launching dialer', err));
   }
 
+  getInfo() {
+    this.toCollect = 0;
+    for (var i = 0; i < this.items.length; i++) {
+      this.items[i].index = i;
+      this.stockValue = this.stockValue + (this.items[i].stock * this.items[i].pPrice);
+      if (this.items[i].stock < 10) {
+        this.lowStock = this.lowStock + 1;
+      }
+      if (this.items[i].stock > 30) {
+        this.highStock = this.highStock + 1;
+      }
+    }
+    this.toShow = this.items;
+    for (var i = 0; i < this.lenders.length; i++) {
+      if (this.lenders[i].paid) {
+        this.toCollect = this.toCollect + (this.lenders[i].total - this.lenders[i].paid);
+      } else {
+        this.toCollect = this.toCollect + (this.lenders[i].total);
+      }
+    }
+
+    for (var i = 0; i < this.sales.length; i++) {
+      if (this.sales[i].paid) {
+        this.salesValue = this.salesValue + Number(this.sales[i].paid);
+      }
+    }
+  }
+
+  sortLowStock(){
+    this.toShow.sort((a,b) => (a.stock > b.stock) ? 1 : ((b.stock > a.stock) ? -1 : 0));
+  }
+
+  sortAlpha(){
+    this.toShow.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+  }
+
+  sortPriceDown(){
+    this.toShow.sort((a,b) => (a.rPrice > b.rPrice) ? 1 : ((b.rPrice > a.rPrice) ? -1 : 0));
+  }
+
+  sortPriceUp(){
+    this.toShow.sort((a,b) => (a.rPrice < b.rPrice) ? 1 : ((b.rPrice < a.rPrice) ? -1 : 0));
+  }
+
   getItems() {
     if (window.localStorage.getItem('items')) {
       this.items = JSON.parse(window.localStorage.getItem('items'));
     } else {
       this.items = [];
     }
+    if (window.localStorage.getItem('lenders')) {
+      this.lenders = JSON.parse(window.localStorage.getItem('lenders'));
+    } else {
+      this.lenders = [];
+    }
+    if (window.localStorage.getItem('sales')) {
+      this.sales = JSON.parse(window.localStorage.getItem('sales'));
+    } else {
+      this.sales = [];
+    }
+    setTimeout(() => {
+      this.getInfo();
+    }, 600)
   }
 
   ionViewWillEnter() {

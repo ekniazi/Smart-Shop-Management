@@ -67,7 +67,7 @@
         <ion-icon style="color: green;position: relative;top: 0.2em;" name="arrow-down-outline"></ion-icon>
       </div>
 
-      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(207, 16, 207, 0.753);">150
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(207, 16, 207, 0.753);">{{toCollect}}
       </ion-label>
 
     </div>
@@ -78,7 +78,7 @@
 
       </div>
 
-      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(7, 245, 86, 0.753);">0 </ion-label>
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(7, 245, 86, 0.753);">{{lowStock}} </ion-label>
 
     </div>
 
@@ -88,7 +88,7 @@
 
       </div>
 
-      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(0, 0, 0, 0.753);">350000
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(0, 0, 0, 0.753);">{{stockValue}}
       </ion-label>
 
     </div>
@@ -99,7 +99,7 @@
 
       </div>
 
-      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(0, 0, 0, 0.753);">90000
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(0, 0, 0, 0.753);">{{salesValue}}
       </ion-label>
 
     </div>
@@ -110,7 +110,7 @@
 
       </div>
 
-      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(0, 0, 0, 0.753);">10 </ion-label>
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(0, 0, 0, 0.753);">{{highStock}} </ion-label>
 
     </div>
 
@@ -145,25 +145,24 @@
     </div>
 
     <div style="margin-top: 0.2em;display: flex;justify-content: center;">
-      <ion-chip mode='ios' color="primary">Low stock first<ion-icon name="arrow-down"></ion-icon>
+      <ion-chip mode='ios' color="primary" (click) = "sortLowStock()">Low stock first<ion-icon name="arrow-down"></ion-icon>
       </ion-chip>
-      <ion-chip mode='ios' color="primary">Alphabetical</ion-chip>
-      <ion-chip mode='ios' color="primary">Price<ion-icon name="arrow-down"></ion-icon>
+      <ion-chip mode='ios' color="primary" (click) = "sortAlpha()">Alphabetical</ion-chip>
+      <ion-chip mode='ios' color="primary" (click) = "sortPriceDown()">Price<ion-icon name="arrow-down"></ion-icon>
       </ion-chip>
-      <ion-chip mode='ios' color="primary">Price<ion-icon name="arrow-up"></ion-icon>
+      <ion-chip mode='ios' color="primary" (click) = "sortPriceUp()">Price<ion-icon name="arrow-up"></ion-icon>
       </ion-chip>
     </div>
   </div>
 
   <div style="display: flex;justify-content: center;margin-top: 0.5em;flex-direction: column;text-align: center;">
 
-    <div *ngFor="let item of [].constructor(10)" class="prodcard">
+    <div *ngFor="let item of toShow" class="prodcard">
 
       <div style="display: flex;justify-content: space-between;">
-        <ion-title style="text-align: left;font-family: 'Secular One', sans-serif;color: rgba(0, 0, 0, 0.836);">Sample
-          Party</ion-title>
+        <ion-title style="text-align: left;font-family: 'Secular One', sans-serif;color: rgba(0, 0, 0, 0.836);">{{item.name}}({{item.stock}})</ion-title>
 
-        <ion-icon (click)="showOptions()" style="margin-right: 2px;font-size: 20px;" name="ellipsis-vertical-outline">
+        <ion-icon (click)="showOptions(item)" style="margin-right: 2px;font-size: 20px;" name="ellipsis-vertical-outline">
         </ion-icon>
       </div>
 
@@ -172,13 +171,13 @@
         <div>
           <ion-title
             style="text-align: left;font-family: 'Secular One', sans-serif;color: rgba(0, 0, 0, 0.39);font-size: 18px;">
-            Supplier Name</ion-title>
+            {{item.barcode}}</ion-title>
 
           <br>
 
           <ion-title
-            style="text-align: left;font-family: 'Secular One', sans-serif;color: rgba(0, 0, 0, 0.315);font-size: 18px;">
-            27/April/2021</ion-title>
+            style="text-align: left;font-family: 'Secular One', sans-serif;color: rgb(5, 202, 120);font-size: 18px;">
+            <ion-icon style="position: relative;top: 2px;" name="card-outline"></ion-icon>{{item.rPrice}}</ion-title>
         </div>
 
         <div style="position: relative;top: 6px;">
@@ -186,7 +185,7 @@
             style="display: flex;text-align: left;font-family: 'Secular One', sans-serif;color: palevioletred;font-size: 20px;padding: 10px;border-radius: 14px;margin-right: 10px;position: relative;top: 1em;">
             <ion-icon style="position: relative;top: 2px;" name="card-outline"></ion-icon>
 
-            200
+            {{item.pPrice}}
 
 
 
