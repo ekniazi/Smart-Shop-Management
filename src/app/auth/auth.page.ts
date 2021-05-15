@@ -185,10 +185,10 @@ export class AuthPage implements OnInit {
   gotoPage() {
     if (this.selectedUser == 'Owner') {
 
-      this.router.navigate(['helperpage'])
-    }
-    else {
       this.router.navigate(['ownerpage'])
+    }
+    else if (this.selectedUser == 'Helper') {
+      this.router.navigate(['helperpage'])
     }
   }
 
@@ -265,15 +265,12 @@ export class AuthPage implements OnInit {
 
         this.done = true;
         this.stop();
-
+        this.loadingController.dismiss('getotp')
+        this.loadingController.dismiss('verifyOtp')
         this.msg = "OTP Verified Successfully"
         this.duration = 2000;
         this.color = "dark";
         this.toastCreater();
-        setTimeout(() => {
-          this.loadingController.dismiss('getotp')
-          this.loadingController.dismiss('verifyOtp')
-        }, 2000);
       })
       .catch(error => {
         this.loadingController.dismiss('verifyOtp')
@@ -286,46 +283,60 @@ export class AuthPage implements OnInit {
   }
 
   name: string;
-  adress: string;
-  referal: string
+  adress: string = "";
+  referal: string = ""
   abc: boolean = false;
 
 
   saveData() {
 
-    if (!this.name || !this.adress || !this.referal) {
-      this.msg = "Fill out All fields";
-      this.toastCreater()
 
+    if (!this.selectedUser) {
+      this.msg = 'User Type cannot be left blank'
+      this.toastCreater()
     }
     else {
-      const authsub = this.firebaseauth.authState.subscribe(user => {
-        if (user && user.uid) {
-          const userID = user.uid;
-          const timeJoined = new Date();
-          const phone = this.phone;
-          const name = this.name;
-          const language = this.selectedLanguage;
-          const adress = this.adress;
-          const referal = this.referal;
-          this.firestore.collection('users').doc(user.uid).set({
-            name, adress, language,
-            phone, userID, timeJoined,
-            referals: firebase.firestore.FieldValue.arrayUnion({
-              referal
-            })
-          }).then(() => {
-            this.gotoPage();
+      let userData = {
+        name: this.name,
+        timeJoined: new Date(),
+        phone: this.phone,
+        language: this.selectedLanguage,
+        adress: this.adress,
+        uType: this.selectedUser,
+        referal: this.referal,
+      }
+      this.gotoPage()
+      window.localStorage.setItem('user', JSON.stringify(userData))
 
-          }).catch(e => {
-            this.msg = JSON.stringify(e.message)
-            this.toastCreater()
-          })
-        }
-      })
     }
 
   }
+
+  // const authsub = this.firebaseauth.authState.subscribe(user => {
+  //   if (user && user.uid) {
+  //     const userID = user.uid;
+  //     const timeJoined = new Date();
+  //     const phone = this.phone;
+  //     const name = this.name;
+  //     const userType = this.selectedUser
+  //     const language = this.selectedLanguage;
+  //     const adress = this.adress;
+  //     const referal = this.referal;
+  //     this.firestore.collection('users').doc(user.uid).set({
+  //       name, adress, language,
+  //       phone, userID, timeJoined, userType,
+  //       referals: firebase.firestore.FieldValue.arrayUnion({
+  //         referal
+  //       })
+  //     }).then(() => {
+  //       this.gotoPage();
+
+  //     }).catch(e => {
+  //       this.msg = JSON.stringify(e.message)
+  //       this.toastCreater()
+  //     })
+  //   }
+  //  })
 
   checkAuth(uid: string) {
     this.firestore.collection('users').doc(uid).valueChanges().subscribe((res: any) => {
@@ -348,6 +359,9 @@ export class AuthPage implements OnInit {
           this.loaderID = 'getotp'
           this.loadermsg = 'Fetching OTP'
           this.presentLoading()
+          setTimeout(() => {
+            this.loadingController.dismiss('getotp')
+          }, 10000);
           document.addEventListener('onSMSArrive', (e: any) => {
 
             var IncomingSMS = e.data;

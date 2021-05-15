@@ -1,3 +1,5 @@
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 import { environment } from './../environments/environment';
 import { NgModule } from '@angular/core';
@@ -11,7 +13,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 /////////////////EKNIAZI IMPORTS/////////////////////////////
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
@@ -51,12 +53,14 @@ export function LanguageLoader(http: HttpClient) {
   ],
 
   providers: [
-
+    StatusBar,
+    SplashScreen,
     AngularFirestore,
     TranslateConfigService,
     BarcodeScanner,
     SocialSharing,
     CallNumber,
+    OneSignal,
     File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }
   ],
