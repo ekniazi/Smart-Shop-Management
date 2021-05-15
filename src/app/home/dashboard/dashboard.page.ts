@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AddItemPage } from 'src/app/add-item/add-item.page';
 import { AddSupplierPage } from 'src/app/add-supplier/add-supplier.page';
+import { ExcelImportPage } from 'src/app/excel-import/excel-import.page';
 
 @Component({
   selector: 'app-dashboard',
@@ -46,6 +47,11 @@ export class DashboardPage implements OnInit {
 
   addSupplier(){
     this.ModalPage = AddSupplierPage;
+    this.openModal();
+  }
+
+  excelImport(){
+    this.ModalPage = ExcelImportPage;
     this.openModal();
   }
 

@@ -7,14 +7,15 @@ import { AddItemPageModule } from '../add-item/add-item.module';
 import { AddSupplierPage } from '../add-supplier/add-supplier.page';
 import { SelectSupplierPage } from '../select-supplier/select-supplier.page';
 import { SelectItemPage } from '../select-item/select-item.page';
+import { ExcelImportPage } from '../excel-import/excel-import.page';
 
 @NgModule({
-  declarations: [AddItemPage,AddSupplierPage,SelectSupplierPage,SelectItemPage],
+  declarations: [AddItemPage,AddSupplierPage,SelectSupplierPage,SelectItemPage,ExcelImportPage],
   imports: [
     IonicModule,
     FormsModule,
     CommonModule,
   ],
-  exports: [AddItemPage,AddSupplierPage,SelectSupplierPage,SelectItemPage]
+  exports: [AddItemPage,AddSupplierPage,SelectSupplierPage,SelectItemPage,ExcelImportPage]
 })
 export class SharedModule { }

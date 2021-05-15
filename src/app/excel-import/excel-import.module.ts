@@ -15,6 +15,6 @@ import { ExcelImportPage } from './excel-import.page';
     IonicModule,
     ExcelImportPageRoutingModule
   ],
-  declarations: [ExcelImportPage]
+  declarations: []
 })
 export class ExcelImportPageModule {}

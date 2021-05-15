@@ -27,6 +27,10 @@ export class AddItemPage implements OnInit {
   choice: string = "";
   msg: string;
   color: string;
+  SGST:number;
+  IGST:number;
+  CGST:number;
+  HSN:string = "";
 
   async openModal() {
     const modal = await this.modalController.create({
@@ -118,6 +122,15 @@ export class AddItemPage implements OnInit {
       this.color = "warning"
       this.presentToast();
     } else {
+      if (!this.SGST){
+        this.SGST = 0
+      }
+      if (!this.IGST){
+        this.IGST = 0
+      }
+      if (!this.CGST){
+        this.CGST = 0
+      }
       let data = {
         name: this.name,
         rPrice: this.rPrice,
@@ -125,6 +138,10 @@ export class AddItemPage implements OnInit {
         stock: this.stock,
         supplier: this.supplier,
         barcode: this.barcode,
+        SGST:this.SGST,
+        IGST:this.IGST,
+        CGST:this.CGST,
+        HSN:this.HSN,
       }
       this.items.push(data);
       window.localStorage.setItem('items', JSON.stringify(this.items));

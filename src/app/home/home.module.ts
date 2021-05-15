@@ -9,6 +9,7 @@ import { AddItemPage } from '../add-item/add-item.page';
 import { SharedModule } from '../shared/shared.module';
 import { AddSupplierPage } from '../add-supplier/add-supplier.page';
 import { SelectSupplierPage } from '../select-supplier/select-supplier.page';
+import { ExcelImportPage } from '../excel-import/excel-import.page';
 
 
 @NgModule({
@@ -20,6 +21,6 @@ import { SelectSupplierPage } from '../select-supplier/select-supplier.page';
     SharedModule,
   ],
   declarations: [HomePage],
-  entryComponents: [AddItemPage,AddSupplierPage,SelectSupplierPage],
+  entryComponents: [AddItemPage,AddSupplierPage,SelectSupplierPage,ExcelImportPage],
 })
 export class HomePageModule {}
