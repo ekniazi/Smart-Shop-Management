@@ -255,7 +255,17 @@
             </ion-list>
           </div>
 
-          <ion-button (click)="saveData()" mode='ios' color="success" expand="block">I'm in</ion-button>
+          <ion-list class="line-input">
+            <ion-item lines="none" color="none">
+              <ion-select [(ngModel)]="selectedUser" (ionChange)="userselect(selectedUser)" style="margin-top: 1em;"
+                placeholder="Choose user type" interface="popover">
+                <ion-select-option *ngFor="let item of userTyp" value="{{item}}">{{item}}</ion-select-option>
+
+              </ion-select>
+            </ion-item>
+          </ion-list>
+
+          <ion-button style="margin-top: 5px;" (click)="saveData()" mode='ios' color="success" expand="block">I'm in</ion-button>
         </div>
 
       </div>

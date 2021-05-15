@@ -27,10 +27,16 @@
 
   <div style="margin-top: 15px;">
 
-    <ion-searchbar *ngIf="!viewcart" (ionChange)="searchItem()" [(ngModel)]="searchParam" mode='ios'></ion-searchbar>
+    <ion-searchbar *ngIf="currentPage == 'dashboard'" (ionChange)="searchItem()" [(ngModel)]="searchParam" mode='ios'>
+    </ion-searchbar>
+
+    <ion-searchbar *ngIf="currentPage == 'search'" (ionChange)="searchItem()" [(ngModel)]="searchParam" mode='ios'>
+    </ion-searchbar>
+
   </div>
 
-  <div *ngIf="!viewsales && !viewcart" style="display: flex;flex-wrap: wrap;margin-top: 20px;">
+
+  <div *ngIf="currentPage == 'dashboard'" style="display: flex;flex-wrap: wrap;margin-top: 20px;">
     <ion-card class="card">
       <div style="color: pink;">
         <ion-icon color="none" style="font-size: 30px;" name="easel"></ion-icon>
@@ -87,59 +93,62 @@
 
   </div>
 
-  <div *ngIf="searchFound && searchFound.length > 0">
+
+  <div *ngIf="currentPage=='search'">
+    <div *ngIf="searchFound && searchFound.length > 0">
 
 
 
-    <ion-item-sliding *ngFor="let item of [].constructor(20)">
-      <ion-item (click)="addSearchItem(item)">
-        <ion-checkbox mode='ios' color="success" slot="end"></ion-checkbox>
+      <ion-item-sliding *ngFor="let item of [].constructor(20)">
+        <ion-item (click)="addSearchItem(item)">
+          <ion-checkbox mode='ios' color="success" slot="end"></ion-checkbox>
 
-        <div style="padding: 5px;">
-          <ion-label style="text-align: center;padding: 10px;font-size: 20px;font-weight: bold;" class="robothin">
-            {{item.name}}
-          </ion-label>
-
-          <div style="display: flex;flex-wrap: wrap;justify-content: center;">
-
-            <ion-label style="padding: 1px;">
-              <b>
-                PRICE:
-              </b> 3600 INR.
-            </ion-label>
-            <ion-label style="padding: 1px;">
-              <b>
-                BARCODE:
-              </b>
-              {{item.barcode}}
+          <div style="padding: 5px;">
+            <ion-label style="text-align: center;padding: 10px;font-size: 20px;font-weight: bold;" class="robothin">
+              {{item.name}}
             </ion-label>
 
-            <ion-label style="padding: 1px;">
-              <b>
-                STOCK:
-              </b>
-              {{item.stock}}
-            </ion-label>
+            <div style="display: flex;flex-wrap: wrap;justify-content: center;">
+
+              <ion-label style="padding: 1px;">
+                <b>
+                  PRICE:
+                </b> 3600 INR.
+              </ion-label>
+              <ion-label style="padding: 1px;">
+                <b>
+                  BARCODE:
+                </b>
+                {{item.barcode}}
+              </ion-label>
+
+              <ion-label style="padding: 1px;">
+                <b>
+                  STOCK:
+                </b>
+                {{item.stock}}
+              </ion-label>
+
+            </div>
 
           </div>
 
-        </div>
+        </ion-item>
 
-      </ion-item>
+        <ion-item-options>
+          <ion-item-option color="danger">
 
-      <ion-item-options>
-        <ion-item-option color="danger">
+            <ion-label>DELETE</ion-label>
 
-          <ion-label>DELETE</ion-label>
+          </ion-item-option>
+        </ion-item-options>
 
-        </ion-item-option>
-      </ion-item-options>
+      </ion-item-sliding>
+    </div>
 
-    </ion-item-sliding>
   </div>
 
-
-  <div *ngIf="!viewsales && !viewcart"
+  <div *ngIf="currentPage=='dashboard'"
     style="display: flex;justify-content: center;margin-top: 0.3em;width: 100%;min-height: 15em;flex-wrap: wrap;">
     <div style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.082);border-radius:14px;margin-top: 4px;width: 96%; background-color: rgba(139, 53, 27, 0.096);
       ">
@@ -209,7 +218,7 @@
     </div>
   </div>
 
-  <div *ngIf="viewcart">
+  <div *ngIf="currentPage=='cart'">
     <div
       style="display: flex;justify-content: space-between;margin-top: 2px; border-bottom: 3px solid pink;border-bottom-left-radius: 13px;border-bottom-right-radius: 13px;margin-left: 14px;margin-right: 14px;">
 
@@ -307,11 +316,11 @@
 
 
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button *ngIf="!viewsales &&!viewcart" mode='ios' (click)="scanBarcode()">
+    <ion-fab-button *ngIf="currentPage=='dashboard'" mode='ios' (click)="scanBarcode()">
       <ion-icon name="scan"></ion-icon>
     </ion-fab-button>
 
-    <ion-fab-button *ngIf="viewsales && !viewcart" color="success" mode='ios'>
+    <ion-fab-button *ngIf="currentPage=='search'" color="success" mode='ios'>
       <ion-icon name="checkmark"></ion-icon>
     </ion-fab-button>
 

@@ -51,7 +51,8 @@ export class AuthPage implements OnInit {
   loaderID: string;
   windowRef: any;
   params: string;
-
+  userTyp: string[] = ["Owner", "Helper"]
+  selectedUser: string;
 
   async presentAlertConfirm(err: string) {
     const alert = await this.alertController.create({
@@ -81,6 +82,10 @@ export class AuthPage implements OnInit {
     this.selectedLanguage = lang
     console.log('language=>', this.selectedLanguage);
     this.translateConfigService.setLanguage(this.selectedLanguage);
+  }
+
+  userselect(param: string) {
+    this.selectedUser = param
   }
 
   uppercase(text: string) {
@@ -176,6 +181,16 @@ export class AuthPage implements OnInit {
     this.router.navigate(['home'])
   }
 
+  gotoPage() {
+    if (this.selectedUser == 'Owner') {
+
+      this.router.navigate(['helperpage'])
+    }
+    else {
+      this.router.navigate(['ownerpage'])
+    }
+  }
+
   phone: any;
   c_code: number = 92;
   num: number;
@@ -238,7 +253,7 @@ export class AuthPage implements OnInit {
     }
   }
 
-  done: boolean = false;
+  done: boolean = true;
 
   //verifying OTP
   verifyLoginCode(code: any) {
@@ -299,7 +314,7 @@ export class AuthPage implements OnInit {
               referal
             })
           }).then(() => {
-            this.gotoHome();
+            this.gotoPage();
 
           }).catch(e => {
             this.msg = JSON.stringify(e.message)
@@ -317,7 +332,7 @@ export class AuthPage implements OnInit {
 
       }
       else {
-        this.gotoHome()
+       
       }
     })
   }
@@ -371,7 +386,7 @@ export class AuthPage implements OnInit {
       this.d = this.code.slice(3, 4)
       this.e = this.code.slice(4, 5)
       this.f = this.code.slice(5, 6)
-    
+
       this.verifyLoginCode(this.code)
     }
     else {

@@ -31,9 +31,11 @@ export class POSPage implements OnInit {
   cNum: string = "";
   cName2: string = "";
 
-  viewsales: boolean = false;
-  viewcart: boolean = false;
+  currentPage: string = 'dashboard'
 
+  changePage(c_page: string) {
+    this.currentPage = c_page
+  }
 
   async presentToast() {
     const toast = await this.toastController.create({
