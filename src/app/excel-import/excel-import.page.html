@@ -1,9 +1,38 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>excel-import</ion-title>
+  <ion-toolbar style="--background: #2b5876;  /* fallback for old browsers */
+  --background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
+  --background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ">
+    <div style="display: flex;color: white;">
+      <img style="height: 3em;object-fit: contain;" src="../../assets/logo.png" alt="">
+      <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">Upload Excel File
+      </ion-title>
+      <ion-icon (click)="close()" style="position: relative;top: 0.3em;font-size: 30px;right: 3px;" color="light"
+        name="close-circle">
+      </ion-icon>
+    </div>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
+
+  <div style="padding:10px">
+    <ion-label class="assis">
+      Import Excel file with item Name,sales prices,purchase prices,tax rate,hsn and other details.
+    </ion-label>
+
+
+    <ion-button style="margin-top: 1em;" mode='ios' expand="block">
+      <b>
+        Upload File
+      </b>
+    </ion-button>
+
+    <div style="margin-top: 1em;">
+
+    </div>
+
+  </div>
 
 </ion-content>

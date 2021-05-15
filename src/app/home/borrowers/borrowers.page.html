@@ -1,15 +1,66 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>borrowers</ion-title>
+  <ion-toolbar style="--background: #2b5876;  /* fallback for old browsers */
+  --background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
+  --background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ">
+    <div style="display: flex;color: white;">
+      <img style="height: 3em;object-fit: contain;" src="../../../assets/logo.png" alt="">
+      <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">Borrowers
+      </ion-title>
+
+    </div>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
-  <div *ngIf="lenders">
-    <div *ngFor="let lender of lenders">
-      <ion-item mode = "ios" button (click) = "whatsappMsg(lender)">
-        <ion-label><span style="font: bold;">{{lender.cName}}</span>({{lender.total - lender.paid}})</ion-label>
+  <!-- <div *ngIf="lenders">
+    <div >
+      <ion-item mode="ios" button (click)="">
+        <ion-label><span style="font: bold;"></span>()</ion-label>
       </ion-item>
     </div>
+  </div> -->
+
+  <div *ngIf="lenders" style="padding:10px;">
+    <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+
+      <ion-card *ngFor="let lender of lenders"
+        style="display: flex;padding-left: 10px;padding-right: 10px;width: 95%;min-height: 4em;color: black;background: rgba(255, 255, 255, 0.027);">
+        <img style="height: 4em;position: relative;top: 0.5em;" src="../../../assets/borrow.png" alt="">
+        <div style="width: 80%;">
+
+          <ion-title style="font-size: 24px;margin-top: 10px;" class="balu">{{lender.cName}}</ion-title>
+
+          <ion-title
+            style="font-family:Georgia;font-size: 15px;color: rgba(0, 0, 0, 0.781);position: relative;top: -12px;">
+            {{lender.total - lender.paid}}
+            INR.
+          </ion-title>
+
+        </div>
+
+        <div>
+          <ion-icon (click)="whatsappMsg(lender)" color="success"
+            style="background: rgba(74, 196, 4, 0.041);font-size: 25px;margin-top: 0.5em;border-radius: 50%;padding: 5px;margin-top: 18px;"
+            name="logo-whatsapp">
+          </ion-icon>
+
+        </div>
+
+      </ion-card>
+
+    </div>
   </div>
+
+  <div *ngIf="!lenders">
+
+
+    <p
+      style="font-family: impact;color: rgba(128, 128, 128, 0.616);position: relative;top: 6em;text-align: center;font-size: 32px;">
+      NOTHING TO SHOW...!
+    </p>
+
+  </div>
+
 </ion-content>

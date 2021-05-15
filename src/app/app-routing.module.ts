@@ -4,47 +4,48 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: 'home/borrowers',
     pathMatch: 'full'
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthPageModule)
   },
   {
     path: 'add-item',
-    loadChildren: () => import('./add-item/add-item.module').then( m => m.AddItemPageModule)
+    loadChildren: () => import('./add-item/add-item.module').then(m => m.AddItemPageModule)
   },
   {
     path: 'add-supplier',
-    loadChildren: () => import('./add-supplier/add-supplier.module').then( m => m.AddSupplierPageModule)
+    loadChildren: () => import('./add-supplier/add-supplier.module').then(m => m.AddSupplierPageModule)
   },
   {
     path: 'select-supplier',
-    loadChildren: () => import('./select-supplier/select-supplier.module').then( m => m.SelectSupplierPageModule)
+    loadChildren: () => import('./select-supplier/select-supplier.module').then(m => m.SelectSupplierPageModule)
   },
   {
     path: 'pos',
-    loadChildren: () => import('./pos/pos.module').then( m => m.POSPageModule)
+    loadChildren: () => import('./pos/pos.module').then(m => m.POSPageModule)
   },
   {
     path: 'select-item',
-    loadChildren: () => import('./select-item/select-item.module').then( m => m.SelectItemPageModule)
+    loadChildren: () => import('./select-item/select-item.module').then(m => m.SelectItemPageModule)
   },
   {
     path: 'excel-import',
-    loadChildren: () => import('./excel-import/excel-import.module').then( m => m.ExcelImportPageModule)
-  },  {
+    loadChildren: () => import('./excel-import/excel-import.module').then(m => m.ExcelImportPageModule)
+  },
+  {
     path: 'helperpage',
-    loadChildren: () => import('./helperpage/helperpage.module').then( m => m.HelperpagePageModule)
+    loadChildren: () => import('./helperpage/helperpage.module').then(m => m.HelperpagePageModule)
   },
   {
     path: 'ownerpage',
-    loadChildren: () => import('./ownerpage/ownerpage.module').then( m => m.OwnerpagePageModule)
+    loadChildren: () => import('./ownerpage/ownerpage.module').then(m => m.OwnerpagePageModule)
   },
 
 

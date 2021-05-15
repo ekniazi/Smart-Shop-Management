@@ -20,8 +20,6 @@ export class AppComponent {
     private oneSignal: OneSignal,
   ) {
     this.initializeApp();
-
-
   }
 
   user: any;
