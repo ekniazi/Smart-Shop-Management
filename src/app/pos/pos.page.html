@@ -27,10 +27,10 @@
 
   <div style="margin-top: 15px;">
 
-    <ion-searchbar mode='ios'></ion-searchbar>
+    <ion-searchbar (ionChange)="searchItem()" [(ngModel)]="searchParam" mode='ios'></ion-searchbar>
   </div>
 
-  <div style="display: flex;flex-wrap: wrap;margin-top: 20px;">
+  <div *ngIf="!viewsales" style="display: flex;flex-wrap: wrap;margin-top: 20px;">
     <ion-card class="card">
       <div style="color: pink;">
         <ion-icon color="none" style="font-size: 30px;" name="easel"></ion-icon>
@@ -87,9 +87,60 @@
 
   </div>
 
+  <div *ngIf="searchFound && searchFound.length > 0">
 
 
-  <div style="display: flex;justify-content: center;margin-top: 0.3em;width: 100%;min-height: 15em;flex-wrap: wrap;">
+
+    <ion-item-sliding *ngFor="let item of [].constructor(20)">
+      <ion-item (click)="addSearchItem(item)">
+        <ion-checkbox mode='ios' color="success" slot="end"></ion-checkbox>
+
+        <div style="padding: 5px;">
+          <ion-label style="text-align: center;padding: 10px;font-size: 20px;font-weight: bold;" class="robothin">
+            {{item.name}}
+          </ion-label>
+
+          <div style="display: flex;flex-wrap: wrap;justify-content: center;">
+
+            <ion-label style="padding: 1px;">
+              <b>
+                PRICE:
+              </b> 3600 INR.
+            </ion-label>
+            <ion-label style="padding: 1px;">
+              <b>
+                BARCODE:
+              </b>
+              {{item.barcode}}
+            </ion-label>
+
+            <ion-label style="padding: 1px;">
+              <b>
+                STOCK:
+              </b>
+              {{item.stock}}
+            </ion-label>
+
+          </div>
+
+        </div>
+
+      </ion-item>
+
+      <ion-item-options>
+        <ion-item-option color="danger">
+
+          <ion-label>DELETE</ion-label>
+
+        </ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </div>
+
+
+  <div *ngIf="!viewsales"
+    style="display: flex;justify-content: center;margin-top: 0.3em;width: 100%;min-height: 15em;flex-wrap: wrap;">
     <div style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.082);border-radius:14px;margin-top: 4px;width: 96%; background-color: rgba(139, 53, 27, 0.096);
       ">
       <div>
@@ -158,32 +209,26 @@
     </div>
   </div>
 
+  <div *ngIf="viewsales">
+
+  </div>
+
+
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button mode='ios' (click)="scanBarcode()">
+    <ion-fab-button *ngIf="!viewsales" mode='ios' (click)="scanBarcode()">
       <ion-icon name="scan"></ion-icon>
     </ion-fab-button>
+
+    <ion-fab-button *ngIf="viewsales" color="success" mode='ios'>
+      <ion-icon name="checkmark"></ion-icon>
+    </ion-fab-button>
+
   </ion-fab>
 
 </ion-content>
 
-<ion-footer style="background: #f8005fce;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #f8005fce, #fe0094d7);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #f8005fce, #fe0094d7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-;height: 3em;
-border-top-left-radius:25px;
-border-top-right-radius:25px;
-">
-  <!-- <div *ngIf="searchFound && searchFound.length > 0">
-    <div *ngFor="let item of searchFound">
-      <ion-item mode="ios" button (click)="addSearchItem(item)">
-        <ion-icon name="search"></ion-icon>
-        <ion-label><span style="font-weight: bold;">{{item.name}}</span>({{item.stock}})</ion-label>
-        <div slot="end">{{item.barcode}}</div>
-      </ion-item>
-    </div>
-  </div>
-  <ion-input (ionChange)="searchItem()" [(ngModel)]="searchParam" placeholder="Enter item name or barcode here...">
-  </ion-input> -->
+<ion-footer class="footer">
+
   <div style="display: flex;color: white;position: relative;top: 0.5em;">
     <ion-icon (click)="back()" style="font-size: 25px;margin-left: 6px;" name="close-circle"></ion-icon>
 

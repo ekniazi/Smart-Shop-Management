@@ -31,6 +31,9 @@ export class POSPage implements OnInit {
   cNum: string = "";
   cName2: string = "";
 
+  viewsales: boolean = false;
+
+
   async presentToast() {
     const toast = await this.toastController.create({
       message: this.msg,
@@ -153,8 +156,8 @@ export class POSPage implements OnInit {
     const alert2 = await this.alertController.create({
       header: "Customer's name?",
       subHeader: "You can leave it blank if the customer doesn't want to share name.",
-       mode: 'ios',
-       backdropDismiss: false,
+      mode: 'ios',
+      backdropDismiss: false,
       inputs: [
         {
           name: 'input',
@@ -180,7 +183,7 @@ export class POSPage implements OnInit {
   async cNumber() {
     const alert2 = await this.alertController.create({
       subHeader: "Would you wish to enter the customer's number?",
-      header: "RETURN: "+ (this.paid-this.total),
+      header: "RETURN: " + (this.paid - this.total),
       message: "If the customer is not paying full it is mandatory to enter the customer's number for future tracking of borrowed money.",
       mode: 'ios',
       backdropDismiss: false,

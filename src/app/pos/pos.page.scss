@@ -34,7 +34,6 @@
     padding-left: 6px;
 }
 
-
 .right {
     border: #c5097d solid 2px;
     height: 120px;
@@ -192,7 +191,6 @@
     }
 }
 
-
 .flex {
     display: flex;
     flex-wrap: wrap;
@@ -205,4 +203,23 @@
     font-size: 35px;
     margin-top: 0.6em;
     letter-spacing: -2px;
+}
+.footer {
+    background: #f8005fce; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f8005fce, #fe0094d7); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #f8005fce,
+        #fe0094d7
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 3em;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+.opensans {
+    font-family: "Open Sans", sans-serif;
+}
+b {
+    font-family: "Hammersmith One", sans-serif;
+    font-weight: lighter;
 }
