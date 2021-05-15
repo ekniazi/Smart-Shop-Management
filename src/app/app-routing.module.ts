@@ -34,7 +34,11 @@ const routes: Routes = [
   {
     path: 'select-item',
     loadChildren: () => import('./select-item/select-item.module').then( m => m.SelectItemPageModule)
+  },  {
+    path: 'excel-import',
+    loadChildren: () => import('./excel-import/excel-import.module').then( m => m.ExcelImportPageModule)
   },
+
 
 
 ];

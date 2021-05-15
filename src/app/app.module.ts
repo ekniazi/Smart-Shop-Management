@@ -16,6 +16,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { PapaParseModule } from 'ngx-papaparse';
+import { File } from '@ionic-native/file/ngx';
 
 /////////////////FOR MULTILANGUAGE SUPPORT/////////////////////////////
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -38,6 +40,7 @@ export function LanguageLoader(http: HttpClient) {
     AngularFireAuthModule,
     HttpClientModule,
     SharedModule,
+    PapaParseModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -54,6 +57,7 @@ export function LanguageLoader(http: HttpClient) {
     BarcodeScanner,
     SocialSharing,
     CallNumber,
+    File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }
   ],
   bootstrap: [AppComponent],
