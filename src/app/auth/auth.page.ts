@@ -254,7 +254,7 @@ export class AuthPage implements OnInit {
     }
   }
 
-  done: boolean = true;
+  done: boolean = false;
 
   //verifying OTP
   verifyLoginCode(code: any) {
@@ -361,6 +361,10 @@ export class AuthPage implements OnInit {
           this.presentLoading()
           setTimeout(() => {
             this.loadingController.dismiss('getotp')
+            if (!this.code) {
+              this.msg = 'Auto fetch failed add manualy'
+              this.toastCreater()
+            }
           }, 10000);
           document.addEventListener('onSMSArrive', (e: any) => {
 
