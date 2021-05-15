@@ -223,3 +223,32 @@ b {
     font-family: "Hammersmith One", sans-serif;
     font-weight: lighter;
 }
+.a_card {
+    min-height: 8em;
+    min-width: 95%;
+    margin-top: 2em;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    background-color: #15045e96;
+    .txt {
+        color: white;
+        padding-top: 12px;
+        font-size: 2em;
+        font-weight: bold;
+        font-family: "Hammersmith One", sans-serif;
+    }
+    .amount {
+        font-family: Georgia, "Times New Roman", Times, serif;
+        font-weight: bold;
+        color: white;
+        padding-top: 12px;
+        font-size: 2em;
+    }
+}
+
+.items {
+    display: flex;
+}
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@500&display=swap");

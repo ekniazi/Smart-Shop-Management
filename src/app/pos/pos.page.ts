@@ -32,6 +32,7 @@ export class POSPage implements OnInit {
   cName2: string = "";
 
   viewsales: boolean = false;
+  viewcart: boolean = false;
 
 
   async presentToast() {
