@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 
@@ -10,6 +11,7 @@ export class SuppliersPage implements OnInit {
 
   constructor(
     private callNumber: CallNumber,
+    private router: Router,
   ) { }
 
   suppliers: any[];
@@ -20,6 +22,10 @@ export class SuppliersPage implements OnInit {
     } else {
       this.suppliers = [];
     }
+  }
+
+  addsupplier() {
+    this.router.navigate(['add-supplier'])
   }
 
   call(boi) {
