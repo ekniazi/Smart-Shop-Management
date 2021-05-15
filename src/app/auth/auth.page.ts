@@ -86,6 +86,7 @@ export class AuthPage implements OnInit {
 
   userselect(param: string) {
     this.selectedUser = param
+    window.localStorage.setItem('usertype', this.selectedUser);
   }
 
   uppercase(text: string) {
@@ -332,7 +333,7 @@ export class AuthPage implements OnInit {
 
       }
       else {
-       
+
       }
     })
   }
