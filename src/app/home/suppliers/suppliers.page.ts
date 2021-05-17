@@ -25,7 +25,7 @@ export class SuppliersPage implements OnInit {
   }
 
   addsupplier() {
-    this.router.navigate(['add-supplier'])
+    this.router.navigate(['select-supplier'])
   }
 
   call(boi) {

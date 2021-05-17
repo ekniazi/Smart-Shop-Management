@@ -199,21 +199,16 @@
 
       </div>
 
-      <div style="display: flex;justify-content: center;align-content: center;margin-top: 10px;">
-        <div style="height: 1px;width: 90%;background: rgba(128, 0, 128, 0.404);">
-
-        </div>
-      </div>
-
-      <div *ngIf="item.supplier" style="display: flex;justify-content:flex-end;margin-top: 2px;padding-right: 10px;">
+      <div *ngIf="item.supplier">
 
 
 
-        <ion-button (click)="call(item.supplier)" color="success" style="padding:2px" fill='clear' mode='ios'>
+        <ion-button (click)="call(item.supplier)" expand="block" color="primary" style="padding:2px" fill='outline'
+          mode='ios'>
           <p style="font-family: helvetica;font-size: 17px;margin-right: 2px;">
             Contact Supplier
           </p>
-          <ion-icon style="font-size: 17px;" name="arrow-redo-outline"></ion-icon>
+          <ion-icon style="font-size: 17px;" name="call"></ion-icon>
         </ion-button>
 
       </div>
@@ -221,7 +216,7 @@
       <div *ngIf="!item.supplier" style="display: flex;justify-content:flex-end;margin-top: 2px;padding-right: 10px;">
 
 
-        <ion-button (click) = "addSupplier(item)" color="success" style="padding:2px" fill='clear' mode='ios'>
+        <ion-button (click)="addSupplier(item)" color="success" style="padding:2px" fill='clear' mode='ios'>
           <p style="font-family: helvetica;font-size: 17px;margin-right: 2px;">
             Add Supplier
           </p>

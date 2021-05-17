@@ -248,7 +248,7 @@ export class InventoryPage implements OnInit {
       }, {
         text: 'Cancel',
         icon: 'close',
-        role: 'cancel',
+        role: 'destructive',
         handler: () => {
           console.log('Cancel clicked');
         }

@@ -9,6 +9,12 @@ export class HelperpagePage implements OnInit {
 
   constructor() { }
 
+  requested: boolean = false;
+
+  toggle() {
+    this.requested = !this.requested;
+  }
+
   ngOnInit() {
   }
 

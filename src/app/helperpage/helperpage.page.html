@@ -1,9 +1,106 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>helperpage</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
 
+  <div class="wrapper" style="position: relative;top: 75px;
+  ">
+
+    <div *ngIf="!requested" style="position: relative;top:65px;" class="fade-in one">
+      <div style="text-align: center;">
+        <img style="height: 10em;" src="../../assets/logo.png" alt="">
+        <h2 style="font-weight: bold;">JOIN AS A HELPER</h2>
+      </div>
+
+      <div
+        style="display: flex;justify-content: center;align-items: center;position: relative;top: 30px;flex-direction: column;text-align: left;">
+        <ion-label
+          style="text-align: center;color: rgba(128, 58, 0, 0.74);display: flex;max-width: 80%;font-family: imapct;">
+          Enter Shop
+          Owner
+          Number To
+          Request Joining As A Helper.
+
+        </ion-label>
+        <div style="width: 90%;display: flex;justify-content: center;flex-direction: column;margin-top: 15px;">
+
+          <div style="display: flex;">
+
+            <div style="width: 30%;">
+              <ion-list class="line-input">
+                <ion-item lines="none" color="none">
+                  <ion-input type='tel' maxlength="2" placeholder="91"></ion-input>
+                </ion-item>
+              </ion-list>
+            </div>
+            <div style="width: 5%;">
+
+            </div>
+            <div style="width: 65%;">
+
+              <ion-list class="line-input">
+                <ion-item lines="none" color="none">
+                  <ion-input type='tel' maxlength="10" placeholder="32566898520"></ion-input>
+                </ion-item>
+              </ion-list>
+
+            </div>
+
+
+          </div>
+
+
+          <div style="margin-top: 15px;">
+
+            <ion-button (click)="toggle()" style="margin-top: 5px;" mode='ios' color="success" expand="block">REQUEST TO
+              JOIN
+            </ion-button>
+
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div *ngIf="requested" style="position: relative;top:65px;" class="fade-in one">
+      <div style="text-align: center;">
+        <img style="height: 10em;" src="../../assets/logo.png" alt="">
+        <h2 style="font-weight: bold;">JOIN AS A HELPER</h2>
+      </div>
+
+
+      <div style="margin-top: 40px;padding-left: 1em;padding-right: 1em;">
+
+
+
+
+
+        <div style="margin-top:20px;">
+          <div class="loader5"></div>
+        </div>
+
+        <ion-label
+          style="text-align: center;color: rgba(128, 0, 28, 0.705);display: flex;justify-content: center;align-items: center;margin-top: 25px;font-weight: bold;font-family: Impact;">
+          AWAITING ACCEPTANCE
+        </ion-label>
+
+
+        <ion-button disabled='true' style="margin-top: 20px;" mode='ios' color="success" expand="block">REQUESTED
+        </ion-button>
+
+        <ion-button (click)="toggle()" style="margin-top: 10px;" fill='outline' mode='ios' color="danger"
+          expand="block">WITHDRAW
+        </ion-button>
+
+
+      </div>
+
+    </div>
+
+  </div>
 </ion-content>
+
+<ion-footer>
+
+</ion-footer>
