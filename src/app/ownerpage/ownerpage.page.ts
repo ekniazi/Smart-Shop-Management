@@ -30,12 +30,11 @@ export class OwnerpagePage implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(window.localStorage.getItem('user'));
+    const num = this.auth.auth.currentUser.phoneNumber;
     const sub = this.firestore
-      .collection("stores", (q) => q.where("owner", "==", this.user.phone))
+      .collection("stores", (q) => q.where("owner", "==", num))
       .valueChanges()
       .subscribe((r: any) => {
-        alert(JSON.stringify(r));
-        alert(this.user.phone);
         if (r.length >= 1) {
           window.localStorage.setItem('storeInfo', JSON.stringify(r[0]));
           this.user.docID = r[0].docID;
