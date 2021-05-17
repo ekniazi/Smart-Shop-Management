@@ -30,6 +30,18 @@ export class OwnerpagePage implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(window.localStorage.getItem('user'));
+    const sub = this.firestore
+      .collection("notifications", (q) => q.where("owner", "==", this.user.phone))
+      .valueChanges()
+      .subscribe((r: any) => {
+        if (r.length >= 1) {
+          window.localStorage.setItem('storeInfo', JSON.stringify(r[0]));
+          this.user.docID = r[0].docID;
+          window.localStorage.setItem('user', JSON.stringify(this.user));
+          this.router.navigate(['home/dashboard']);
+          sub.unsubscribe();
+        }
+      })
   }
 
   startTrial() {
@@ -50,6 +62,8 @@ export class OwnerpagePage implements OnInit {
       this.firestore.collection('stores').add(data).then((data2) => {
         window.localStorage.setItem('storeInfo', JSON.stringify(data));
         this.user.docID = data2.id;
+        const docID = data2.id;
+        this.firestore.collection('stores').doc(data2.id).update({ docID });
         window.localStorage.setItem('user', JSON.stringify(this.user));
         this.router.navigate(['home/dashboard']);
       }).catch(err => alert(err.message))
@@ -84,5 +98,5 @@ export class OwnerpagePage implements OnInit {
         alert(err.message);
       });
   }
-  
+
 }
