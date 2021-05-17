@@ -1,19 +1,20 @@
 <ion-content>
 
-  <div class="wrapper" style="position: relative;height:100%;top: 20px;
+  <div class="wrapper" style="position: relative;top: 20px;
   " *ngIf="newShop">
 
-    <div class="fade-in one">
+    <div style="position: relative;top:65px;" class="fade-in one">
       <div style="text-align: center;">
         <img style="height: 10em;" src="../../assets/logo.png" alt="">
-        <h1>Creating shop</h1>
+        <h2 style="font-weight: bold;">REGISTER YOUR SHOP</h2>
       </div>
 
       <div
-        style="display: flex;justify-content: center;align-items: center;position: relative;top: 50px;flex-direction: column;text-align: left;">
-        <ion-label style="text-align: left;color: green;display: flex;">To Proceed Further Fill Out Necessary Fields
+        style="display: flex;justify-content: center;align-items: center;position: relative;top: 30px;flex-direction: column;text-align: left;">
+        <ion-label style="text-align: left;color: rgba(128, 58, 0, 0.74);display: flex;">To Add Shop Fill Out Necessary
+          Fields
         </ion-label>
-        <div style="width: 90%;display: flex;justify-content: center;flex-direction: column;margin-top: 5px;">
+        <div style="width: 90%;display: flex;justify-content: center;flex-direction: column;margin-top: 15px;">
 
           <ion-list class="line-input">
             <ion-item lines="none" color="none">
@@ -22,7 +23,7 @@
             </ion-item>
           </ion-list>
 
-          <div style="margin-top: 5px;">
+          <div style="margin-top: 10px;">
             <ion-list class="line-input">
               <ion-item lines="none" color="none">
                 <ion-input [(ngModel)]="address" style="border: none;" type="text" placeholder="Enter address here..">
@@ -32,7 +33,7 @@
 
           </div>
 
-          <div style="margin-top: 5px;margin-bottom: 5px;">
+          <div style="margin-top: 10px;margin-bottom: 5px;">
             <ion-list class="line-input">
               <ion-item lines="none" color="none">
                 <ion-input [(ngModel)]="referal" style="border: none;" type="text" placeholder="Referal if any">
@@ -41,22 +42,36 @@
             </ion-list>
           </div>
 
-          <ion-list class="line-input">
-            <ion-item lines="none" color="none">
-              <ion-select [(ngModel)]="selectedPlan"  style="margin-top: 1em;" style = "width: 100%;"
-                placeholder="Choose plan.." interface="popover">
-                <ion-select-option *ngFor="let item of userTyp" value="{{item}}">{{item}}</ion-select-option>
 
-              </ion-select>
-            </ion-item>
-          </ion-list>
+          <div style="margin-top: 10px;margin-bottom: 8px;">
+            <ion-list class="line-input">
+              <ion-item lines="none" color="none">
+                <ion-select [(ngModel)]="selectedPlan" style="margin-top: 1em;" style="width: 100%;"
+                  placeholder="Choose plan.." interface="popover">
+                  <ion-select-option *ngFor="let item of userTyp" value="{{item}}">{{item}}</ion-select-option>
 
-          <ion-button *ngIf = "selectedPlan == 'Trial'" style="margin-top: 5px;" (click)="startTrial()" mode='ios' color="success" expand="block">Start Trial
-          </ion-button>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+          </div>
 
-          
-          <ion-button *ngIf = "selectedPlan == 'Paid'" style="margin-top: 5px;" (click)="paymentProceed()" mode='ios' color="success" expand="block">Proceed to payment
-          </ion-button>
+          <ion-label
+            style="text-align: center;color: rgba(128, 0, 28, 0.705);display: flex;justify-content: center;align-items: center;margin-top: 5px;font-weight: bold;font-family: Impact;">
+            Free Trial Will Be Only For 15 Days.
+          </ion-label>
+
+          <div style="margin-top: 5px;">
+
+            <ion-button *ngIf="selectedPlan == 'Trial'" style="margin-top: 5px;" (click)="startTrial()" mode='ios'
+              color="success" expand="block">Start Trial
+            </ion-button>
+
+
+            <ion-button *ngIf="selectedPlan == 'Paid'" style="margin-top: 5px;" (click)="paymentProceed()" mode='ios'
+              color="success" expand="block">Proceed to payment
+            </ion-button>
+          </div>
+
         </div>
 
       </div>

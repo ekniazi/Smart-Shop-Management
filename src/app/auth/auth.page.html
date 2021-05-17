@@ -146,7 +146,8 @@
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
             <ion-item lines="none" color="none">
-              <ion-input  (keyup)="onKeyUp($event,1)" type="number" placeholder="1" maxlength="1" #passcode1 [(ngModel)]="a"></ion-input>
+              <ion-input (keyup)="onKeyUp($event,1)" type="number" placeholder="1" maxlength="1" #passcode1
+                [(ngModel)]="a"></ion-input>
             </ion-item>
           </ion-list>
         </div>
@@ -154,7 +155,8 @@
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
             <ion-item lines="none" color="none">
-              <ion-input (keyup)="onKeyUp($event,2)" type="number" placeholder="1" maxlength="1" #passcode2 [(ngModel)]="b"></ion-input>
+              <ion-input (keyup)="onKeyUp($event,2)" type="number" placeholder="1" maxlength="1" #passcode2
+                [(ngModel)]="b"></ion-input>
             </ion-item>
           </ion-list>
         </div>
@@ -162,7 +164,8 @@
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
             <ion-item lines="none" color="none">
-              <ion-input (keyup)="onKeyUp($event,3)" type="number" placeholder="1" maxlength="1" #passcode3 [(ngModel)]="c" type="number"></ion-input>
+              <ion-input (keyup)="onKeyUp($event,3)" type="number" placeholder="1" maxlength="1" #passcode3
+                [(ngModel)]="c" type="number"></ion-input>
             </ion-item>
           </ion-list>
         </div>
@@ -170,7 +173,8 @@
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
             <ion-item lines="none" color="none">
-              <ion-input (keyup)="onKeyUp($event,4)" type="number" placeholder="1" maxlength="1" #passcode4 [(ngModel)]="d" type="number"></ion-input>
+              <ion-input (keyup)="onKeyUp($event,4)" type="number" placeholder="1" maxlength="1" #passcode4
+                [(ngModel)]="d" type="number"></ion-input>
             </ion-item>
           </ion-list>
 
@@ -179,7 +183,8 @@
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
             <ion-item lines="none" color="none">
-              <ion-input  (keyup)="onKeyUp($event,5)" type="number" placeholder="1" maxlength="1" #passcode5 type="number"></ion-input>
+              <ion-input (keyup)="onKeyUp($event,5)" type="number" placeholder="1" maxlength="1" #passcode5
+                type="number"></ion-input>
             </ion-item>
           </ion-list>
         </div>
@@ -187,8 +192,8 @@
         <div style="width: 15%;padding-right: 6px;">
           <ion-list class="line-input">
             <ion-item lines="none" color="none">
-              <ion-input  (keyup)="onKeyUp($event,6)" (input)="submit($event)" type="number" placeholder="1"
-              maxlength="1" #passcode6 [(ngModel)]="f" type="number"></ion-input>
+              <ion-input (keyup)="onKeyUp($event,6)" (input)="submit($event)" type="number" placeholder="1"
+                maxlength="1" #passcode6 [(ngModel)]="f" type="number"></ion-input>
             </ion-item>
 
           </ion-list>
@@ -237,7 +242,7 @@
             </ion-item>
           </ion-list>
 
-          <div style="margin-top: 5px;">
+          <div style="margin-top: 10px;">
             <ion-list class="line-input">
               <ion-item lines="none" color="none">
                 <ion-input [(ngModel)]="adress" style="border: none;" type="text" placeholder="Enter your adress">
@@ -247,7 +252,7 @@
 
           </div>
 
-          <div style="margin-top: 5px;margin-bottom: 5px;">
+          <div style="margin-top: 10px;margin-bottom: 5px;">
             <ion-list class="line-input">
               <ion-item lines="none" color="none">
                 <ion-input [(ngModel)]="referal" style="border: none;" type="text" placeholder="Referal if any">
@@ -256,17 +261,20 @@
             </ion-list>
           </div>
 
-          <ion-list class="line-input">
-            <ion-item lines="none" color="none">
-              <ion-select [(ngModel)]="selectedUser" (ionChange)="userselect(selectedUser)" style="margin-top: 1em;"
-                placeholder="Choose user type" interface="popover">
-                <ion-select-option *ngFor="let item of userTyp" value="{{item}}">{{item}}</ion-select-option>
+          <div style="margin-top: 10px;margin-bottom: 5px;">
+            <ion-list class="line-input">
+              <ion-item lines="none" color="none">
+                <ion-select [(ngModel)]="selectedUser" (ionChange)="userselect(selectedUser)" style="margin-top: 1em;"
+                  placeholder="Choose user type" interface="popover">
+                  <ion-select-option *ngFor="let item of userTyp" value="{{item}}">{{item}}</ion-select-option>
 
-              </ion-select>
-            </ion-item>
-          </ion-list>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+          </div>
 
-          <ion-button style="margin-top: 5px;" (click)="saveData()" mode='ios' color="success" expand="block">I'm in</ion-button>
+          <ion-button style="margin-top: 5px;" (click)="saveData()" mode='ios' color="success" expand="block">I'm in
+          </ion-button>
         </div>
 
       </div>

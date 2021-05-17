@@ -1,0 +1,48 @@
+ion-select {
+    width: 100%;
+    color: black;
+    font-family: "Noto Sans JP", sans-serif;
+    text-align: center;
+    max-height: 0.7em;
+    position: relative;
+}
+
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap");
+
+h2 {
+    font-family: "Noto Sans JP", sans-serif;
+}
+ion-input {
+    min-height: 2em;
+    font-family: "Noto Sans JP";
+    font-size: 18px;
+    color: black;
+}
+
+.line-input {
+    margin: 0 !important;
+    background: none !important;
+    padding: 0 !important;
+    ion-item {
+        --border-color: transparent !important;
+        --highlight-height: 0;
+        border: 1px solid rgba(0, 0, 0, 0.514);
+        border-radius: 4px;
+
+        &.item-has-focus {
+            border: 1px solid var(--ion-color-success, #0da02d);
+        }
+
+        ion-label {
+            color: #807e7e !important;
+            font-weight: 300;
+            font-size: 1rem !important;
+        }
+        ion-input {
+            font-family: "Noto Sans JP", sans-serif;
+            color: black;
+        }
+    }
+}
