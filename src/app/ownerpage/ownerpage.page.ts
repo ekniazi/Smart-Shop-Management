@@ -1,9 +1,10 @@
+import { AngularFireAuth } from 'angularfire2/auth';
 import { Component, OnInit } from '@angular/core';
 import { InAppPurchase } from '@ionic-native/in-app-purchase/ngx';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { FirebaseAuth } from 'angularfire2';
+
 
 @Component({
   selector: 'app-ownerpage',
@@ -16,7 +17,7 @@ export class OwnerpagePage implements OnInit {
     private iap: InAppPurchase,
     public firestore: AngularFirestore,
     private router: Router,
-    private auth: FirebaseAuth,
+    private auth: AngularFireAuth,
   ) { }
 
   userTyp: string[] = ["Trial", "Paid"]
@@ -25,7 +26,7 @@ export class OwnerpagePage implements OnInit {
   name: string;
   address: string;
   referal: string = "";
-  user:any;
+  user: any;
 
   ngOnInit() {
     this.user = JSON.parse(window.localStorage.getItem('user'));
@@ -35,12 +36,12 @@ export class OwnerpagePage implements OnInit {
     var myCurrentDate = new Date();
     var expiry = new Date(myCurrentDate);
     expiry.setDate(expiry.getDate() + 15);
-    var owner = this.auth.currentUser.phoneNumber;
+    var owner = this.auth.auth.currentUser.phoneNumber;
     if (this.name.length > 2 && this.address.length > 7 && this.selectedPlan.length > 1) {
       const data = {
         name: this.name,
         address: this.address,
-        referal:this.referal,
+        referal: this.referal,
         selectedPlan: this.selectedPlan,
         expiry: expiry,
         creationTime: new Date(),
@@ -49,9 +50,9 @@ export class OwnerpagePage implements OnInit {
       this.firestore.collection('stores').add(data).then((data2) => {
         window.localStorage.setItem('storeInfo', JSON.stringify(data));
         this.user.docID = data2.id;
-        window.localStorage.setItem('user',JSON.stringify(this.user));
+        window.localStorage.setItem('user', JSON.stringify(this.user));
         this.router.navigate(['home/dashboard']);
-      }).catch(err=>alert(err.message))
+      }).catch(err => alert(err.message))
     } else {
       alert("Please fill in the fields correctly!");
     }
@@ -83,5 +84,5 @@ export class OwnerpagePage implements OnInit {
         alert(err.message);
       });
   }
-
+  
 }

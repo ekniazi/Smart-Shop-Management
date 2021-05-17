@@ -43,7 +43,7 @@
 
           <ion-list class="line-input">
             <ion-item lines="none" color="none">
-              <ion-select [(ngModel)]="selectedPlan" (ionChange)="userselect(selectedUser)" style="margin-top: 1em;" style = "width: 100%;"
+              <ion-select [(ngModel)]="selectedPlan"  style="margin-top: 1em;" style = "width: 100%;"
                 placeholder="Choose plan.." interface="popover">
                 <ion-select-option *ngFor="let item of userTyp" value="{{item}}">{{item}}</ion-select-option>
 
