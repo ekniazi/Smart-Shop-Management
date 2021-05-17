@@ -95,6 +95,7 @@ export class POSPage implements OnInit {
   }
 
   addSearchItem(item) {
+
     let data = item;
     data.quantity = 1;
     this.recipt.push(data);
@@ -106,24 +107,33 @@ export class POSPage implements OnInit {
   }
 
   searchItem() {
-    this.searchFound = [];
-    var found = 0;
-    if (this.searchParam != "") {
-      for (var k = 0; k < this.items.length; k++) {
-        if (this.items[k].name.toLowerCase().includes(this.searchParam.toLowerCase())) {
-          found = found + 1;
-          if (found < 8) {
-            this.searchFound.push(this.items[k]);
-            this.searchFound[this.searchFound.length - 1].index = k;
-          } else break
-        } else if (this.items[k].barcode.toLowerCase().includes(this.searchParam.toLowerCase())) {
-          found = found + 1;
-          if (found < 8) {
-            this.searchFound.push(this.items[k]);
-            this.searchFound[this.searchFound.length - 1].index = k;
-          } else break
+
+    if (this.searchParam) {
+
+      this.changePage('search')
+      this.searchFound = [];
+      var found = 0;
+      if (this.searchParam != "") {
+        for (var k = 0; k < this.items.length; k++) {
+          if (this.items[k].name.toLowerCase().includes(this.searchParam.toLowerCase())) {
+            found = found + 1;
+            if (found < 8) {
+              this.searchFound.push(this.items[k]);
+              this.searchFound[this.searchFound.length - 1].index = k;
+            } else break
+          } else if (this.items[k].barcode.toLowerCase().includes(this.searchParam.toLowerCase())) {
+            found = found + 1;
+            if (found < 8) {
+              this.searchFound.push(this.items[k]);
+              this.searchFound[this.searchFound.length - 1].index = k;
+            } else break
+          }
         }
       }
+    }
+
+    else {
+      this.changePage('dashboard')
     }
   }
 

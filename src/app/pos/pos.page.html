@@ -1,29 +1,22 @@
-<ion-content>
-  <!-- <ion-card *ngFor="let item of recipt">
-    <ion-item color="none" lines='none' color="none">
-      <div slot="start">
-        {{item.name}}</div>
-      <div slot="end">{{item.rPrice}}</div>
-    </ion-item>
-    <ion-item>
-      <div slot="end">x</div>
-      <div slot="end" style="width:50px;text-align: right;" slot="end">
-        <ion-input type="number" placeholder="{{item.quantity}}" [(ngModel)]="item.quantity">
-        </ion-input>
-      </div>
-    </ion-item>
-  </ion-card>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="recipt && recipt.length > 0">
-    <ion-fab-button (click)="endSale()" color="success">
-      <ion-icon name="checkmark"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+<ion-header *ngIf="currentPage=='viewsales'">
+  <ion-toolbar style="--background: #2b5876;  /* fallback for old browsers */
+  --background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
+  --background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ">
+    <div style="display: flex;color: white;">
+      <img style="height: 3em;object-fit: contain;" src="../../../assets/logo.png" alt="">
+      <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">VIEW SALES
+      </ion-title>
+      <ion-button (click)="changePage('dashboard')" style="padding-top: 5px;" fill='clear' color="primary">
+        <p style="color: white;font-family: Impact;">
+          BACK </p>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button (click)="scanBarcode()">
-      <ion-icon name="scan"></ion-icon>
-    </ion-fab-button>
-  </ion-fab> -->
+<ion-content>
+
 
   <div style="margin-top: 15px;">
 
@@ -37,7 +30,7 @@
 
 
   <div *ngIf="currentPage == 'dashboard'" style="display: flex;flex-wrap: wrap;margin-top: 20px;">
-    <ion-card class="card">
+    <ion-card (click)="changePage('viewsales')" class="card">
       <div style="color: pink;">
         <ion-icon color="none" style="font-size: 30px;" name="easel"></ion-icon>
       </div>
@@ -55,7 +48,7 @@
       </ion-label>
     </ion-card>
 
-    <ion-card class="card">
+    <ion-card (click)="changePage('cart')" class="card">
       <div style="color: rgb(86, 43, 136);">
         <ion-icon color="none" style="font-size: 30px;" name="cart"></ion-icon>
       </div>
@@ -78,7 +71,7 @@
         <ion-icon color="none" style="font-size: 30px;" name="refresh"></ion-icon>
       </div>
       <ion-label class="cardtxt">
-        RESET POS
+        Reset POS
       </ion-label>
     </ion-card>
 
@@ -87,7 +80,7 @@
         <ion-icon color="none" style="font-size: 30px;" name="card"></ion-icon>
       </div>
       <ion-label class="cardtxt">
-        Generate Bill
+        End Sale
       </ion-label>
     </ion-card>
 
@@ -304,7 +297,7 @@
         CLEAR
       </ion-button>
 
-      <ion-button style="width: 60%;padding: 2px;" fill='outline' mode='ios'>
+      <ion-button (click)="changePage('dashboard')" style="width: 60%;padding: 2px;" fill='outline' mode='ios'>
         <ion-icon style="padding-right: 1px;font-size: 15px;position: relative;top: -2px;" name='home'></ion-icon>
         DASHBOARD
       </ion-button>
@@ -314,6 +307,72 @@
 
   </div>
 
+  <div style="height: 100%;background-color: white;" *ngIf="currentPage=='viewsales'">
+    <ion-item-sliding *ngFor="let item of [].constructor(20)">
+      <ion-item>
+
+        <div style="display: flex;">
+
+          <div style="width: 20%;">
+            <img style="margin-top: 15px;" src="../../assets/allokey.png" alt="">
+          </div>
+
+          <div style="width: 50%;">
+
+            <div style="padding: 5px;">
+              <ion-label
+                style="text-align: center;padding: 10px;font-size: 20px;font-weight: bold;font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
+                NAME
+              </ion-label>
+
+              <div style="display: flex;flex-wrap: wrap;justify-content: center;flex-direction: column;">
+
+                <ion-label style="padding: 1px;">
+                  <b>
+                    DATE
+                  </b>
+                  26/10/2021
+                </ion-label>
+                <ion-label style="padding: 1px;">
+                  <b>
+                    SOLD BY
+                  </b>
+                  HelperName
+                </ion-label>
+
+                <ion-label style="padding: 1px;">
+                  <b>
+                    QUAntity
+                  </b>
+                  20
+                </ion-label>
+
+              </div>
+
+            </div>
+
+          </div>
+          <div style="width: 30%;">
+            <ion-label
+              style="text-align: right;padding: 10px;font-size: 20px;font-weight: bold;margin-top: 30px;font-family: Open Sans;color: rgba(158, 43, 8, 0.897);">
+              <ion-icon style="position: relative;top: 2px;" name="arrow-back"></ion-icon>
+              SWIPE
+            </ion-label>
+          </div>
+        </div>
+
+      </ion-item>
+
+      <ion-item-options>
+        <ion-item-option color="light">
+
+          <ion-label>3600</ion-label>
+
+        </ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </div>
 
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button *ngIf="currentPage=='dashboard'" mode='ios' (click)="scanBarcode()">
@@ -329,7 +388,7 @@
 
 </ion-content>
 
-<ion-footer class="footer">
+<ion-footer *ngIf="currentPage !='viewsales'" class="footer">
 
   <div style="display: flex;color: white;position: relative;top: 0.5em;">
     <ion-icon (click)="back()" style="font-size: 25px;margin-left: 6px;" name="close-circle"></ion-icon>
