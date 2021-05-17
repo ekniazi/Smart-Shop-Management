@@ -34,6 +34,7 @@ export class OwnerpagePage implements OnInit {
       .collection("stores", (q) => q.where("owner", "==", this.user.phone))
       .valueChanges()
       .subscribe((r: any) => {
+        alert(JSON.stringify(r));
         if (r.length >= 1) {
           window.localStorage.setItem('storeInfo', JSON.stringify(r[0]));
           this.user.docID = r[0].docID;
