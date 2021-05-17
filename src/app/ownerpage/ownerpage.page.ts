@@ -31,7 +31,7 @@ export class OwnerpagePage implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(window.localStorage.getItem('user'));
     const sub = this.firestore
-      .collection("notifications", (q) => q.where("owner", "==", this.user.phone))
+      .collection("stores", (q) => q.where("owner", "==", this.user.phone))
       .valueChanges()
       .subscribe((r: any) => {
         if (r.length >= 1) {
