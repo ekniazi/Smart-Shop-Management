@@ -97,6 +97,28 @@
         <ion-input [(ngModel)]="stock" type="number" placeholder="Enter stock here.."></ion-input>
       </ion-item>
 
+      
+      <ion-item style="margin-top: 15px;" lines="none">
+
+        <ion-input [(ngModel)]="SGST" type="number" placeholder="Enter SGST here.."></ion-input>
+      </ion-item>
+      
+      <ion-item style="margin-top: 15px;" lines="none">
+
+        <ion-input [(ngModel)]="IGST" type="number" placeholder="Enter IGST here.."></ion-input>
+      </ion-item>
+      
+      <ion-item style="margin-top: 15px;" lines="none">
+
+        <ion-input [(ngModel)]="CGST" type="number" placeholder="Enter CGST here.."></ion-input>
+      </ion-item>
+
+      
+      <ion-item style="margin-top: 15px;" lines="none">
+
+        <ion-input [(ngModel)]="HSN" placeholder="Enter HSN here.."></ion-input>
+      </ion-item>
+
       <ion-item mode="ios" button style="margin-top: 15px;display: flex;justify-content: space-between;"
         (click)="openSuppliers()" lines="none" color="none">
         <div *ngIf="!supplier">Select Supplier</div>
@@ -106,7 +128,7 @@
 
 
       <div style="margin-top: 25px;width: 60%;">
-        <ion-button class="shadow-red" color="none" style="background: #2b5876;  /* fallback for old browsers */
+        <ion-button (click) = "addItem()" class="shadow-red" color="none" style="background: #2b5876;  /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #4e4376, #2b5876);" expand='block' mode='ios'>
           <p style="font-family: Impact;color: rgba(255, 255, 255, 0.897);">

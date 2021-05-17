@@ -5,6 +5,8 @@ import { Component } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +20,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private oneSignal: OneSignal,
+    public firestore: AngularFirestore,
   ) {
     this.initializeApp();
   }
@@ -47,7 +50,7 @@ export class AppComponent {
               this.router.navigate(['helperpage'])
             }
           }
-          
+
         }
       } else {
         this.router.navigate(['auth'])
@@ -69,7 +72,23 @@ export class AppComponent {
     this.oneSignal.endInit();
   }
 
+  itemsToBeUploaded: any[];
 
+  checkUpload() {
+    if (window.localStorage.getItem('itemsToBeUploaded')) {
+      this.itemsToBeUploaded = JSON.parse(window.localStorage.getItem('itemsToBeUploaded'));
+      this.user = JSON.parse(window.localStorage.getItem('user'));
+      for (var i = 0; i < this.itemsToBeUploaded.length; i++) {
+        this.firestore.collection('stores').doc(this.user.docID).update({
+          items: firebase.firestore.FieldValue.arrayUnion(this.itemsToBeUploaded[i])
+        }).then(()=>{
+          this.itemsToBeUploaded = this.itemsToBeUploaded.splice(i,1);
+        })
+      }
+    } else {
+      this.itemsToBeUploaded = [];
+    }
+  }
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -79,6 +98,7 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.checkLogin();
+      this.checkUpload()
       this.setupPush()
     });
   }

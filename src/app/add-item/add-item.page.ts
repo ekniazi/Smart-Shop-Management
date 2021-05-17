@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { SelectSupplierPage } from '../select-supplier/select-supplier.page';
 import { ToastController } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-add-item',
@@ -14,7 +16,8 @@ export class AddItemPage implements OnInit {
   constructor(
     private barcodeScanner: BarcodeScanner,
     public modalController: ModalController,
-    public toastController: ToastController
+    public toastController: ToastController,
+    public firestore: AngularFirestore,
   ) { }
 
   ModalPage: any;
@@ -27,10 +30,10 @@ export class AddItemPage implements OnInit {
   choice: string = "";
   msg: string;
   color: string;
-  SGST:number;
-  IGST:number;
-  CGST:number;
-  HSN:string = "";
+  SGST: number;
+  IGST: number;
+  CGST: number;
+  HSN: string = "";
 
   async openModal() {
     const modal = await this.modalController.create({
@@ -61,11 +64,23 @@ export class AddItemPage implements OnInit {
     this.choice = choice;
   }
 
+  user: any;
+  itemsToBeUploaded: any;
+
   getItems() {
     if (window.localStorage.getItem('items')) {
       this.items = JSON.parse(window.localStorage.getItem('items'));
     } else {
       this.items = [];
+    }
+    if (window.localStorage.getItem('user')) {
+      this.user = JSON.parse(window.localStorage.getItem('user'));
+    }
+
+    if (window.localStorage.getItem('itemsToBeUploaded')) {
+      this.itemsToBeUploaded = JSON.parse(window.localStorage.getItem('itemsToBeUploaded'));
+    } else {
+      this.itemsToBeUploaded = [];
     }
   }
 
@@ -98,12 +113,12 @@ export class AddItemPage implements OnInit {
       this.color = "warning"
       this.presentToast();
     } else if (!this.rPrice) {
-      this.msg = "Invalid purchase price!";
+      this.msg = "Invalid retail price!";
       this.color = "warning"
       this.presentToast();
 
     } else if (!this.pPrice) {
-      this.msg = "Invalid retail price!";
+      this.msg = "Invalid purchase price!";
       this.color = "warning"
       this.presentToast();
 
@@ -122,13 +137,13 @@ export class AddItemPage implements OnInit {
       this.color = "warning"
       this.presentToast();
     } else {
-      if (!this.SGST){
+      if (!this.SGST) {
         this.SGST = 0
       }
-      if (!this.IGST){
+      if (!this.IGST) {
         this.IGST = 0
       }
-      if (!this.CGST){
+      if (!this.CGST) {
         this.CGST = 0
       }
       let data = {
@@ -138,16 +153,24 @@ export class AddItemPage implements OnInit {
         stock: this.stock,
         supplier: this.supplier,
         barcode: this.barcode,
-        SGST:this.SGST,
-        IGST:this.IGST,
-        CGST:this.CGST,
-        HSN:this.HSN,
+        SGST: this.SGST,
+        IGST: this.IGST,
+        CGST: this.CGST,
+        HSN: this.HSN,
       }
-      this.items.push(data);`
-      window.localStorage.setItem('items', JSON.stringify(this.items));`
+      this.items.push(data);
+      window.localStorage.setItem('items', JSON.stringify(this.items));
       this.msg = "Item added!";
       this.color = "success"
       this.presentToast();
+      this.firestore.collection('stores').doc(this.user.docID).update({
+        items: firebase.firestore.FieldValue.arrayUnion(data)
+      }).then(data=>console.log(data)).catch((err) => {
+        console.log(err);
+        this.itemsToBeUploaded.push(data);
+        window.localStorage.setItem('itemsToBeUploaded', JSON.stringify(this.itemsToBeUploaded));
+      }
+      )
       this.modalController.dismiss(data);
     }
   }

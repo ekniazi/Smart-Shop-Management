@@ -4,6 +4,10 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { ModalController } from '@ionic/angular';
+import { AddItemPage } from 'src/app/add-item/add-item.page';
+import { AddSupplierPage } from 'src/app/add-supplier/add-supplier.page';
+import { SelectSupplierPage } from 'src/app/select-supplier/select-supplier.page';
 
 @Component({
   selector: 'app-inventory',
@@ -18,6 +22,7 @@ export class InventoryPage implements OnInit {
     public toastController: ToastController,
     public alertController: AlertController,
     private callNumber: CallNumber,
+    public modalController: ModalController,
   ) { }
 
   items: any[];
@@ -34,6 +39,25 @@ export class InventoryPage implements OnInit {
   highStock: number = 0;
   stockValue: number = 0;
   salesValue: number = 0;
+  ModalPage: any;
+  returnDat: any;
+
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: this.ModalPage,
+      cssClass: 'color-modal',
+    });
+
+    modal.onDidDismiss()
+      .then((event: any) => {
+        this.getItems();
+        if (event['data']) {
+          this.returnDat = event['data'];
+        }
+      });
+
+    return await modal.present();
+  }
 
   async presentToast() {
     const toast = await this.toastController.create({
@@ -45,7 +69,95 @@ export class InventoryPage implements OnInit {
     toast.present();
   }
 
+  addItem() {
+    this.ModalPage = AddItemPage;
+    this.openModal();
+  }
+
   ngOnInit() {
+  }
+
+
+  async addSupplier(item) {
+    const modal = await this.modalController.create({
+      component: SelectSupplierPage,
+      cssClass: 'color-modal',
+    });
+
+    modal.onDidDismiss()
+      .then((event: any) => {
+        this.getItems();
+        if (event['data']) {
+          item.supplier = event['data'];
+          window.localStorage.setItem('items', JSON.stringify(this.items));
+        }
+      });
+
+    return await modal.present();
+  }
+
+  async editPurchase(item) {
+    const alert2 = await this.alertController.create({
+      subHeader: "Enter the purchase price",
+      header: "This option is to change the pruchase price of the item stored in the app.",
+      mode: 'ios',
+      inputs: [
+        {
+          name: 'input',
+          type: 'number',
+          id: 'name',
+          value: name,
+          placeholder: "Enter the pruchase price here..",
+        },
+      ],
+      buttons: [{
+        text: 'Change',
+        handler: data => {
+          this.items[this.findItemIndex(item)].pPrice = Number(data.input);
+          window.localStorage.setItem('items', JSON.stringify(this.items));
+        }
+      }, {
+        text: 'Cancel',
+        role: 'destructive',
+        handler: data => {
+
+        }
+      }
+      ]
+    });
+    await alert2.present();
+  }
+
+  async editRetail(item) {
+    const alert2 = await this.alertController.create({
+      subHeader: "Enter the retail price",
+      header: "This option is to change the retail price of the item stored in the app.",
+      mode: 'ios',
+      inputs: [
+        {
+          name: 'input',
+          type: 'number',
+          id: 'name',
+          value: name,
+          placeholder: "Enter the retail price here..",
+        },
+      ],
+      buttons: [{
+        text: 'Change',
+        handler: data => {
+          this.items[this.findItemIndex(item)].rPrice = Number(data.input);
+          window.localStorage.setItem('items', JSON.stringify(this.items));
+        }
+      }, {
+        text: 'Cancel',
+        role: 'destructive',
+        handler: data => {
+
+        }
+      }
+      ]
+    });
+    await alert2.present();
   }
 
   async changeStock(item) {
@@ -114,9 +226,14 @@ export class InventoryPage implements OnInit {
       mode: 'ios',
       cssClass: 'my-custom-class',
       buttons: [{
-        text: 'Edit item',
+        text: 'Edit purchase price',
         handler: () => {
-          console.log('Share clicked');
+          this.editPurchase(item);
+        }
+      }, {
+        text: 'Edit retail price',
+        handler: () => {
+          this.editRetail(item);
         }
       }, {
         text: 'Add Stock',
@@ -129,13 +246,6 @@ export class InventoryPage implements OnInit {
           this.changeStock(item);
         }
       }, {
-        text: 'Delete',
-        role: 'destructive',
-        icon: 'trash',
-        handler: () => {
-          console.log('Delete clicked');
-        }
-      }, {
         text: 'Cancel',
         icon: 'close',
         role: 'cancel',
@@ -145,7 +255,7 @@ export class InventoryPage implements OnInit {
       }]
     });
     await actionSheet.present();
-    actionSheet.onDidDismiss().then(()=>{
+    actionSheet.onDidDismiss().then(() => {
       this.getInfo();
     })
   }
@@ -192,6 +302,7 @@ export class InventoryPage implements OnInit {
         }
       }
     }
+    this.toShow = this.searchFound;
   }
 
   call(boi) {
@@ -202,6 +313,9 @@ export class InventoryPage implements OnInit {
 
   getInfo() {
     this.toCollect = 0;
+    this.lowStock = 0;
+    this.highStock = 0;
+    this.stockValue = 0;
     for (var i = 0; i < this.items.length; i++) {
       this.items[i].index = i;
       this.stockValue = this.stockValue + (this.items[i].stock * this.items[i].pPrice);
@@ -228,22 +342,23 @@ export class InventoryPage implements OnInit {
     }
   }
 
-  sortLowStock(){
-    this.toShow.sort((a,b) => (a.stock > b.stock) ? 1 : ((b.stock > a.stock) ? -1 : 0));
+  sortLowStock() {
+    this.toShow.sort((a, b) => (a.stock > b.stock) ? 1 : ((b.stock > a.stock) ? -1 : 0));
   }
 
-  sortAlpha(){
-    this.toShow.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+  sortAlpha() {
+    this.toShow.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
   }
 
-  sortPriceDown(){
-    this.toShow.sort((a,b) => (a.rPrice > b.rPrice) ? 1 : ((b.rPrice > a.rPrice) ? -1 : 0));
+  sortPriceDown() {
+    this.toShow.sort((a, b) => (a.rPrice > b.rPrice) ? 1 : ((b.rPrice > a.rPrice) ? -1 : 0));
   }
 
-  sortPriceUp(){
-    this.toShow.sort((a,b) => (a.rPrice < b.rPrice) ? 1 : ((b.rPrice < a.rPrice) ? -1 : 0));
+  sortPriceUp() {
+    this.toShow.sort((a, b) => (a.rPrice < b.rPrice) ? 1 : ((b.rPrice < a.rPrice) ? -1 : 0));
   }
 
+  storeInfo: any;
   getItems() {
     if (window.localStorage.getItem('items')) {
       this.items = JSON.parse(window.localStorage.getItem('items'));
@@ -254,6 +369,16 @@ export class InventoryPage implements OnInit {
       this.lenders = JSON.parse(window.localStorage.getItem('lenders'));
     } else {
       this.lenders = [];
+    }
+    if (window.localStorage.getItem('sales')) {
+      this.sales = JSON.parse(window.localStorage.getItem('sales'));
+    } else {
+      this.sales = [];
+    }
+    if (window.localStorage.getItem('storeInfo')) {
+      this.storeInfo = JSON.parse(window.localStorage.getItem('storeInfo'));
+    } else {
+      this.storeInfo = [];
     }
     if (window.localStorage.getItem('sales')) {
       this.sales = JSON.parse(window.localStorage.getItem('sales'));

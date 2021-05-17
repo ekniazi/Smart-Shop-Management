@@ -7,7 +7,8 @@
       <img style="height: 3em;object-fit: contain;" src="../../../assets/logo.png" alt="">
       <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">SmartShop Inventory
       </ion-title>
-      <ion-icon style="position: relative;top: 0.3em;font-size: 30px;right: 3px;" name="add-circle"></ion-icon>
+      <ion-icon (click)="addItem()" style="position: relative;top: 0.3em;font-size: 30px;right: 3px;" name="add-circle">
+      </ion-icon>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -43,14 +44,14 @@
     <div style="display: flex;">
 
       <div style="background: skyblue;border-radius: 14px;color: white;width: 3.3em;height: 3.3em;text-align: center;">
-        <ion-label style="font-family: impact;font-size: 30px;position: relative;top: 0.34em;">
-          C
+        <ion-label *ngIf="storeInfo" style="font-family: impact;font-size: 30px;position: relative;top: 0.34em;">
+          {{storeInfo.name[0]}}
         </ion-label>
       </div>
 
-      <ion-title
+      <ion-title *ngIf="storeInfo"
         style="font-weight: bold;font-family: impact;letter-spacing: -0.5px;font-family: 'Baloo Tammudu 2', cursive;">
-        Company Name</ion-title>
+        {{storeInfo.name}}</ion-title>
 
     </div>
 
@@ -67,7 +68,8 @@
         <ion-icon style="color: green;position: relative;top: 0.2em;" name="arrow-down-outline"></ion-icon>
       </div>
 
-      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(207, 16, 207, 0.753);">{{toCollect}}
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(207, 16, 207, 0.753);">
+        {{toCollect}}
       </ion-label>
 
     </div>
@@ -78,7 +80,8 @@
 
       </div>
 
-      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(7, 245, 86, 0.753);">{{lowStock}} </ion-label>
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(7, 245, 86, 0.753);">{{lowStock}}
+      </ion-label>
 
     </div>
 
@@ -110,7 +113,8 @@
 
       </div>
 
-      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(0, 0, 0, 0.753);">{{highStock}} </ion-label>
+      <ion-label style="font-size: 25px;font-family: 'Anton', sans-serif;color: rgba(0, 0, 0, 0.753);">{{highStock}}
+      </ion-label>
 
     </div>
 
@@ -138,16 +142,17 @@
     </div>
 
     <div style="display: flex;justify-content:flex-end;margin-top: 22px;padding-right: 10px;">
-      
+
     </div>
 
     <div style="margin-top: 0.2em;display: flex;justify-content: center;">
-      <ion-chip mode='ios' color="primary" (click) = "sortLowStock()">Low stock first<ion-icon name="arrow-down"></ion-icon>
+      <ion-chip mode='ios' color="primary" (click)="sortLowStock()">Low stock first<ion-icon name="arrow-down">
+        </ion-icon>
       </ion-chip>
-      <ion-chip mode='ios' color="primary" (click) = "sortAlpha()">Alphabetical</ion-chip>
-      <ion-chip mode='ios' color="primary" (click) = "sortPriceDown()">Price<ion-icon name="arrow-down"></ion-icon>
+      <ion-chip mode='ios' color="primary" (click)="sortAlpha()">Alphabetical</ion-chip>
+      <ion-chip mode='ios' color="primary" (click)="sortPriceDown()">Price<ion-icon name="arrow-down"></ion-icon>
       </ion-chip>
-      <ion-chip mode='ios' color="primary" (click) = "sortPriceUp()">Price<ion-icon name="arrow-up"></ion-icon>
+      <ion-chip mode='ios' color="primary" (click)="sortPriceUp()">Price<ion-icon name="arrow-up"></ion-icon>
       </ion-chip>
     </div>
   </div>
@@ -157,9 +162,11 @@
     <div *ngFor="let item of toShow" class="prodcard">
 
       <div style="display: flex;justify-content: space-between;">
-        <ion-title style="text-align: left;font-family: 'Secular One', sans-serif;color: rgba(0, 0, 0, 0.836);">{{item.name}}({{item.stock}})</ion-title>
+        <ion-title style="text-align: left;font-family: 'Secular One', sans-serif;color: rgba(0, 0, 0, 0.836);">
+          {{item.name}}({{item.stock}})</ion-title>
 
-        <ion-icon (click)="showOptions(item)" style="margin-right: 2px;font-size: 20px;" name="ellipsis-vertical-outline">
+        <ion-icon (click)="showOptions(item)" style="margin-right: 2px;font-size: 20px;"
+          name="ellipsis-vertical-outline">
         </ion-icon>
       </div>
 
@@ -174,7 +181,8 @@
 
           <ion-title
             style="text-align: left;font-family: 'Secular One', sans-serif;color: rgb(5, 202, 120);font-size: 18px;">
-            <ion-icon style="position: relative;top: 2px;" name="card-outline"></ion-icon>{{item.rPrice}}</ion-title>
+            <ion-icon style="position: relative;top: 2px;" name="card-outline"></ion-icon>{{item.rPrice}}
+          </ion-title>
         </div>
 
         <div style="position: relative;top: 6px;">
@@ -197,18 +205,32 @@
         </div>
       </div>
 
-      <div style="display: flex;justify-content:flex-end;margin-top: 2px;padding-right: 10px;">
+      <div *ngIf="item.supplier" style="display: flex;justify-content:flex-end;margin-top: 2px;padding-right: 10px;">
 
 
 
-        <ion-button color="success" style="padding:2px" fill='clear' mode='ios'>
+        <ion-button (click)="call(item.supplier)" color="success" style="padding:2px" fill='clear' mode='ios'>
           <p style="font-family: helvetica;font-size: 17px;margin-right: 2px;">
-            Share
+            Contact Supplier
           </p>
           <ion-icon style="font-size: 17px;" name="arrow-redo-outline"></ion-icon>
         </ion-button>
 
       </div>
+
+      <div *ngIf="!item.supplier" style="display: flex;justify-content:flex-end;margin-top: 2px;padding-right: 10px;">
+
+
+        <ion-button (click) = "addSupplier(item)" color="success" style="padding:2px" fill='clear' mode='ios'>
+          <p style="font-family: helvetica;font-size: 17px;margin-right: 2px;">
+            Add Supplier
+          </p>
+          <ion-icon style="font-size: 17px;" name="arrow-redo-outline"></ion-icon>
+        </ion-button>
+
+      </div>
+
+
 
     </div>
 
