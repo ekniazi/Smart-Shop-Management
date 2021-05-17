@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-settings',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private firebaseauth: AngularFireAuth,
+    ) { }
 
+    logout(){
+      this.firebaseauth.auth.signOut();
+    }
   ngOnInit() {
+
   }
 
 }

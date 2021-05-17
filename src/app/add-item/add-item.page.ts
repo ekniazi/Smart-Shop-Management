@@ -143,8 +143,8 @@ export class AddItemPage implements OnInit {
         CGST:this.CGST,
         HSN:this.HSN,
       }
-      this.items.push(data);
-      window.localStorage.setItem('items', JSON.stringify(this.items));
+      this.items.push(data);`
+      window.localStorage.setItem('items', JSON.stringify(this.items));`
       this.msg = "Item added!";
       this.color = "success"
       this.presentToast();

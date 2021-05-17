@@ -20,6 +20,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { PapaParseModule } from 'ngx-papaparse';
 import { File } from '@ionic-native/file/ngx';
+import { InAppPurchase } from '@ionic-native/in-app-purchase/ngx';
 
 /////////////////FOR MULTILANGUAGE SUPPORT/////////////////////////////
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -62,6 +63,7 @@ export function LanguageLoader(http: HttpClient) {
     CallNumber,
     OneSignal,
     File,
+    InAppPurchase,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }
   ],
   bootstrap: [AppComponent],

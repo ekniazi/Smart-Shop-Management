@@ -28,6 +28,7 @@ export class AppComponent {
     this.auth.authState.subscribe(user => {
       if (user && user.uid) {
         if (window.localStorage.getItem('user')) {
+
           this.user = JSON.parse(window.localStorage.getItem('user'));
           if (this.user.uType == 'Owner') {
 
@@ -46,10 +47,10 @@ export class AppComponent {
               this.router.navigate(['helperpage'])
             }
           }
-
-        } else {
-          this.router.navigate(['auth'])
+          
         }
+      } else {
+        this.router.navigate(['auth'])
       }
     })
   }
@@ -77,8 +78,8 @@ export class AppComponent {
       this.statusBar.backgroundColorByHexString("ffffff");
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.setupPush()
       this.checkLogin();
+      this.setupPush()
     });
   }
 

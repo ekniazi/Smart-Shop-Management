@@ -418,17 +418,16 @@ export class AuthPage implements OnInit {
     this.windowRef = this.win.windowRef
     this.windowRef.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { 'size': 'invisible' });
     this.windowRef.recaptchaVerifier.render()
+    const authSub = this.firebaseauth.authState.subscribe(user => {
+      if (user) {
+        if (user.uid) {
+          this.checkAuth(user.uid)
+        }
+        else {
 
-    // const authSub = this.firebaseauth.authState.subscribe(user => {
-    //   if (user) {
-    //     if (user.uid) {
-    //       this.checkAuth(user.uid)
-    //     }
-    //     else {
-
-    //     }
-    //   }
-    // })
+        }
+      }
+    })
 
 
 

@@ -1,9 +1,67 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>ownerpage</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
 
+  <div class="wrapper" style="position: relative;height:100%;top: 20px;
+  " *ngIf="newShop">
+
+    <div class="fade-in one">
+      <div style="text-align: center;">
+        <img style="height: 10em;" src="../../assets/logo.png" alt="">
+        <h1>Creating shop</h1>
+      </div>
+
+      <div
+        style="display: flex;justify-content: center;align-items: center;position: relative;top: 50px;flex-direction: column;text-align: left;">
+        <ion-label style="text-align: left;color: green;display: flex;">To Proceed Further Fill Out Necessary Fields
+        </ion-label>
+        <div style="width: 90%;display: flex;justify-content: center;flex-direction: column;margin-top: 5px;">
+
+          <ion-list class="line-input">
+            <ion-item lines="none" color="none">
+              <ion-input [(ngModel)]="name" style="border: none;" type="email" placeholder="Enter shop name here..">
+              </ion-input>
+            </ion-item>
+          </ion-list>
+
+          <div style="margin-top: 5px;">
+            <ion-list class="line-input">
+              <ion-item lines="none" color="none">
+                <ion-input [(ngModel)]="address" style="border: none;" type="text" placeholder="Enter address here..">
+                </ion-input>
+              </ion-item>
+            </ion-list>
+
+          </div>
+
+          <div style="margin-top: 5px;margin-bottom: 5px;">
+            <ion-list class="line-input">
+              <ion-item lines="none" color="none">
+                <ion-input [(ngModel)]="referal" style="border: none;" type="text" placeholder="Referal if any">
+                </ion-input>
+              </ion-item>
+            </ion-list>
+          </div>
+
+          <ion-list class="line-input">
+            <ion-item lines="none" color="none">
+              <ion-select [(ngModel)]="selectedPlan" (ionChange)="userselect(selectedUser)" style="margin-top: 1em;" style = "width: 100%;"
+                placeholder="Choose plan.." interface="popover">
+                <ion-select-option *ngFor="let item of userTyp" value="{{item}}">{{item}}</ion-select-option>
+
+              </ion-select>
+            </ion-item>
+          </ion-list>
+
+          <ion-button *ngIf = "selectedPlan == 'Trial'" style="margin-top: 5px;" (click)="startTrial()" mode='ios' color="success" expand="block">Start Trial
+          </ion-button>
+
+          
+          <ion-button *ngIf = "selectedPlan == 'Paid'" style="margin-top: 5px;" (click)="paymentProceed()" mode='ios' color="success" expand="block">Proceed to payment
+          </ion-button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 </ion-content>
