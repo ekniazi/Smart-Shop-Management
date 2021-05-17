@@ -82,7 +82,7 @@ export class AppComponent {
         this.firestore.collection('stores').doc(this.user.docID).update({
           items: firebase.firestore.FieldValue.arrayUnion(this.itemsToBeUploaded[i])
         }).then(()=>{
-          this.itemsToBeUploaded = this.itemsToBeUploaded.splice(i,1);
+          this.itemsToBeUploaded.splice(i,1);
         })
       }
     } else {

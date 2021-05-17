@@ -15,16 +15,15 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-header *ngIf="currentPage == 'dashboard' || currentPage == 'search'">
+
+  <ion-searchbar (ionChange)="searchItem()" [(ngModel)]="searchParam" mode='ios'>
+  </ion-searchbar>
+</ion-header>
 <ion-content>
 
 
   <div style="margin-top: 15px;">
-
-    <ion-searchbar *ngIf="currentPage == 'dashboard'" (ionChange)="searchItem()" [(ngModel)]="searchParam" mode='ios'>
-    </ion-searchbar>
-
-    <ion-searchbar *ngIf="currentPage == 'search'" (ionChange)="searchItem()" [(ngModel)]="searchParam" mode='ios'>
-    </ion-searchbar>
 
   </div>
 
@@ -39,7 +38,7 @@
       </ion-label>
     </ion-card>
 
-    <ion-card class="card">
+    <ion-card class="card" (click) = "addDiscount()">
       <div style="color: rgb(255, 228, 192);">
         <ion-icon color="none" style="font-size: 30px;" name="cafe"></ion-icon>
       </div>
@@ -53,11 +52,11 @@
         <ion-icon color="none" style="font-size: 30px;" name="cart"></ion-icon>
       </div>
       <ion-label class="cardtxt">
-        View Cart
+        View Cart ({{recipt.length}})
       </ion-label>
     </ion-card>
 
-    <ion-card class="card">
+    <ion-card class="card" (click) = "addNote()">
       <div style="color: rgba(122, 11, 29, 0.849);">
         <ion-icon color="none" style="font-size: 30px;" name="clipboard"></ion-icon>
       </div>
@@ -66,7 +65,7 @@
       </ion-label>
     </ion-card>
 
-    <ion-card class="card">
+    <ion-card class="card" (click) = "clearRecipt()">
       <div style="color: rgb(77, 52, 5);">
         <ion-icon color="none" style="font-size: 30px;" name="refresh"></ion-icon>
       </div>
@@ -75,7 +74,7 @@
       </ion-label>
     </ion-card>
 
-    <ion-card class="card">
+    <ion-card class="card" (click) = "endSale()">
       <div style="color: rgba(5, 139, 45, 0.815);">
         <ion-icon color="none" style="font-size: 30px;" name="card"></ion-icon>
       </div>
@@ -92,7 +91,7 @@
 
 
 
-      <ion-item-sliding *ngFor="let item of [].constructor(20)">
+      <ion-item-sliding *ngFor="let item of searchFound">
         <ion-item (click)="addSearchItem(item)">
           <ion-checkbox mode='ios' color="success" slot="end"></ion-checkbox>
 
@@ -106,7 +105,7 @@
               <ion-label style="padding: 1px;">
                 <b>
                   PRICE:
-                </b> 3600 INR.
+                </b> {{item.rPrice}}
               </ion-label>
               <ion-label style="padding: 1px;">
                 <b>
@@ -245,54 +244,65 @@
     <div style="display: flex;justify-content: center;align-items: center;text-align: center;">
 
       <ion-card mode='ios' class='a_card'>
-        <ion-label class="txt">
+        <ion-label class="txt" *ngIf = "discount == 0">
           TOTAL
+        </ion-label>
+        
+        <ion-label class="txt" *ngIf = "discount > 0">
+          DISCOUNTED TOTAL
         </ion-label>
 
         <ion-label class="amount">
-          360000 INR.
+          {{total}}
         </ion-label>
 
-
-
       </ion-card>
+      
     </div>
+    
+    <h2 style = "text-align: center;">Discount: {{discount}}</h2>
 
 
-    <ion-card *ngFor="let item of [].constructor(2)" style="padding: 10px;color: black;" class="items">
-      <img style="object-fit: contain;height: 4em;" src="../../assets/prodicon.png" alt="">
+    <div *ngIf="recipt && recipt.length > 0">
 
-      <div style="width: 60%;">
+      <ion-card *ngFor="let item of recipt;let i = index" style="padding: 10px;color: black;" class="items">
+        <img style="object-fit: contain;height: 4em;" src="../../assets/prodicon.png" alt="">
 
-        <ion-title style="color: rgba(0, 0, 0, 0.705);" class="opensans">PRODNAME</ion-title>
+        <div style="width: 60%;">
 
-        <div style="display: flex;">
+          <ion-title style="color: rgba(0, 0, 0, 0.705);" class="opensans">{{item.name}}</ion-title>
 
-          <ion-chip style="font-family: Impact;" fill="outline" color="success">
-            InStock
-          </ion-chip>
+          <div style="display: flex;">
+
+            <ion-chip style="font-family: Impact;" fill="outline" color="success">
+              InStock
+            </ion-chip>
 
 
-          <ion-chip mode='ios' style="padding-left: 20px;padding-right: 20px;" color="medium">
-            <ion-label class="opensans">Quantity:</ion-label>1x
-          </ion-chip>
-          <ion-icon style="position: relative;top: 0.8em;left: -1.5em;" color="danger" name="create-outline"></ion-icon>
+            <ion-chip mode='ios' style="padding-left: 20px;padding-right: 20px;" color="medium">
+              <ion-label class="opensans">Quantity</ion-label>x <ion-input [(ngModel)]="item.quantity"
+                (ionChange)="calculateTotal()" type="number" placeholder="{{item.quantity}}">
+              </ion-input>
+            </ion-chip>
+            <ion-icon style="position: relative;top: 0.8em;left: -1.5em;" color="danger" name="create-outline">
+            </ion-icon>
+
+          </div>
 
         </div>
 
-      </div>
+        <div style="margin-top: 1.5em;">
+          <ion-title style="color: #4e4376;" class="opensans">{{item.rPrice}}</ion-title>
+        </div>
+        <div (click)="deleteItem(i)" style="position: relative;top: -1em;z-index: 1;">
+          <ion-icon  style="font-size: 32px;" color="danger" name="trash"></ion-icon>
 
-      <div style="margin-top: 1.5em;">
-        <ion-title style="color: #4e4376;" class="opensans">200 INR.</ion-title>
-      </div>
-      <div style="position: relative;top: -1em;z-index: 1;">
-        <ion-icon style="font-size: 32px;" color="danger" name="trash"></ion-icon>
-
-      </div>
-    </ion-card>
+        </div>
+      </ion-card>
+    </div>
 
     <div style="display: flex;padding: 10px;justify-content: center;">
-      <ion-button color="danger" mode='ios'>
+      <ion-button color="danger" mode='ios' (click) = "clearRecipt()">
         <ion-icon name='close'></ion-icon>
         CLEAR
       </ion-button>

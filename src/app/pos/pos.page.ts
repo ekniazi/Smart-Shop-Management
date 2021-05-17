@@ -3,11 +3,15 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { AlertController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
+import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-pos',
   templateUrl: './pos.page.html',
   styleUrls: ['./pos.page.scss'],
+  providers: [DatePipe]
 })
 export class POSPage implements OnInit {
 
@@ -16,6 +20,8 @@ export class POSPage implements OnInit {
     private barcodeScanner: BarcodeScanner,
     public toastController: ToastController,
     public alertController: AlertController,
+    private datePipe: DatePipe,
+    public firestore: AngularFirestore,
   ) { }
 
   items: any[];
@@ -30,6 +36,8 @@ export class POSPage implements OnInit {
   paid: number = 0;
   cNum: string = "";
   cName2: string = "";
+  note: string = "";
+  discount: number = 0;
 
   currentPage: string = 'dashboard'
 
@@ -47,23 +55,34 @@ export class POSPage implements OnInit {
     toast.present();
   }
 
+  user: any;
+  salesToBeUpload: any;
+
   getItems() {
     if (window.localStorage.getItem('items')) {
       this.items = JSON.parse(window.localStorage.getItem('items'));
     } else {
       this.items = [];
     }
-
     if (window.localStorage.getItem('sales')) {
       this.sales = JSON.parse(window.localStorage.getItem('sales'));
     } else {
       this.sales = [];
     }
-
     if (window.localStorage.getItem('lenders')) {
       this.lenders = JSON.parse(window.localStorage.getItem('lenders'));
     } else {
       this.lenders = [];
+    }
+    if (window.localStorage.getItem('user')) {
+      this.user = JSON.parse(window.localStorage.getItem('user'));
+    } else {
+      this.user = [];
+    }
+    if (window.localStorage.getItem('salesToBeUpload')) {
+      this.salesToBeUpload = JSON.parse(window.localStorage.getItem('salesToBeUpload'));
+    } else {
+      this.salesToBeUpload = [];
     }
   }
 
@@ -94,6 +113,14 @@ export class POSPage implements OnInit {
     });
   }
 
+  calculateTotal() {
+    this.total = 0;
+    for (var i = 0; i < this.recipt.length; i++) {
+      this.total = this.total + (this.recipt[i].rPrice * this.recipt[i].quantity);
+    }
+    this.total = this.total - this.discount;
+  }
+
   addSearchItem(item) {
 
     let data = item;
@@ -104,6 +131,15 @@ export class POSPage implements OnInit {
     this.presentToast();
     this.searchParam = "";
     this.searchFound = [];
+    this.calculateTotal();
+  }
+
+  deleteItem(i) {
+    this.recipt.splice(i, 1);
+  }
+
+  clearRecipt() {
+    this.recipt = [];
   }
 
   searchItem() {
@@ -137,6 +173,56 @@ export class POSPage implements OnInit {
     }
   }
 
+  async addNote() {
+    const alert2 = await this.alertController.create({
+      subHeader: "Would you like to add additional notes for this sale?",
+      mode: 'ios',
+      backdropDismiss: false,
+      inputs: [
+        {
+          name: 'input',
+          id: 'name',
+          value: name,
+          placeholder: "Enter the note here..",
+        },
+      ],
+      buttons: [{
+        text: 'Next',
+        handler: data => {
+          this.note = data.input;
+        },
+      },
+      ]
+    });
+    await alert2.present();
+  }
+
+
+  async addDiscount() {
+    const alert2 = await this.alertController.create({
+      subHeader: "How much should be the discount?",
+      mode: 'ios',
+      backdropDismiss: false,
+      inputs: [
+        {
+          name: 'input',
+          type: 'number',
+          id: 'name',
+          value: name,
+          placeholder: "Enter the amount here..",
+        },
+      ],
+      buttons: [{
+        text: 'Next',
+        handler: data => {
+          this.discount = Number(data.input);
+        },
+      },
+      ]
+    });
+    await alert2.present();
+  }
+
   async getAmount() {
     const alert2 = await this.alertController.create({
       subHeader: "How much is the customer paying?",
@@ -157,6 +243,9 @@ export class POSPage implements OnInit {
         text: 'Next',
         handler: data => {
           this.paid = data.input;
+          if (this.paid > this.total) {
+            this.toReturn = this.paid - this.total;
+          }
           this.cName();
         },
       },
@@ -165,10 +254,12 @@ export class POSPage implements OnInit {
     await alert2.present();
   }
 
+  toReturn: number = 0;
   async cName() {
     const alert2 = await this.alertController.create({
       header: "Customer's name?",
-      subHeader: "You can leave it blank if the customer doesn't want to share name.",
+      subHeader: "To Return: " + this.toReturn,
+      message: "You can leave it blank if the customer doesn't want to share name.",
       mode: 'ios',
       backdropDismiss: false,
       inputs: [
@@ -181,7 +272,7 @@ export class POSPage implements OnInit {
         },
       ],
       buttons: [{
-        text: 'Done',
+        text: 'Next',
         handler: data => {
           this.cName2 = data.input;
           this.cNumber();
@@ -195,9 +286,8 @@ export class POSPage implements OnInit {
 
   async cNumber() {
     const alert2 = await this.alertController.create({
-      subHeader: "Would you wish to enter the customer's number?",
-      header: "RETURN: " + (this.paid - this.total),
-      message: "If the customer is not paying full it is mandatory to enter the customer's number for future tracking of borrowed money.",
+      header: "Would you wish to enter the customer's number?",
+      subHeader: "If the customer is not paying full it is mandatory to enter the customer's number for future tracking of borrowed money.",
       mode: 'ios',
       backdropDismiss: false,
       inputs: [
@@ -228,18 +318,29 @@ export class POSPage implements OnInit {
       this.items[this.recipt[i].index].stock = this.items[this.recipt[i].index].stock - this.recipt[i].quantity;
       this.total = this.total + (this.recipt[i].rPrice * this.recipt[i].quantity);
     }
-    window.localStorage.setItem('items', JSON.stringify(this.items));
+    this.total = this.total - this.discount;
     this.getAmount();
   }
 
   endSale2() {
+    window.localStorage.setItem('items', JSON.stringify(this.items));
+    this.firestore.collection('stores').doc(this.user.docID).update({
+      items: this.items,
+    }).then(data2 => console.log(data2))
+    const date = new Date();
+    const pathDate = this.datePipe.transform(date, 'ddMMyyyy');
     let data = {
       recipt: this.recipt,
       total: this.total,
       paid: this.paid,
       cNum: this.cNum,
       cName: this.cName2,
+      date: date,
+      discount: this.discount,
+      note: this.note,
+      soldBy: this.user.name,
     }
+    const sale = JSON.stringify(data);
     if (this.paid < this.total) {
       this.lenders.push(data);
       window.localStorage.setItem('lenders', JSON.stringify(this.lenders));
@@ -249,6 +350,30 @@ export class POSPage implements OnInit {
     this.msg = "Sale completed!";
     this.color = "success";
     this.presentToast();
+
+    const sub = this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).get().subscribe(data2 => {
+      if (data2.exists) {
+        this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).update({
+          sales: firebase.firestore.FieldValue.arrayUnion(sale)
+        }).then(data2 => console.log(data2)).catch((err) => {
+          console.log(err);
+          this.salesToBeUpload.push(data);
+          window.localStorage.setItem('salesToBeUpload', JSON.stringify(this.salesToBeUpload));
+          sub.unsubscribe();
+        }
+        )
+      } else {
+        this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).set({
+          sales: firebase.firestore.FieldValue.arrayUnion(sale)
+        }).then(data2 => console.log(data2)).catch((err) => {
+          console.log(err);
+          this.salesToBeUpload.push(data);
+          window.localStorage.setItem('salesToBeUpload', JSON.stringify(this.salesToBeUpload));
+          sub.unsubscribe();
+        }
+        )
+      }
+    })
     this.back();
   }
 
