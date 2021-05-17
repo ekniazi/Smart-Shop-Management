@@ -20,7 +20,7 @@ export class SuppliersPage implements OnInit {
     if (window.localStorage.getItem('suppliers')) {
       this.suppliers = JSON.parse(window.localStorage.getItem('suppliers'));
     } else {
-      this.suppliers = [];
+
     }
   }
 
