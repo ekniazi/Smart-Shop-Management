@@ -27,12 +27,15 @@ export class OwnerpagePage implements OnInit {
   address: string;
   referal: string = "";
   user: any;
+  phone:any;
 
   ngOnInit() {
     this.user = JSON.parse(window.localStorage.getItem('user'));
-    const num = this.auth.auth.currentUser.phoneNumber;
+    this.auth.authState.subscribe(data=>{
+      this.phone = data.phoneNumber;
+    })
     const sub = this.firestore
-      .collection("stores", (q) => q.where("owner", "==", num))
+      .collection("stores", (q) => q.where("owner", "==", this.phone))
       .valueChanges()
       .subscribe((r: any) => {
         if (r.length >= 1) {
