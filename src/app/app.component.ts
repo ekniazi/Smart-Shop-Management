@@ -51,7 +51,7 @@ export class AppComponent {
               this.router.navigate(['pos'])
             }
             else {
-              this.router.navigate(['helperpage'])
+              this.router.navigate(['excel-import'])
             }
           }
 

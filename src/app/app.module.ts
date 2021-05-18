@@ -21,7 +21,7 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
 import { PapaParseModule } from 'ngx-papaparse';
 import { File } from '@ionic-native/file/ngx';
 import { InAppPurchase } from '@ionic-native/in-app-purchase/ngx';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 /////////////////FOR MULTILANGUAGE SUPPORT/////////////////////////////
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -43,6 +43,8 @@ export function LanguageLoader(http: HttpClient) {
     AngularFireAuthModule,
     HttpClientModule,
     SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
     PapaParseModule,
     TranslateModule.forRoot({
       loader: {

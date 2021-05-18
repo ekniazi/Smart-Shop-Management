@@ -413,7 +413,8 @@
 <ion-footer *ngIf="currentPage !='viewsales'" class="footer">
 
   <div style="display: flex;color: white;position: relative;top: 0.5em;">
-    <ion-icon (click)="back()" style="font-size: 25px;margin-left: 6px;" name="close-circle"></ion-icon>
+    <ion-icon *ngIf="this.user.uType != 'Helper'" (click)="back()" style="font-size: 25px;margin-left: 6px;"
+      name="close-circle"></ion-icon>
 
     <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">POINT OF SALE
     </ion-title>

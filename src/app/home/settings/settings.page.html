@@ -1,133 +1,173 @@
 <ion-header>
-  <ion-toolbar
-    style=" --background: #2b5876; /* fallback for old browsers */ --background:
-    -webkit-linear-gradient(to right, #4e4376, #2b5876); /* Chrome 10-25, Safari 5.1-6 */ --background:
-    linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ ">
-    <ion-title class=" settings" style="color: white;text-align: center;">
-      Settings
-    </ion-title>
+  <ion-toolbar style="--background: #2b5876;  /* fallback for old browsers */
+  --background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
+  --background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ">
+    <div style="display: flex;color: white;">
+      <img style="height: 3em;object-fit: contain;" src="../../../assets/logo.png" alt="">
+      <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">Settings
+      </ion-title>
+
+    </div>
   </ion-toolbar>
 </ion-header>
-<ion-content>
 
+<ion-content>
   <ion-list>
 
-    <div style="display: flex;justify-content: center;align-items: center;padding-top: 40px;">
-      <div style="color: black;display: flex;width: 85%;">
-        <img style="height: 4em;position: relative;top: -0.8em;"
-          src="https://img.icons8.com/fluent/2x/user-male-circle.png" alt="">
-        <div style="position: relative;padding-left: 15px;width: 80%;">
-          <ion-label style="font-size: 20px;font-weight: bold;color: rgb(15, 15, 15);letter-spacing: -0.3px;"
-            class="robo">
-            Muhammad Awais
-          </ion-label>
-          <p class="robo"
-            style="color: rgba(0, 0, 0, 0.856);position: relative;top: -1em;font-size: 12px;text-align: left;">
-            Tap To View Profile
-          </p>
-        </div>
+    <div *ngIf="currentDiv=='one'">
+      <div style="display: flex;justify-content: center;align-items: center;padding-top: 40px;">
+        <div style="color: black;display: flex;width: 85%;">
 
-        <div style="text-align: right;position: relative;color: rgba(0, 0, 0, 0.521);width: 20%;top: 0.5em;">
-          <ion-icon color="none" style="font-size: 25px;" name="chevron-forward-outline"></ion-icon>
+          <div
+            style="background: skyblue;border-radius: 14px;color: white;width: 3.3em;height: 3.3em;text-align: center;position: relative;top: -0.6em;">
+            <ion-label *ngIf="storeInfo" style="font-family: impact;font-size: 30px;position: relative;top: 0.34em;">
+              {{storeInfo.name[0]}}
+            </ion-label>
+          </div>
+
+          <div style="position: relative;padding-left: 1px;width: 80%;">
+            <ion-title *ngIf="storeInfo"
+              style="font-weight: bold;font-family: impact;letter-spacing: -0.5px;font-family: 'Baloo Tammudu 2', cursive;">
+              {{storeInfo.name}}</ion-title>
+
+
+          </div>
+
+
         </div>
       </div>
-    </div>
 
 
 
-    <div class="h-divider">
-      <div class="shadow"></div>
-    </div>
+      <div class="h-divider">
+        <div class="shadow"></div>
+      </div>
 
-    <div class="flex">
+      <div class="flex">
 
-      <ion-card class="card">
-        <div style="color: rgba(226, 125, 43, 0.863);">
-          <ion-icon color="none" style="font-size: 30px;" name="card"></ion-icon>
-        </div>
-        <ion-label class="cardtxt">
-          Cards
-        </ion-label>
-      </ion-card>
-
-      <ion-card class="card">
-        <div style="color: rgba(185, 12, 35, 0.774);">
-          <ion-icon color="none" style="font-size: 30px;" name="cloud-upload"></ion-icon>
-        </div>
-        <ion-label class="cardtxt">
-          Upload Excel
-        </ion-label>
-      </ion-card>
-
-
-      <ion-card class="card">
-        <div style="color: rgb(14, 187, 8);">
-          <ion-icon color="none" style="font-size: 30px;" name="podium"></ion-icon>
-        </div>
-        <ion-label class="cardtxt">
-          Products
-        </ion-label>
-      </ion-card>
-
-
-      <ion-card class="card">
-        <div style="color: rgb(19, 43, 151);">
-          <ion-icon color="none" style="font-size: 30px;" name="document"></ion-icon>
-        </div>
-        <ion-label class="cardtxt">
-          Excels
-        </ion-label>
-      </ion-card>
-
-      <ion-card class="card">
-        <div style="color: rgba(112, 4, 49, 0.596);">
-          <ion-icon color="none" style="font-size: 30px;" name="person"></ion-icon>
-        </div>
-        <ion-label class="cardtxt">
-          Edit Profile
-        </ion-label>
-      </ion-card>
-
-      <ion-card class="card">
-        <div style="color: rgb(182, 12, 12);">
-          <ion-icon color="none" style="font-size: 30px;" name="lock-open"></ion-icon>
-        </div>
-        <ion-label class="cardtxt">
-          Password
-        </ion-label>
-      </ion-card>
-
-
-      <ion-card class="card">
-        <div style="color: rgb(39, 3, 3);">
-          <ion-icon color="none" style="font-size: 30px;" name="finger-print"></ion-icon>
-        </div>
-        <ion-label class="cardtxt">
-          Privacy
-        </ion-label>
-      </ion-card>
-
-
-      <ion-card class="card">
-        <div style="color: rgb(95, 39, 2);">
-          <ion-icon color="none" style="font-size: 30px;" name="language"></ion-icon>
-        </div>
-        <ion-label class="cardtxt">
-          Language
-        </ion-label>
-      </ion-card>
-
-      <ion-card style="width: 100%;border-radius: 0" class="card" (click) = "logout()" button>
-        <div>
-          <ion-icon color="danger" style="font-size: 30px;" name="log-out"></ion-icon>
-
-          <ion-label style="  color: rgba(0, 0, 0, 0.459); padding-left: 10px; font-weight: bold;
-       position: relative;top: -0.6em;font-family: Hammersmith One, sans-serif;">
-            Logout
+        <ion-card class="card">
+          <div style="color: rgba(226, 125, 43, 0.863);">
+            <ion-icon color="none" style="font-size: 30px;" name="card"></ion-icon>
+          </div>
+          <ion-label class="cardtxt">
+            Cards
           </ion-label>
+        </ion-card>
+
+        <ion-card (click)="gotoPage('excel-import')" class="card">
+          <div style="color: rgba(185, 12, 35, 0.774);">
+            <ion-icon color="none" style="font-size: 30px;" name="cloud-upload"></ion-icon>
+          </div>
+          <ion-label class="cardtxt">
+            Upload Excel
+          </ion-label>
+        </ion-card>
+
+
+        <ion-card (click)="gotoPage('home/inventory')" class="card">
+          <div style="color: rgb(14, 187, 8);">
+            <ion-icon color="none" style="font-size: 30px;" name="podium"></ion-icon>
+          </div>
+          <ion-label class="cardtxt">
+            Products
+          </ion-label>
+        </ion-card>
+
+
+        <ion-card class="card">
+          <div style="color: rgb(19, 43, 151);">
+            <ion-icon color="none" style="font-size: 30px;" name="document"></ion-icon>
+          </div>
+          <ion-label class="cardtxt">
+            Excels
+          </ion-label>
+        </ion-card>
+
+        <ion-card (click)="addNote()" class="card">
+          <div style="color: rgba(112, 4, 49, 0.596);">
+            <ion-icon color="none" style="font-size: 30px;" name="person"></ion-icon>
+          </div>
+          <ion-label class="cardtxt">
+            Invite Helper
+          </ion-label>
+        </ion-card>
+
+        <ion-card (click)="currentPage('two')" class="card">
+          <div style="color: rgb(182, 12, 12);">
+            <ion-icon color="none" style="font-size: 30px;" name="lock-open"></ion-icon>
+          </div>
+          <ion-label class="cardtxt">
+            Accept Helpers
+          </ion-label>
+        </ion-card>
+
+
+        <ion-card class="card">
+          <div style="color: rgb(39, 3, 3);">
+            <ion-icon color="none" style="font-size: 30px;" name="finger-print"></ion-icon>
+          </div>
+          <ion-label class="cardtxt">
+
+          </ion-label>
+        </ion-card>
+
+
+        <ion-card class="card">
+          <div style="color: rgb(95, 39, 2);">
+            <ion-icon color="none" style="font-size: 30px;" name="language"></ion-icon>
+          </div>
+          <ion-label class="cardtxt">
+            Language
+          </ion-label>
+        </ion-card>
+
+        <ion-card style="width: 100%;border-radius: 0" class="card" (click)="logout()" button>
+          <div>
+            <ion-icon color="danger" style="font-size: 30px;" name="log-out"></ion-icon>
+
+            <ion-label style="  color: rgba(0, 0, 0, 0.459); padding-left: 10px; font-weight: bold;
+     position: relative;top: -0.6em;font-family: Hammersmith One, sans-serif;">
+              Logout
+            </ion-label>
+          </div>
+        </ion-card>
+
+      </div>
+
+    </div>
+
+    <div *ngIf="currentDiv=='two'">
+      <ion-card *ngFor="let boi of helpers"
+        style="display: flex;padding-left: 10px;padding-right: 10px;width: 95%;max-height: 6em;color: black;background: rgba(255, 255, 255, 0.349);margin-top: 18px;">
+
+
+        <img style="height: 4em;position: relative;top: 1em;" src="../../../assets/boi.png" alt="">
+        <div style="width: 72%;">
+
+          <ion-title style="font-size: 24px;margin-top: 8px;text-align: center;" class="balu"> {{boi.name}}</ion-title>
+
+          <ion-chip
+            style="position:relative;top: -1.1em;left: 0.4em;display: flex;justify-content: center;align-items: center;text-align: center;"
+            color="primary" mode='ios'>
+            <ion-icon style="font-size: 14px;margin-right: 2px;" name="call"></ion-icon>
+            {{boi.phone}}
+          </ion-chip>
+
         </div>
+
+        <div>
+          <ion-icon (click)="accept(boi.userID)" color="success"
+            style="background: rgba(74, 196, 4, 0.24);font-size: 25px;margin-top: 1em;border-radius: 50%;padding: 5px;position: relative;left: 20px;"
+            name="checkmark">
+          </ion-icon>
+
+        </div>
+
+
       </ion-card>
 
+      <ion-button (click)="currentPage('one')" mode='ios' expand='block' color="medium">BACK</ion-button>
     </div>
 
   </ion-list>

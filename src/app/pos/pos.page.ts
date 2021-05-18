@@ -6,6 +6,9 @@ import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
+import { Platform } from "@ionic/angular";
+import { AngularFireAuth } from '@angular/fire/auth';
+
 
 @Component({
   selector: 'app-pos',
@@ -22,6 +25,8 @@ export class POSPage implements OnInit {
     public alertController: AlertController,
     private datePipe: DatePipe,
     public firestore: AngularFirestore,
+    private platform: Platform,
+    private auth: AngularFireAuth,
   ) { }
 
   items: any[];
@@ -42,6 +47,16 @@ export class POSPage implements OnInit {
   profit: number = 0;
 
   currentPage: string = 'dashboard'
+
+  backDisbale = this.platform.backButton.subscribeWithPriority(999, () => {
+
+    if (this.user.uType == 'Helper') {
+      navigator['app'].exitApp();
+    }
+    else if (this.user.uType == 'Owner') {
+      this.router.navigate(['home/dashboard'])
+    }
+  });
 
   changePage(c_page: string) {
     this.currentPage = c_page
@@ -376,7 +391,15 @@ export class POSPage implements OnInit {
         )
       }
     })
-    this.back();
+
+    if (this.user.uType == 'Helper') {
+
+    }
+    else if (this.user.uType == 'Owner') {
+      this.back();
+    }
+
+
   }
 
   statSales: any;

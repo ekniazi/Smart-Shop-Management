@@ -1,3 +1,7 @@
+import { ToastController, LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,15 +11,195 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HelperpagePage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private auth: AngularFireAuth,
+    private firestore: AngularFirestore,
+    private router: Router,
+    private toast: ToastController,
+    private loading: LoadingController,
 
-  requested: boolean = false;
+  ) {
+    this.currentDiv = 'one'
+  }
+  loadermsg: string;
+  loaderID: string;
+  userID: string;
+  user: any;
+  msg: string;
+  color: string;
+  currentDiv: string;
 
-  toggle() {
-    this.requested = !this.requested;
+  async presentToast() {
+    const toast = await this.toast.create({
+      message: this.msg,
+      duration: 800,
+      mode: 'ios',
+      color: this.color,
+      position: 'top',
+    });
+    toast.present();
+  }
+
+
+  //loading
+  async presentLoading() {
+    const loading = await this.loading.create({
+      message: this.loadermsg,
+      spinner: 'dots',
+      id: this.loaderID,
+      mode: 'ios',
+    });
+    await loading.present();
+  }
+
+  changeDiv(name: string) {
+    this.currentDiv = name;
+  }
+
+  checkRequestsSent(userID: string) {
+    this.firestore.collection('helpers').doc(userID).valueChanges().subscribe((data: any) => {
+      console.log('just to chekc', data);
+
+      if (data == undefined) {
+        console.log('no user found on firebase');
+        this.loading.dismiss('load')
+      }
+      else if (data.requestStatus) {
+        if (data.requestStatus == 'pending') {
+
+          this.currentDiv = 'two'
+          console.log('request sent and is pending');
+          this.loading.dismiss('load')
+
+        }
+        else if (data.requestStatus == 'recieved') {
+          this.currentDiv = 'three'
+          this.loading.dismiss('load')
+
+        }
+        else if (data.requestStatus == 'approved') {
+          this.loading.dismiss('load')
+          this.router.navigate(['pos'])
+        }
+      }
+      else {
+
+        console.log('na request sent na recienved');
+        this.currentDiv = 'one'
+        this.loading.dismiss('load')
+      }
+    })
+  }
+  code: number;
+
+
+  withdrawRequest() {
+    const requestStatus = ''
+    this.firestore.collection('helpers').doc(this.userID).update({
+      requestStatus,
+    }).then(() => {
+      this.msg = 'request removed'
+      this.presentToast()
+    })
+  }
+
+  acceptReq() {
+    const requestStatus = 'approved'
+    this.firestore.collection('helpers').doc(this.userID).update({
+      requestStatus,
+    }).then(() => {
+
+      this.msg = 'request accepted'
+      this.presentToast()
+      this.router.navigate(['pos'])
+    })
+  }
+
+  phone: number;
+
+  sendRequest() {
+
+    if (!this.phone || !this.code) {
+
+      this.msg = 'Phone number is blank'
+      this.presentToast()
+    }
+    else {
+      const ownerPhone = '+' + this.code + this.phone;
+      const requestStatus = 'pending'
+      this.firestore.collection('helpers').doc(this.userID).update({
+        ownerPhone,
+        requestStatus,
+      }).then(() => {
+
+        this.msg = 'request to shopOwner'
+        this.presentToast()
+        this.checkRequestsSent(this.userID)
+      }).catch(err => {
+
+        this.msg = JSON.stringify(err.message)
+        this.presentToast()
+      })
+
+    }
+  }
+
+  getuserdata(uid) {
+    this.firestore.collection('helpers').doc(uid).valueChanges().subscribe((res: any) => {
+      if (res == undefined) {
+
+      }
+      else if (res.docID) {
+        this.user.docID = res.docID
+        window.localStorage.setItem('user', JSON.stringify(this.user));
+      }
+    })
   }
 
   ngOnInit() {
+
+    this.loaderID = 'load'
+    this.loadermsg = 'HOLD ON A MOMENT..'
+    this.presentLoading()
+
+    this.user = JSON.parse(window.localStorage.getItem('user'));
+    console.log(this.user);
+
+
+    const sb = this.auth.authState.subscribe(u => {
+      this.userID = u.uid
+      console.log(this.userID);
+      this.getuserdata(u.uid)
+      this.firestore.collection('helpers').doc(this.userID).valueChanges().subscribe(res => {
+
+
+        if (res == undefined) {
+
+          const userID = this.userID
+          const timestamp = new Date()
+          const userDetails = this.user
+          const name = this.user.name
+          const phone = this.user.phone
+          this.firestore.collection('helpers').doc(this.userID).set({
+            timestamp,
+            userID,
+            userDetails,
+            name, phone,
+          }).then(() => {
+
+            this.loading.dismiss('load')
+
+          })
+
+        }
+        else {
+
+          this.checkRequestsSent(this.userID)
+
+        }
+      })
+
+    })
   }
 
 }
