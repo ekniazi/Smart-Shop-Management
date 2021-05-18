@@ -27,12 +27,12 @@
 
         <div style="display: flex;flex-wrap: wrap;width: 100%;">
 
-          <ion-card style="background: white;width: 43%;" class="card">
+          <ion-card style="background: white;width: 43%;" class="card" button (click) = "gotTotPage('home/inventory')">
             <div style="color: purple;">
               <ion-icon color="none" style="font-size: 30px;" name="albums"></ion-icon>
             </div>
             <ion-label class="cardtxt">
-              26 products
+              <span *ngIf = "items">{{items.length}}</span><span *ngIf = "!items">0</span> products
             </ion-label>
           </ion-card>
 
@@ -46,22 +46,22 @@
             </ion-label>
           </ion-card>
 
-          <ion-card style="background: white;width: 43%;" class="card">
+          <ion-card style="background: white;width: 43%;" class="card" button (click) = "gotTotPage('home/suppliers')">
             <div style="color: rgb(211, 19, 115);">
               <ion-icon color="none" style="font-size: 30px;" name="sparkles"></ion-icon>
             </div>
             <ion-label class="cardtxt">
-              26 registered suppliers
+              <span *ngIf = "suppliers">{{suppliers.length}}</span><span *ngIf = "!suppliers">0</span> registered suppliers
             </ion-label>
           </ion-card>
 
 
-          <ion-card style="background: white;width: 43%;" class="card">
+          <ion-card style="background: white;width: 43%;" class="card" button (click) = "gotTotPage('home/borrowers')">
             <div style="color: rgb(197, 71, 13);">
               <ion-icon color="none" style="font-size: 30px;" name="cash"></ion-icon>
             </div>
             <ion-label class="cardtxt">
-              26 deliveries today
+              <span *ngIf = "lenders">{{lenders.length}}</span><span *ngIf = "!lenders">0</span> borrowers
             </ion-label>
           </ion-card>
 
@@ -77,7 +77,7 @@
         ">
         <div>
           <ion-title style="color: white;font-size: 28px;" class="hello">
-            Statistics
+            Daily Statistics
           </ion-title>
           <div style="width: 110%;margin-top: 10px;" class="flex">
 
@@ -86,12 +86,26 @@
               <div class="right"></div>
               <div class="left"></div>
               <div class="middle">
-                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">294 <br />
-                </p>
+                <div *ngIf="statSales">
+                  <p *ngIf="statSales.sales"
+                    style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">
+                    {{statSales.sales.length}} <br />
+                  </p>
+                  <p *ngIf="!statSales.sales"
+                    style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">
+                    0 <br />
+                  </p>
+                </div>
+
+                <div *ngIf="!statSales">
+                  <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">
+                    0 <br />
+                  </p>
+                </div>
               </div>
               <ion-label
                 style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1.3em;font-size: 18px;padding-bottom: 10px;">
-                VENDORS</ion-label>
+                SALES</ion-label>
 
 
             </div>
@@ -101,12 +115,13 @@
               <div class="right"></div>
               <div class="left"></div>
               <div class="middle">
-                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">24 <br />
+                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">{{revenue}}
+                  <br />
                 </p>
               </div>
               <ion-label
                 style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1em;font-size: 18px;padding-bottom: 10px;">
-                PRODUCTS</ion-label>
+                REVENUE</ion-label>
 
 
             </div>
@@ -116,12 +131,13 @@
               <div class="right"></div>
               <div class="left"></div>
               <div class="middle">
-                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">204 <br />
+                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">{{profit}}
+                  <br />
                 </p>
               </div>
               <ion-label
                 style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1.6em;font-size: 18px;padding-bottom: 10px;">
-                HELPERS</ion-label>
+                PROFIT</ion-label>
 
 
             </div>
@@ -147,7 +163,7 @@
         </ion-label>
       </ion-card>
 
-      <ion-card class="card" (click) = "excelImport()">
+      <ion-card class="card" (click)="excelImport()">
         <div style="color: rgba(0, 128, 28, 0.555);">
           <ion-icon color="none" style="font-size: 30px;" name="attach"></ion-icon>
         </div>
@@ -179,7 +195,7 @@
 
     </div>
 
-  
+
   </div>
 
 

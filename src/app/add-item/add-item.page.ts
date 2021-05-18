@@ -169,8 +169,7 @@ export class AddItemPage implements OnInit {
         console.log(err);
         this.itemsToBeUploaded.push(data);
         window.localStorage.setItem('itemsToBeUploaded', JSON.stringify(this.itemsToBeUploaded));
-      }
-      )
+      })
       this.modalController.dismiss(data);
     }
   }

@@ -7,20 +7,24 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
+  providers: [DatePipe]
 })
 export class AppComponent {
-  constructor(private auth: AngularFireAuth,
+  constructor(
+    private auth: AngularFireAuth,
     private router: Router,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private oneSignal: OneSignal,
     public firestore: AngularFirestore,
+    private datePipe: DatePipe,
   ) {
     this.initializeApp();
   }
@@ -73,6 +77,7 @@ export class AppComponent {
   }
 
   itemsToBeUploaded: any[];
+  salesToBeUpload: any[];
 
   checkUpload() {
     if (window.localStorage.getItem('itemsToBeUploaded')) {
@@ -81,12 +86,35 @@ export class AppComponent {
       for (var i = 0; i < this.itemsToBeUploaded.length; i++) {
         this.firestore.collection('stores').doc(this.user.docID).update({
           items: firebase.firestore.FieldValue.arrayUnion(this.itemsToBeUploaded[i])
-        }).then(()=>{
-          this.itemsToBeUploaded.splice(i,1);
+        }).then(() => {
+          this.itemsToBeUploaded.splice(i, 1);
         })
       }
     } else {
       this.itemsToBeUploaded = [];
+    }
+    if (window.localStorage.getItem('salesToBeUpload')) {
+      this.salesToBeUpload = JSON.parse(window.localStorage.getItem('salesToBeUpload'));
+      this.user = JSON.parse(window.localStorage.getItem('user'));
+      for (var i = 0; i < this.salesToBeUpload.length; i++) {
+        const sale = JSON.stringify(this.salesToBeUpload[i]);
+        const pathDate = this.datePipe.transform(this.salesToBeUpload[i].date, 'ddMMyyyy');
+        const sub = this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).get().subscribe(data2 => {
+          if (data2.exists) {
+            this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).update({
+              sales: firebase.firestore.FieldValue.arrayUnion(sale)
+            }).then(data2 => this.salesToBeUpload.splice(i, 1))
+            sub.unsubscribe();
+          } else {
+            this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).set({
+              sales: firebase.firestore.FieldValue.arrayUnion(sale)
+            }).then(data2 => this.salesToBeUpload.splice(i, 1))
+            sub.unsubscribe();
+          }
+        })
+      }
+    } else {
+      this.salesToBeUpload = [];
     }
   }
 
