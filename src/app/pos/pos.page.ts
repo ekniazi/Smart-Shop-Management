@@ -38,6 +38,8 @@ export class POSPage implements OnInit {
   cName2: string = "";
   note: string = "";
   discount: number = 0;
+  revenue: number = 0;
+  profit: number = 0;
 
   currentPage: string = 'dashboard'
 
@@ -377,16 +379,26 @@ export class POSPage implements OnInit {
     this.back();
   }
 
-  statSales:any;
+  statSales: any;
 
   getSales() {
     const date = new Date();
     const pathDate = this.datePipe.transform(date, 'ddMMyyyy');
     this.user = JSON.parse(window.localStorage.getItem('user'));
-    this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).valueChanges().subscribe((data:any) => {
-      this.statSales = data.sales;
-      for (var i = 0; i < this.statSales.length; i++){
-        this.statSales[i] = JSON.parse(this.statSales[i]);
+    this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).valueChanges().subscribe((data: any) => {
+      this.statSales = data;
+      this.revenue = 0;
+      this.profit = 0;
+      if (this.statSales.sales) {
+        for (var i = 0; i < this.statSales.sales.length; i++) {
+          this.statSales.sales[i] = JSON.parse(this.statSales.sales[i]);
+          this.revenue = this.revenue + this.statSales.sales[i].total;
+          if (this.statSales.sales[i].recipt.length > 0) {
+            for (var k = 0; k < this.statSales.sales[i].recipt.length; k++) {
+              this.profit = (this.statSales.sales[i].recipt[k].rPrice * this.statSales.sales[i].recipt[k].quantity) - (this.statSales.sales[i].recipt[k].pPrice * this.statSales.sales[i].recipt[k].quantity);
+            }
+          }
+        }
       }
     })
   }
