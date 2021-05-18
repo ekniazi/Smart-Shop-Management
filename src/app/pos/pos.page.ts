@@ -231,7 +231,7 @@ export class POSPage implements OnInit {
       header: "TOTAL: " + this.total.toString(),
       message: "Kindly provide exact figures to calculate the arrear money or update the borrowing table. If the customer is paying nothing enter 0.",
       mode: 'ios',
-      backdropDismiss: false,
+      backdropDismiss: true,
       inputs: [
         {
           name: 'input',
