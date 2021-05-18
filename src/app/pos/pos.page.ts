@@ -377,12 +377,26 @@ export class POSPage implements OnInit {
     this.back();
   }
 
+  statSales:any;
+
+  getSales() {
+    const date = new Date();
+    const pathDate = this.datePipe.transform(date, 'ddMMyyyy');
+    this.user = JSON.parse(window.localStorage.getItem('user'));
+    this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).valueChanges().subscribe((data:any) => {
+      this.statSales = data.sales;
+      for (var i = 0; i < this.statSales.length; i++){
+        this.statSales[i] = JSON.parse(this.statSales[i]);
+      }
+    })
+  }
 
   back() {
     this.router.navigate(['home/dashboard']);
   }
 
   ngOnInit() {
+    this.getSales();
   }
 
   ionViewWillEnter() {

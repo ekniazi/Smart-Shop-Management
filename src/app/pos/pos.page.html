@@ -318,7 +318,7 @@
   </div>
 
   <div style="height: 100%;background-color: white;" *ngIf="currentPage=='viewsales'">
-    <ion-item-sliding *ngFor="let item of [].constructor(20)">
+    <ion-item-sliding *ngFor="let sale of statSales">
       <ion-item>
 
         <div style="display: flex;">
@@ -330,9 +330,9 @@
           <div style="width: 50%;">
 
             <div style="padding: 5px;">
-              <ion-label
+              <ion-label *ngIf = "sale.cName"
                 style="text-align: center;padding: 10px;font-size: 20px;font-weight: bold;font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
-                NAME
+                {{sale.cName}}
               </ion-label>
 
               <div style="display: flex;flex-wrap: wrap;justify-content: center;flex-direction: column;">
@@ -341,20 +341,20 @@
                   <b>
                     DATE
                   </b>
-                  26/10/2021
+                  {{sale.date | date:'dd/MM/yyyy'}}
                 </ion-label>
                 <ion-label style="padding: 1px;">
                   <b>
                     SOLD BY
                   </b>
-                  HelperName
+                  {{sale.soldBy}}
                 </ion-label>
 
                 <ion-label style="padding: 1px;">
                   <b>
-                    QUAntity
+                    ITEMS
                   </b>
-                  20
+                  <span *ngIf = "sale.recipt">{{sale.recipt.length}}</span>
                 </ion-label>
 
               </div>
@@ -376,7 +376,7 @@
       <ion-item-options>
         <ion-item-option color="light">
 
-          <ion-label>3600</ion-label>
+          <ion-label>TOTAL {{sale.total}}</ion-label>
 
         </ion-item-option>
       </ion-item-options>
