@@ -432,6 +432,7 @@ export class POSPage implements OnInit {
 
   ngOnInit() {
     this.getSales();
+    this.getcurentUsershop()
   }
 
   ionViewWillEnter() {
@@ -440,6 +441,33 @@ export class POSPage implements OnInit {
 
   ionViewWillLeave() {
     this.recipt = [];
+  }
+
+  getcurentUsershop() {
+    console.log(this.user);
+    this.firestore.collection('stores').doc(this.user.docID).valueChanges().subscribe((res: any) => {
+      console.log(res);
+
+      if (res.items) {
+
+        if (res.items.length < 1) {
+          console.log('lol but not');
+
+        }
+        else {
+          console.log(res.items);
+
+          this.items = JSON.parse(window.localStorage.getItem('items'));
+          console.log(this.items, 'item');
+          this.items = res.items
+          window.localStorage.setItem('items', JSON.stringify(this.items));
+          this.items = JSON.parse(window.localStorage.getItem('items'));
+          console.log('updated items', this.items);
+
+        }
+      }
+
+    })
   }
 
 }
