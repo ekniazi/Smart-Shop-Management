@@ -48,7 +48,7 @@ export class AppComponent {
           }
           else if (this.user.uType == 'Helper') {
             if (this.user.docID) {
-              this.router.navigate(['pos'])
+              this.checkRequestsSent(user.uid)
             }
             else {
               this.router.navigate(['excel-import'])
@@ -58,6 +58,36 @@ export class AppComponent {
         }
       } else {
         this.router.navigate(['auth'])
+      }
+    })
+  }
+
+  checkRequestsSent(userID: string) {
+    this.firestore.collection('helpers').doc(userID).valueChanges().subscribe((data: any) => {
+      console.log('just to chekc', data);
+
+      if (data == undefined) {
+        console.log('no user found on firebase');
+
+      }
+      else if (data.requestStatus) {
+        if (data.requestStatus == 'pending') {
+
+          this.router.navigate(['helperpage'])
+
+        }
+        else if (data.requestStatus == 'recieved') {
+          this.router.navigate(['helperpage'])
+
+        }
+        else if (data.requestStatus == 'approved') {
+          this.router.navigate(['pos'])
+        }
+      }
+      else {
+        this.router.navigate(['helperpage'])
+        console.log('na request sent na recienved');
+
       }
     })
   }

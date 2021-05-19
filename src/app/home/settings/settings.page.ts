@@ -4,14 +4,11 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { ModalController } from '@ionic/angular';
-import { AddItemPage } from 'src/app/add-item/add-item.page';
-import { AddSupplierPage } from 'src/app/add-supplier/add-supplier.page';
-import { SelectSupplierPage } from 'src/app/select-supplier/select-supplier.page';
+
 
 @Component({
   selector: 'app-settings',
@@ -57,8 +54,22 @@ export class SettingsPage implements OnInit {
     this.currentDiv = name
     this.checkRequests()
   }
-  phone: number;
 
+  //toasts
+  async toastCreater() {
+    const toast = await this.toastController.create({
+      color: this.color,
+      duration: 2000,
+      message: this.msg,
+      animated: true,
+      mode: 'ios',
+    });
+    await toast.present();
+  }
+
+
+  phone: number;
+  name: string;
   async addNote() {
     const alert2 = await this.alertController.create({
       subHeader: "please add a phone number with 913568878952 format",
@@ -66,17 +77,65 @@ export class SettingsPage implements OnInit {
       backdropDismiss: false,
       inputs: [
         {
-          name: 'input',
+          name: 'name',
           id: 'name',
-          value: name,
+          placeholder: "Enter the name here..",
+        },
+        {
+          name: 'phone',
+          id: 'phone',
+          type: 'number',
           placeholder: "Enter the number here..",
         },
       ],
       buttons: [{
         text: 'Next',
         handler: data => {
-          this.phone = data.input;
-          alert(this.phone)
+
+          this.phone = data.phone;
+          this.name = data.name;
+
+          if (!this.name || !this.phone) {
+            this.msg = 'Fields cannot be left blank'
+            this.toastCreater()
+            this.addNote()
+          }
+          else {
+            alert('all okey')
+            const docID = this.storeInfo.docID
+            const phone = '+' + this.phone
+            const name = this.name
+            const timestamp = new Date()
+            this.firestore.collection('helpers', q => q.where('phone', '==', phone)).valueChanges().subscribe((res: any) => {
+              console.log('lkaho', res[0].userID + 'phone' + phone);
+
+              if (res.length < 1) {
+
+                this.msg = 'cannot send invitation user donnot exist!!'
+                this.toastCreater()
+              }
+              else {
+                const requestStatus = 'recieved'
+                this.firestore.collection('helpers').doc(res[0].userID).update({
+                  docID,
+                  name,
+                  phone,
+                  timestamp,
+                  requestStatus
+                }).then(() => {
+
+                  this.msg = 'helper invitation sent successfully'
+                  this.toastCreater()
+                }).catch(err => {
+
+                  this.msg = JSON.stringify(err.message)
+                  this.toastCreater()
+                })
+
+              }
+            })
+
+          }
         },
       },
       ]

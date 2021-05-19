@@ -167,6 +167,10 @@
 
       </ion-card>
 
+      <div *ngIf="helpers==undefined" style="height: 4em;width: 100;">
+        NOTHING NEW REQUESTS FOR NOW..!
+      </div>
+
       <ion-button (click)="currentPage('one')" mode='ios' expand='block' color="medium">BACK</ion-button>
     </div>
 

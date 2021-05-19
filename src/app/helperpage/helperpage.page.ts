@@ -104,15 +104,30 @@ export class HelperpagePage implements OnInit {
   }
 
   acceptReq() {
-    const requestStatus = 'approved'
-    this.firestore.collection('helpers').doc(this.userID).update({
-      requestStatus,
-    }).then(() => {
+    console.log(this.user);
+    const uid = this.auth.auth.currentUser.uid
+    this.firestore.collection('helpers').doc(uid).get().subscribe((u: any) => {
+      console.log(u);
+      if (u.exists) {
+        this.user = JSON.parse(window.localStorage.getItem('user'));
+        this.user.docID = u.Df.sn.proto.mapValue.fields.docID.stringValue
 
-      this.msg = 'request accepted'
-      this.presentToast()
-      this.router.navigate(['pos'])
+        window.localStorage.setItem('user', JSON.stringify(this.user));
+        this.user = JSON.parse(window.localStorage.getItem('user'));
+        console.log(this.user);
+
+        // 
+      }
     })
+    // const requestStatus = 'approved'
+    // this.firestore.collection('helpers').doc(this.userID).update({
+    //   requestStatus,
+    // }).then(() => {
+
+    //   this.msg = 'request accepted'
+    //   this.presentToast()
+    //   this.router.navigate(['pos'])
+    // })
   }
 
   phone: number;
@@ -170,7 +185,7 @@ export class HelperpagePage implements OnInit {
       this.userID = u.uid
       console.log(this.userID);
       this.getuserdata(u.uid)
-      this.firestore.collection('helpers').doc(this.userID).valueChanges().subscribe(res => {
+      this.firestore.collection('helpers').doc(this.userID).valueChanges().subscribe((res: any) => {
 
 
         if (res == undefined) {
@@ -194,6 +209,14 @@ export class HelperpagePage implements OnInit {
         }
         else {
 
+          if (!res.userDetails) {
+            const userDetails = this.user
+            this.firestore.collection('helpers').doc(this.userID).update({
+              userDetails,
+
+            })
+
+          }
           this.checkRequestsSent(this.userID)
 
         }
