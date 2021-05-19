@@ -22,18 +22,18 @@
       Import Excel file with item Name,sales prices,purchase prices,tax rate,hsn and other details.
     </ion-label>
 
+    <input type="file" (change)="selectFile($event)">
 
-    <ion-button  style="margin-top: 1em;" mode='ios' expand="block">
-      <b>
-        Upload File
-      </b>
-    </ion-button>
-
-    <input  type="file" name="" id="">
-    <div style="margin-top: 1em;">
-
+    <div *ngIf = "tempItems" style="margin-top: 1em;">
+      <ion-item *ngFor = "let item of tempItems">
+        {{item.name}}
+      </ion-item>
     </div>
 
   </div>
 
 </ion-content>
+
+<ion-footer>
+  <ion-button size = "block" (click) = "addItems()">Add Items</ion-button>
+</ion-footer>
