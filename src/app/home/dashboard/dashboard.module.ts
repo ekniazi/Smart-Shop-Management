@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +19,8 @@ import { ExcelImportPage } from 'src/app/excel-import/excel-import.page';
     FormsModule,
     IonicModule,
     SharedModule,
-    DashboardPageRoutingModule
+    DashboardPageRoutingModule,
+    TranslateModule,
   ],
   declarations: [DashboardPage],
   entryComponents:[AddItemPage,AddSupplierPage,ExcelImportPage],

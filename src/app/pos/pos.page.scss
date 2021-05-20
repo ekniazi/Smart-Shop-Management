@@ -252,3 +252,22 @@ b {
     display: flex;
 }
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@500&display=swap");
+
+.respcardwrapper {
+    flex-wrap: wrap;
+    display: flex;
+    width: 100%;
+    margin-top: 20px;
+}
+.card {
+    width: 43%;
+}
+
+@media only screen and (max-device-width: 300px) {
+    .card {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+}

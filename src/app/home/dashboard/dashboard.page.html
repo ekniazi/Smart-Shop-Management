@@ -22,46 +22,46 @@
         background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         ">
         <ion-title style="color: white;font-size: 28px;" class="hello">
-          OVERVIEW
+          {{ 'dashboardOne.overView' | translate:params}}
         </ion-title>
 
-        <div style="display: flex;flex-wrap: wrap;width: 100%;">
+        <div class="respcardwrapper">
 
-          <ion-card style="background: white;width: 43%;" class="card"  (click) = "gotTotPage('home/inventory')">
+          <ion-card style="background: white;" class="card" (click)="gotTotPage('home/inventory')">
             <div style="color: purple;">
               <ion-icon color="none" style="font-size: 30px;" name="albums"></ion-icon>
             </div>
             <ion-label class="cardtxt">
-              <span *ngIf = "items">{{items.length}}</span><span *ngIf = "!items">0</span> products
+              <span *ngIf="items">{{items.length}}</span><span *ngIf="!items">0</span>   {{ 'dashboardOne.prod' | translate:params}}
             </ion-label>
           </ion-card>
 
 
-          <ion-card style="background: white;width: 43%;" class="card">
+          <ion-card style="background: white;" class="card">
             <div style="color: greenyellow;">
               <ion-icon color="none" style="font-size: 30px;" name="accessibility"></ion-icon>
             </div>
             <ion-label class="cardtxt">
-              26 active helpers
+              26  {{ 'dashboardOne.help' | translate:params}}
             </ion-label>
           </ion-card>
 
-          <ion-card style="background: white;width: 43%;" class="card"  (click) = "gotTotPage('home/suppliers')">
+          <ion-card style="background: white;" class="card" (click)="gotTotPage('home/suppliers')">
             <div style="color: rgb(211, 19, 115);">
               <ion-icon color="none" style="font-size: 30px;" name="sparkles"></ion-icon>
             </div>
             <ion-label class="cardtxt">
-              <span *ngIf = "suppliers">{{suppliers.length}}</span><span *ngIf = "!suppliers">0</span> registered suppliers
+              <span *ngIf="suppliers">{{suppliers.length}}</span><span *ngIf="!suppliers">0</span>  {{ 'dashboardOne.rp' | translate:params}}
             </ion-label>
           </ion-card>
 
 
-          <ion-card style="background: white;width: 43%;" class="card"  (click) = "gotTotPage('home/borrowers')">
+          <ion-card style="background: white;" class="card" (click)="gotTotPage('home/borrowers')">
             <div style="color: rgb(197, 71, 13);">
               <ion-icon color="none" style="font-size: 30px;" name="cash"></ion-icon>
             </div>
             <ion-label class="cardtxt">
-              <span *ngIf = "lenders">{{lenders.length}}</span><span *ngIf = "!lenders">0</span> borrowers
+              <span *ngIf="lenders">{{lenders.length}}</span><span *ngIf="!lenders">0</span> {{ 'dashboardOne.borr' | translate:params}}
             </ion-label>
           </ion-card>
 
@@ -77,11 +77,11 @@
         ">
         <div>
           <ion-title style="color: white;font-size: 28px;" class="hello">
-            Daily Statistics
+            {{ 'dashboardOne.ds' | translate:params}}
           </ion-title>
           <div style="width: 110%;margin-top: 10px;" class="flex">
 
-            <div style="padding-left: 0.5em;width: 30%;">
+            <div class="circlewwrap">
 
               <div class="right"></div>
               <div class="left"></div>
@@ -105,12 +105,12 @@
               </div>
               <ion-label
                 style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1.3em;font-size: 18px;padding-bottom: 10px;">
-                SALES</ion-label>
+                {{ 'dashboardOne.sales' | translate:params}}</ion-label>
 
 
             </div>
 
-            <div style="padding-left: 0.5em;width: 30%;">
+            <div class="circlewwrap">
 
               <div class="right"></div>
               <div class="left"></div>
@@ -121,12 +121,12 @@
               </div>
               <ion-label
                 style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1em;font-size: 18px;padding-bottom: 10px;">
-                REVENUE</ion-label>
+                {{ 'dashboardOne.rev' | translate:params}}</ion-label>
 
 
             </div>
 
-            <div style="padding-left: 0.5em;width: 30%;">
+            <div class="circlewwrap">
 
               <div class="right"></div>
               <div class="left"></div>
@@ -137,7 +137,7 @@
               </div>
               <ion-label
                 style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1.6em;font-size: 18px;padding-bottom: 10px;">
-                PROFIT</ion-label>
+                {{ 'dashboardOne.pr' | translate:params}}</ion-label>
 
 
             </div>
@@ -159,7 +159,7 @@
           <ion-icon color="none" style="font-size: 30px;" name="prism"></ion-icon>
         </div>
         <ion-label class="cardtxt">
-          Add Item
+          {{ 'dashboardOne.AI' | translate:params}}
         </ion-label>
       </ion-card>
 
@@ -168,7 +168,7 @@
           <ion-icon color="none" style="font-size: 30px;" name="attach"></ion-icon>
         </div>
         <ion-label class="cardtxt">
-          Upload Excel
+          {{ 'dashboardOne.UE' | translate:params}}
         </ion-label>
       </ion-card>
 
@@ -178,7 +178,7 @@
           <ion-icon color="none" style="font-size: 30px;font-weight: bold;" name="add-circle"></ion-icon>
         </div>
         <ion-label class="cardtxt">
-          Add Supplier
+          {{ 'dashboardOne.AS' | translate:params}}
         </ion-label>
       </ion-card>
 
@@ -188,7 +188,7 @@
           <ion-icon color="none" style="font-size: 30px;" name="print"></ion-icon>
         </div>
         <ion-label class="cardtxt">
-          Point Of Sale
+          {{ 'dashboardOne.POS' | translate:params}}
         </ion-label>
       </ion-card>
 

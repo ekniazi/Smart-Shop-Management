@@ -17,5 +17,20 @@
         "headinTwo": "We sent you a 6 digit code on",
         "headinthree": "to verify your phone number",
         "headinfour": "Didn't recieved yet?"
+    },
+    "dashboardOne": {
+        "overView": "OVERVIEW",
+        "prod": "products",
+        "help": "active helpers",
+        "rp": "registered suppliers",
+        "borr": "borrowers",
+        "ds": "Daily Statistics",
+        "sales": "sales",
+        "rev": "revenue",
+        "pr": "profit",
+        "AI": "Add Item",
+        "UE": "Upload Excel",
+        "AS": "Add Supplier",
+        "POS": "Point Of Sale"
     }
 }
