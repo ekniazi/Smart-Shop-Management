@@ -34,7 +34,7 @@
         <ion-icon color="none" style="font-size: 30px;" name="easel"></ion-icon>
       </div>
       <ion-label class="cardtxt">
-        View Sales
+        {{ 'POS.c1' | translate:params}}
       </ion-label>
     </ion-card>
 
@@ -43,7 +43,7 @@
         <ion-icon color="none" style="font-size: 30px;" name="cafe"></ion-icon>
       </div>
       <ion-label class="cardtxt">
-        Add Discount
+        {{ 'POS.c2' | translate:params}}
       </ion-label>
     </ion-card>
 
@@ -52,7 +52,7 @@
         <ion-icon color="none" style="font-size: 30px;" name="cart"></ion-icon>
       </div>
       <ion-label class="cardtxt">
-        View Cart ({{recipt.length}})
+        {{ 'POS.c3' | translate:params}}
       </ion-label>
     </ion-card>
 
@@ -61,7 +61,7 @@
         <ion-icon color="none" style="font-size: 30px;" name="clipboard"></ion-icon>
       </div>
       <ion-label class="cardtxt">
-        Add Note
+        {{ 'POS.c4' | translate:params}}
       </ion-label>
     </ion-card>
 
@@ -70,7 +70,7 @@
         <ion-icon color="none" style="font-size: 30px;" name="refresh"></ion-icon>
       </div>
       <ion-label class="cardtxt">
-        Reset POS
+        {{ 'POS.c5' | translate:params}}
       </ion-label>
     </ion-card>
 
@@ -79,7 +79,7 @@
         <ion-icon color="none" style="font-size: 30px;" name="card"></ion-icon>
       </div>
       <ion-label class="cardtxt">
-        End Sale
+        {{ 'POS.c6' | translate:params}}
       </ion-label>
     </ion-card>
 
@@ -104,19 +104,19 @@
 
               <ion-label style="padding: 1px;">
                 <b>
-                  PRICE:
+                  {{ 'POS.pr' | translate:params}}:
                 </b> {{item.rPrice}}
               </ion-label>
               <ion-label style="padding: 1px;">
                 <b>
-                  BARCODE:
+                  {{ 'POS.br' | translate:params}}:
                 </b>
                 {{item.barcode}}
               </ion-label>
 
               <ion-label style="padding: 1px;">
                 <b>
-                  STOCK:
+                  {{ 'POS.st' | translate:params}}
                 </b>
                 {{item.stock}}
               </ion-label>
@@ -146,7 +146,7 @@
       ">
       <div>
         <ion-title style="color:rgba(0, 0, 0, 0.767);font-size: 28px;" class="hello">
-          OVERVIEW
+          {{ 'POS.overView' | translate:params}}
         </ion-title>
         <div style="width: 110%;margin-top: 10px;" class="flex">
 
@@ -174,7 +174,7 @@
             </div>
             <ion-label
               style="color:rgba(0, 0, 0, 0.767);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1.3em;font-size: 18px;padding-bottom: 10px;">
-              SALES TODAY</ion-label>
+              {{ 'POS.s' | translate:params}}</ion-label>
 
 
           </div>
@@ -191,7 +191,7 @@
             </div>
             <ion-label
               style="color:rgba(0, 0, 0, 0.767);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1em;font-size: 18px;padding-bottom: 10px;">
-              REVENUE TODAY</ion-label>
+              {{ 'POS.r' | translate:params}}</ion-label>
 
 
           </div>
@@ -208,7 +208,7 @@
             </div>
             <ion-label
               style="color:rgba(0, 0, 0, 0.767);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1.6em;font-size: 18px;padding-bottom: 10px;">
-              PROFITS</ion-label>
+              {{ 'POS.p' | translate:params}}</ion-label>
 
 
           </div>
@@ -243,7 +243,7 @@
 
         <ion-title
           style="font-weight: bold;font-family: impact;letter-spacing: -0.5px;font-family: 'Baloo Tammudu 2', cursive;font-size: 30px;color: rgba(0, 0, 0, 0.795);">
-          CART</ion-title>
+          {{ 'POS.car' | translate:params}}</ion-title>
 
       </div>
 
@@ -257,12 +257,11 @@
 
       <ion-card mode='ios' class='a_card'>
         <ion-label class="txt" *ngIf="discount == 0">
-          TOTAL
+          {{ 'POS.total' | translate:params}}
         </ion-label>
 
         <ion-label class="txt" *ngIf="discount > 0">
-          DISCOUNTED TOTAL
-        </ion-label>
+          {{ 'POS.dt' | translate:params}} </ion-label>
 
         <ion-label class="amount">
           {{total}}
@@ -272,7 +271,7 @@
 
     </div>
 
-    <h2 style="text-align: center;">Discount: {{discount}}</h2>
+    <h2 style="text-align: center;"> {{ 'POS.disc' | translate:params}}: {{discount}}</h2>
 
 
     <div *ngIf="recipt && recipt.length > 0">
@@ -287,7 +286,7 @@
           <div style="display: flex;">
 
             <ion-chip style="font-family: Impact;" fill="outline" color="success">
-              InStock
+              {{ 'POS.is' | translate:params}}
             </ion-chip>
 
 
@@ -316,12 +315,12 @@
     <div style="display: flex;padding: 10px;justify-content: center;">
       <ion-button color="danger" mode='ios' (click)="clearRecipt()">
         <ion-icon name='close'></ion-icon>
-        CLEAR
+        {{ 'POS.c' | translate:params}}
       </ion-button>
 
       <ion-button (click)="changePage('dashboard')" style="width: 60%;padding: 2px;" fill='outline' mode='ios'>
         <ion-icon style="padding-right: 1px;font-size: 15px;position: relative;top: -2px;" name='home'></ion-icon>
-        DASHBOARD
+        {{ 'POS.d' | translate:params}}
       </ion-button>
 
 
@@ -351,20 +350,20 @@
 
                 <ion-label style="padding: 1px;">
                   <b>
-                    DATE
+                    {{ 'POS.date' | translate:params}}
                   </b>
                   {{sale.date | date:'dd/MM/yyyy'}}
                 </ion-label>
                 <ion-label style="padding: 1px;">
                   <b>
-                    SOLD BY
+                    {{ 'POS.sold' | translate:params}}
                   </b>
                   {{sale.soldBy}}
                 </ion-label>
 
                 <ion-label style="padding: 1px;">
                   <b>
-                    ITEMS
+                    {{ 'POS.items' | translate:params}}
                   </b>
                   <span *ngIf="sale.recipt">{{sale.recipt.length}}</span>
                 </ion-label>
@@ -378,7 +377,7 @@
             <ion-label
               style="text-align: right;padding: 10px;font-size: 20px;font-weight: bold;margin-top: 30px;font-family: Open Sans;color: rgba(158, 43, 8, 0.897);">
               <ion-icon style="position: relative;top: 2px;" name="arrow-back"></ion-icon>
-              SWIPE
+              {{ 'POS.swipe' | translate:params}}
             </ion-label>
           </div>
         </div>
@@ -388,7 +387,7 @@
       <ion-item-options>
         <ion-item-option color="light">
 
-          <ion-label>TOTAL {{sale.total}}</ion-label>
+          <ion-label> {{ 'POS.total' | translate:params}} {{sale.total}}</ion-label>
 
         </ion-item-option>
       </ion-item-options>

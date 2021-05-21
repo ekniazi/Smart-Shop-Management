@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { IonicModule } from '@ionic/angular';
 
 import { POSPageRoutingModule } from './pos-routing.module';
@@ -13,10 +13,11 @@ import { SelectItemPage } from '../select-item/select-item.page';
   imports: [
     CommonModule,
     FormsModule,
+    TranslateModule,
     IonicModule,
     POSPageRoutingModule
   ],
   declarations: [POSPage],
   entryComponents: [SelectItemPage]
 })
-export class POSPageModule {}
+export class POSPageModule { }

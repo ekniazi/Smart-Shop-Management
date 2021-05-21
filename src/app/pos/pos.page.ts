@@ -45,7 +45,7 @@ export class POSPage implements OnInit {
   discount: number = 0;
   revenue: number = 0;
   profit: number = 0;
-
+  params: any;
   currentPage: string = 'dashboard'
 
   backDisbale = this.platform.backButton.subscribeWithPriority(999, () => {

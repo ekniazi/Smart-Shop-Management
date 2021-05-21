@@ -1,3 +1,4 @@
+import { TranslateConfigService } from './translate-config.service';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -25,6 +26,7 @@ export class AppComponent {
     private oneSignal: OneSignal,
     public firestore: AngularFirestore,
     private datePipe: DatePipe,
+    private translateConfigService: TranslateConfigService,
   ) {
     this.initializeApp();
   }
@@ -40,7 +42,7 @@ export class AppComponent {
           if (this.user.uType == 'Owner') {
 
             if (this.user.docID) {
-              this.router.navigate(['home/dashboard'])
+              this.router.navigate(['home/inventory'])
             }
             else {
               this.router.navigate(['ownerpage'])
@@ -148,6 +150,16 @@ export class AppComponent {
     }
   }
 
+  selectedLanguage: string;
+
+  languageChanged(lang: string) {
+
+    this.selectedLanguage = lang
+    console.log('language=>', this.selectedLanguage);
+    this.translateConfigService.setLanguage(this.selectedLanguage);
+  }
+
+
   initializeApp() {
     this.platform.ready().then(() => {
       console.log('platform ready');
@@ -158,6 +170,8 @@ export class AppComponent {
       this.checkLogin();
       this.checkUpload()
       this.setupPush()
+      this.selectedLanguage = 'english'
+      this.languageChanged(this.selectedLanguage)
     });
   }
 

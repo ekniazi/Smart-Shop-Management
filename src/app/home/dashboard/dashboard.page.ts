@@ -35,14 +35,7 @@ export class DashboardPage implements OnInit {
   suppliers: any;
   params: any;
 
-  selectedLanguage: string;
 
-  languageChanged(lang: string) {
-
-    this.selectedLanguage = lang
-    console.log('language=>', this.selectedLanguage);
-    this.translateConfigService.setLanguage(this.selectedLanguage);
-  }
 
   async openModal() {
     const modal = await this.modalController.create({
@@ -117,8 +110,7 @@ export class DashboardPage implements OnInit {
     const pathDate = this.datePipe.transform(date, 'ddMMyyyy');
     this.user = JSON.parse(window.localStorage.getItem('user'));
     console.log(this.user.language);
-    this.selectedLanguage = 'english'
-    this.languageChanged(this.selectedLanguage)
+  
     this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).valueChanges().subscribe(data => {
       this.statSales = data;
       this.revenue = 0;

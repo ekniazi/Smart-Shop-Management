@@ -32,5 +32,45 @@
         "UE": "Upload Excel",
         "AS": "Add Supplier",
         "POS": "Point Of Sale"
+    },
+    "POS": {
+        "c1": "View Sales",
+        "c2": "Add Discount",
+        "c3": "View Cart",
+        "c4": "Add Note",
+        "c5": "Reset POS",
+        "c6": "End Sale",
+        "pr": "Price",
+        "br": "Barcode",
+        "st": "Stock",
+        "overView": "OVERVIEW",
+        "s": "Sales Today",
+        "r": "Revenue Today",
+        "p": "Profits",
+        "car": "CART",
+        "total": "TOTAL",
+        "dt": "DISCOUNTED TOTAL",
+        "dis": "Discount",
+        "is": "Instock",
+        "c": "Clear",
+        "d": "Dashboard",
+        "date": "DATE",
+        "sold": "SOLD BY",
+        "items": "ITEMS",
+        "swipe": "SWIPE"
+    },
+    "INVENTORY": {
+        "tc": "TO COLLECT",
+        "sv": "STOCK VALUE",
+        "lsi": "LOW STOCK ITEMS",
+        "sales": "SALES",
+        "hsi": "HIGH STOCK ITEMS",
+        "si":"SEARCH ITEM",
+        "lsf":"Low stock first",
+        "Alphabetical":"Alphabetical",
+        "Price":"Price",
+        "cs":"Contact Supplier",
+        "as":"Add Supplier"
+        
     }
 }
