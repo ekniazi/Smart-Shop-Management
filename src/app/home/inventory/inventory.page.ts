@@ -42,6 +42,8 @@ export class InventoryPage implements OnInit {
   ModalPage: any;
   returnDat: any;
 
+  params:any;
+  
   async openModal() {
     const modal = await this.modalController.create({
       component: this.ModalPage,

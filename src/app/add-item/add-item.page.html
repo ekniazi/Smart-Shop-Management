@@ -16,40 +16,34 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- <ion-content>
-  <div >
-    <ion-card>
-      <ion-item>
-        <ion-input [(ngModel)]="name" placeholder="Enter product name here..."></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input [(ngModel)]="rPrice" type="number" placeholder="Enter retail price here.."></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input [(ngModel)]="pPrice" type="number" placeholder="Enter purchase price here.."></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input [(ngModel)]="stock" type="number" placeholder="Enter stock here.."></ion-input>
-      </ion-item>
-      <ion-item *ngIf="supplier"><span style="font-weight:bold;">Supplier:</span>{{supplier.name}}</ion-item>
-      <ion-button (click)="openSuppliers()" *ngIf="!supplier">Select Supplier</ion-button>
-    </ion-card>
-  </div>
-</ion-content> -->
 
 <ion-content *ngIf="choice == ''">
-  <ion-card mode = "ios" button (click)="scanBarcode()" style="text-align: center;">
-    <img src="../../assets/barcode.png" />
-    <ion-card-header>
-      <ion-card-title>Using Barcode</ion-card-title>
-    </ion-card-header>
-  </ion-card>
-  <ion-card  mode = "ios" button (click)="setChoice('manually')" style="text-align: center;">
-    <img src="../../assets/typewriter.png" />
-    <ion-card-header>
-      <ion-card-title>Manually</ion-card-title>
-    </ion-card-header>
-  </ion-card>
+
+  <div class="container">
+    <div style="width: 90%;" class="vertical-center">
+      <ion-card mode="ios" button (click)="scanBarcode()" style="text-align: center;">
+        <img src="../../assets/barcode.png" />
+        <ion-card-header>
+          <ion-card-title style="font-family: impact;color: rgba(0, 0, 0, 0.644);"> {{'ADDITEM.ub'| translate:params}}
+          </ion-card-title>
+        </ion-card-header>
+      </ion-card>
+
+      <div class="h-divider">
+        <div class="shadow"></div>
+        <div class="text"><i> {{'ADDITEM.or'| translate:params}}</i></div>
+      </div>
+
+      <ion-card mode="ios" button (click)="setChoice('manually')" style="text-align: center;">
+        <img src="../../assets/typewriter.png" />
+        <ion-card-header>
+          <ion-card-title style="font-family: impact;color: rgba(0, 0, 0, 0.644);"> {{'ADDITEM.m'| translate:params}}
+          </ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </div>
+  </div>
+
 </ion-content>
 
 <ion-content *ngIf="choice == 'barcode'">
@@ -59,9 +53,7 @@
     <div
       style="min-height: 4em;width: 80%;background: rgba(135, 207, 235, 0.397);margin-top: 2em;border-radius: 14px;padding: 10px;">
       <p style="font-family: Impact;color: rgba(0, 0, 0, 0.507);">
-        Fill out the fields to list a new supplier. All the fields are mandatory make sure to fill out all.
-        After adding
-        the information re-check it and press continue to proceed.
+        {{'ADDITEM.ins'| translate:params}}
       </p>
     </div>
 
@@ -73,7 +65,7 @@
 
 
       <h2 style="font-family: 'Roboto Condensed', sans-serif;font-size:29px">
-        ADD AN ITEM
+        {{'ADDITEM.ai'| translate:params}}
       </h2>
 
 
@@ -97,23 +89,23 @@
         <ion-input [(ngModel)]="stock" type="number" placeholder="Enter stock here.."></ion-input>
       </ion-item>
 
-      
+
       <ion-item style="margin-top: 15px;" lines="none">
 
         <ion-input [(ngModel)]="SGST" type="number" placeholder="Enter SGST here.."></ion-input>
       </ion-item>
-      
+
       <ion-item style="margin-top: 15px;" lines="none">
 
         <ion-input [(ngModel)]="IGST" type="number" placeholder="Enter IGST here.."></ion-input>
       </ion-item>
-      
+
       <ion-item style="margin-top: 15px;" lines="none">
 
         <ion-input [(ngModel)]="CGST" type="number" placeholder="Enter CGST here.."></ion-input>
       </ion-item>
 
-      
+
       <ion-item style="margin-top: 15px;" lines="none">
 
         <ion-input [(ngModel)]="HSN" placeholder="Enter HSN here.."></ion-input>
@@ -128,7 +120,7 @@
 
 
       <div style="margin-top: 25px;width: 60%;">
-        <ion-button (click) = "addItem()" class="shadow-red" color="none" style="background: #2b5876;  /* fallback for old browsers */
+        <ion-button (click)="addItem()" class="shadow-red" color="none" style="background: #2b5876;  /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #4e4376, #2b5876);" expand='block' mode='ios'>
           <p style="font-family: Impact;color: rgba(255, 255, 255, 0.897);">
@@ -152,9 +144,7 @@
     <div
       style="min-height: 4em;width: 80%;background: rgba(135, 207, 235, 0.397);margin-top: 2em;border-radius: 14px;padding: 10px;">
       <p style="font-family: Impact;color: rgba(0, 0, 0, 0.507);">
-        Fill out the fields to list a new supplier. All the fields are mandatory make sure to fill out all.
-        After adding
-        the information re-check it and press continue to proceed.
+        {{'ADDITEM.ins'| translate:params}}
       </p>
     </div>
 
@@ -166,7 +156,7 @@
 
 
       <h2 style="font-family: 'Roboto Condensed', sans-serif;font-size:29px">
-        ADD AN ITEM
+        {{'ADDITEM.ai'| translate:params}}
       </h2>
 
 
@@ -194,23 +184,23 @@
 
         <ion-input [(ngModel)]="barcode" placeholder="Enter barcode here.."></ion-input>
       </ion-item>
-      
+
       <ion-item style="margin-top: 15px;" lines="none">
 
         <ion-input [(ngModel)]="SGST" type="number" placeholder="Enter SGST here.."></ion-input>
       </ion-item>
-      
+
       <ion-item style="margin-top: 15px;" lines="none">
 
         <ion-input [(ngModel)]="IGST" type="number" placeholder="Enter IGST here.."></ion-input>
       </ion-item>
-      
+
       <ion-item style="margin-top: 15px;" lines="none">
 
         <ion-input [(ngModel)]="CGST" type="number" placeholder="Enter CGST here.."></ion-input>
       </ion-item>
 
-      
+
       <ion-item style="margin-top: 15px;" lines="none">
 
         <ion-input [(ngModel)]="HSN" placeholder="Enter HSN here.."></ion-input>
@@ -225,7 +215,7 @@
 
 
       <div style="margin-top: 25px;width: 60%;">
-        <ion-button (click) = "addItem()" class="shadow-red" color="none" style="background: #2b5876;  /* fallback for old browsers */
+        <ion-button (click)="addItem()" class="shadow-red" color="none" style="background: #2b5876;  /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #4e4376, #2b5876);" expand='block' mode='ios'>
           <p style="font-family: Impact;color: rgba(255, 255, 255, 0.897);">

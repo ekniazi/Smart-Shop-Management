@@ -42,7 +42,7 @@ export class AppComponent {
           if (this.user.uType == 'Owner') {
 
             if (this.user.docID) {
-              this.router.navigate(['home/inventory'])
+              this.router.navigate(['home/dashboard'])
             }
             else {
               this.router.navigate(['ownerpage'])
@@ -53,7 +53,7 @@ export class AppComponent {
               this.checkRequestsSent(user.uid)
             }
             else {
-              this.router.navigate(['excel-import'])
+              this.router.navigate(['helperpage'])
             }
           }
 

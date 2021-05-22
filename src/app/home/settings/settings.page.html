@@ -4,8 +4,23 @@
   --background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   ">
     <div style="display: flex;color: white;">
-      <img style="height: 3em;object-fit: contain;" src="../../../assets/logo.png" alt="">
-      <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">Settings
+      <img *ngIf="currentDiv=='one'" style="height: 3em;object-fit: contain;" src="../../../assets/logo.png" alt="">
+
+      <ion-icon *ngIf="currentDiv=='languages' || currentDiv=='two'" (click)="currentPage('one')"
+        style="margin-left: 5px;font-size: 30px;" name="arrow-back">
+
+      </ion-icon>
+
+      <ion-title *ngIf="currentDiv=='one'"
+        style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">Settings
+      </ion-title>
+
+      <ion-title *ngIf="currentDiv=='languages'"
+        style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">LANGUAGES
+      </ion-title>
+
+      <ion-title *ngIf="currentDiv=='two'"
+        style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">REQUESTS
       </ion-title>
 
     </div>
@@ -16,7 +31,7 @@
   <ion-list>
 
     <div *ngIf="currentDiv=='one'">
-      <div style="display: flex;justify-content: center;align-items: center;padding-top: 40px;">
+      <div style="display: flex;justify-content: center;align-items: center;padding-top: 14px;">
         <div style="color: black;display: flex;width: 85%;">
 
           <div
@@ -51,7 +66,8 @@
             <ion-icon color="none" style="font-size: 30px;" name="card"></ion-icon>
           </div>
           <ion-label class="cardtxt">
-            Cards
+            {{ 'SETTINGS.m'
+            | translate:params}}
           </ion-label>
         </ion-card>
 
@@ -60,7 +76,8 @@
             <ion-icon color="none" style="font-size: 30px;" name="cloud-upload"></ion-icon>
           </div>
           <ion-label class="cardtxt">
-            Upload Excel
+            {{ 'SETTINGS.ue'
+            | translate:params}}
           </ion-label>
         </ion-card>
 
@@ -70,7 +87,8 @@
             <ion-icon color="none" style="font-size: 30px;" name="podium"></ion-icon>
           </div>
           <ion-label class="cardtxt">
-            Products
+            {{ 'SETTINGS.c'
+            | translate:params}}
           </ion-label>
         </ion-card>
 
@@ -80,7 +98,8 @@
             <ion-icon color="none" style="font-size: 30px;" name="document"></ion-icon>
           </div>
           <ion-label class="cardtxt">
-            Excels
+            {{ 'SETTINGS.Pr'
+            | translate:params}}
           </ion-label>
         </ion-card>
 
@@ -89,16 +108,18 @@
             <ion-icon color="none" style="font-size: 30px;" name="person"></ion-icon>
           </div>
           <ion-label class="cardtxt">
-            Invite Helper
+            {{ 'SETTINGS.ih'
+            | translate:params}}
           </ion-label>
         </ion-card>
 
-        <ion-card (click)="currentPage('two')" class="card">
+        <ion-card (click)="checkRequests()" class="card">
           <div style="color: rgb(182, 12, 12);">
             <ion-icon color="none" style="font-size: 30px;" name="lock-open"></ion-icon>
           </div>
           <ion-label class="cardtxt">
-            Accept Helpers
+            {{ 'SETTINGS.ah'
+            | translate:params}}
           </ion-label>
         </ion-card>
 
@@ -108,17 +129,19 @@
             <ion-icon color="none" style="font-size: 30px;" name="finger-print"></ion-icon>
           </div>
           <ion-label class="cardtxt">
-
+            {{ 'SETTINGS.s'
+            | translate:params}}
           </ion-label>
         </ion-card>
 
 
-        <ion-card class="card">
+        <ion-card (click)="currentPage('languages')" class="card">
           <div style="color: rgb(95, 39, 2);">
             <ion-icon color="none" style="font-size: 30px;" name="language"></ion-icon>
           </div>
           <ion-label class="cardtxt">
-            Language
+            {{ 'SETTINGS.ln'
+            | translate:params}}
           </ion-label>
         </ion-card>
 
@@ -171,8 +194,21 @@
         NOTHING NEW REQUESTS FOR NOW..!
       </div>
 
-      <ion-button (click)="currentPage('one')" mode='ios' expand='block' color="medium">BACK</ion-button>
+
     </div>
+
+    <div *ngIf="currentDiv=='languages'">
+
+      <ion-list>
+        <ion-item *ngFor="let entry of languagesAvailable">
+          <ion-label style="font-family: Verdana;">{{entry}}</ion-label>
+          <ion-checkbox (ionChange)="checkboxClick($event,entry)" mode='ios' slot="start"></ion-checkbox>
+        </ion-item>
+
+      </ion-list>
+    </div>
+
+
 
   </ion-list>
 </ion-content>

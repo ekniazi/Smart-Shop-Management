@@ -1,0 +1,96 @@
+{
+    "ViewOne": {
+        "headinOne": "SMARTSHOP",
+        "subheadOne": "MANAGEMENT",
+        "headinTwo": "ஒரு மொழியைத் தேர்வுசெய்க",
+        "headinthree": "உங்களுக்கு ஏற்ற ஒரு தவறான மொழியைத் தேர்ந்தெடுக்கவும்"
+    },
+    "ViewTwo": {
+        "headinOne": "வரவேற்பு",
+        "headinTwo": "எங்கள் சேவைகளைப் பயன்படுத்த உள்நுழைக",
+        "headinthree": "OTP ஐப் பெற தொலைபேசி எண்ணை உள்ளிடவும்",
+        "headinfour": " தொடர்ந்தால் நீங்கள் எங்கள் ஏற்றுக்கொள்ள ஒப்புக்கொள்கிறீர்கள்",
+        "headinfive": "விதிமுறைகள் மற்றும் நிபந்தனைகள்"
+    },
+    "ViewThree": {
+        "headinOne": "6-DIGIT OTP ஐ உள்ளிடவும்",
+        "headinTwo": "நாங்கள் உங்களுக்கு 6 இலக்க குறியீட்டை அனுப்பினோம்",
+        "headinthree": "உங்கள் தொலைபேசி எண்ணை சரிபார்க்க",
+        "headinfour": "இன்னும் பெறவில்லையா?"
+    },
+    "dashboardOne": {
+        "overView": "கண்ணோட்டம்",
+        "prod": "தயாரிப்புகள்",
+        "help": "செயலில் உதவியாளர்கள்",
+        "rp": "பதிவு செய்யப்பட்ட சப்ளையர்கள்",
+        "borr": "கடன் வாங்கியவர்கள்",
+        "ds": "தினசரி புள்ளிவிவரம்",
+        "sales": "விற்பனை",
+        "rev": "வருவாய்",
+        "pr": "லாபம்",
+        "AI": "உருப்படியைச் சேர்க்கவும்",
+        "UE": "எக்செல் பதிவேற்றவும்",
+        "AS": "சப்ளையரைச் சேர்க்கவும்",
+        "POS": "விற்பனை செய்யும் இடம்"
+    },
+    "POS": {
+        "c1": "விற்பனையைக் காண்க",
+        "c2": "தள்ளுபடி சேர்க்கவும்",
+        "c3": "வண்டியைக் காண்க",
+        "c4": "குறிப்பு சேர்க்க",
+        "c5": "POS ஐ மீட்டமைக்கவும்",
+        "c6": "இறுதி விற்பனை",
+        "pr": "விலை",
+        "br": "Barcode",
+        "st": "Stock",
+        "overView": "OVERVIEW",
+        "s": "Sales Today",
+        "r": "Revenue Today",
+        "p": "Profits",
+        "car": "CART",
+        "total": "TOTAL",
+        "dt": "DISCOUNTED TOTAL",
+        "dis": "Discount",
+        "is": "Instock",
+        "c": "Clear",
+        "d": "Dashboard",
+        "date": "DATE",
+        "sold": "SOLD BY",
+        "items": "ITEMS",
+        "swipe": "SWIPE"
+    },
+    "INVENTORY": {
+        "tc": "TO COLLECT",
+        "sv": "STOCK VALUE",
+        "lsi": "LOW STOCK ITEMS",
+        "sales": "SALES",
+        "hsi": "HIGH STOCK ITEMS",
+        "si": "SEARCH ITEM",
+        "lsf": "Low stock first",
+        "Alphabetical": "Alphabetical",
+        "Price": "Price",
+        "cs": "Contact Supplier",
+        "as": "Add Supplier"
+    },
+    "SETTINGS": {
+        "m": "Membership",
+        "ue": "Upload Excel",
+        "Pr": "Products",
+        "c": "Charts",
+        "ih": "Invite Helper",
+        "ah": "Helper Requests",
+        "s": "Help Center",
+        "ln": "Languages"
+    },
+    "UPLOADEXCEL": {
+        "btn": "Add Items",
+        "ins": "Import Excel file with item Name,sales prices,purchase prices,tax rate,hsn and other details."
+    },
+    "ADDITEM": {
+        "ins": "Fill out the fields to list a new supplier. All the fields are mandatory make sure to fill out all.After adding the information re-check it and press continue to proceed.",
+        "ai": "ADD ITEM",
+        "or": "OR",
+        "ub": "USING BARCODE",
+        "m": "MANUALLY"
+    }
+}

@@ -39,8 +39,9 @@ export class ExcelImportPage implements OnInit {
   fileTo: File;
   tempItems: any[] = [];
   items: any;
-  user:any;
+  user: any;
   itemsToBeUploaded: any;
+  params: any;
 
   async presentToast() {
     const toast = await this.toastController.create({
@@ -106,6 +107,8 @@ export class ExcelImportPage implements OnInit {
         err => alert('something went wrong: ' + JSON.stringify(err))
       );
   }
+
+ 
 
   private extractData(res) {
     let csvData = res || '';
@@ -199,7 +202,7 @@ export class ExcelImportPage implements OnInit {
     }
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.getItems();
     this.tempItems = [];
   }

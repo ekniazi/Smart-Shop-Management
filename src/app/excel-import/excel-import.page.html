@@ -19,13 +19,13 @@
 
   <div style="padding:10px">
     <ion-label class="assis">
-      Import Excel file with item Name,sales prices,purchase prices,tax rate,hsn and other details.
+      {{'UPLOADEXCEL.ins' | translate:params}}
     </ion-label>
 
     <input type="file" (change)="selectFile($event)">
 
-    <div *ngIf = "tempItems" style="margin-top: 1em;">
-      <ion-item *ngFor = "let item of tempItems">
+    <div *ngIf="tempItems" style="margin-top: 1em;">
+      <ion-item *ngFor="let item of tempItems">
         {{item.name}}
       </ion-item>
     </div>
@@ -35,5 +35,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button size = "block" (click) = "addItems()">Add Items</ion-button>
+  <ion-button size="block" (click)="addItems()"> {{ 'UPLOADEXCEL.btn' | translate:params}}</ion-button>
 </ion-footer>

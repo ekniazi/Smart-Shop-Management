@@ -12,8 +12,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+
 /////////////////EKNIAZI IMPORTS/////////////////////////////
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';

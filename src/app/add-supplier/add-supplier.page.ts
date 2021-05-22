@@ -19,6 +19,7 @@ export class AddSupplierPage implements OnInit {
   phone: string;
   address: string;
   suppliers: any[];
+  params: any;
 
   async presentToast() {
     const toast = await this.toastController.create({

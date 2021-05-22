@@ -9,13 +9,15 @@ import { SelectSupplierPage } from '../select-supplier/select-supplier.page';
 import { SelectItemPage } from '../select-item/select-item.page';
 import { ExcelImportPage } from '../excel-import/excel-import.page';
 
+import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
-  declarations: [AddItemPage,AddSupplierPage,SelectSupplierPage,SelectItemPage,ExcelImportPage],
+  declarations: [AddItemPage, AddSupplierPage, SelectSupplierPage, SelectItemPage, ExcelImportPage],
   imports: [
     IonicModule,
     FormsModule,
     CommonModule,
+    TranslateModule,
   ],
-  exports: [AddItemPage,AddSupplierPage,SelectSupplierPage,SelectItemPage,ExcelImportPage]
+  exports: [AddItemPage, AddSupplierPage, SelectSupplierPage, SelectItemPage, ExcelImportPage]
 })
 export class SharedModule { }

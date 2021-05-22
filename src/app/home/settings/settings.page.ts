@@ -28,7 +28,7 @@ export class SettingsPage implements OnInit {
     private router: Router,
     private firestore: AngularFirestore,
   ) {
-    this.currentDiv = 'one'
+    this.currentDiv = 'languages'
   }
 
   items: any[];
@@ -49,10 +49,11 @@ export class SettingsPage implements OnInit {
   returnDat: any;
   currentDiv: string;
   helpers: any;
-
+  params: any;
+  languagesAvailable: string[] = ['English', 'Gujrati', 'Hindi', 'Marathi', 'Bengali', 'Tamil', 'Malayalam', 'Telugu', 'Kannada']
   currentPage(name) {
     this.currentDiv = name
-    this.checkRequests()
+
   }
 
   //toasts
@@ -145,11 +146,19 @@ export class SettingsPage implements OnInit {
 
 
   checkRequests() {
-    console.log('check', this.storeInfo);
+    this.currentPage('two')
+    console.log('check req', this.storeInfo);
     this.firestore.collection('helpers', q => q.where('ownerPhone', '==', this.storeInfo.owner).where('requestStatus', '==', 'pending')).valueChanges().subscribe((data: any) => {
       console.log(data);
-      this.helpers = data
+      if (data == undefined) {
+        this.msg = 'NO new requests at the moment'
+        this.toastCreater()
+        this.helpers = undefined
+      }
+      else {
+        this.helpers = data
 
+      }
 
     })
 
@@ -238,6 +247,20 @@ export class SettingsPage implements OnInit {
   gotoPage(pageName: string) {
     this.router.navigate([pageName])
   }
+
+  checkboxClick(e, value) {
+    console.log(value);
+
+    var statement = true;
+    if (statement) {
+      e.checked = true;
+    }
+    this.msg = 'Language Changed!!'
+    this.toastCreater()
+    this.currentDiv = 'one'
+
+  }
+
 
   ngOnInit() {
 

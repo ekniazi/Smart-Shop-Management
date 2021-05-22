@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ExcelImportPageRoutingModule } from './excel-import-routing.module';
 
+import { TranslateModule } from '@ngx-translate/core';
 import { ExcelImportPage } from './excel-import.page';
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ExcelImportPage } from './excel-import.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ExcelImportPageRoutingModule
+    ExcelImportPageRoutingModule,
+    TranslateModule,
   ],
   declarations: []
 })

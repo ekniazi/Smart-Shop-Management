@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
@@ -18,6 +19,7 @@ export class AddItemPage implements OnInit {
     public modalController: ModalController,
     public toastController: ToastController,
     public firestore: AngularFirestore,
+    private router: Router,
   ) { }
 
   ModalPage: any;
@@ -34,6 +36,7 @@ export class AddItemPage implements OnInit {
   IGST: number;
   CGST: number;
   HSN: string = "";
+  params: any;
 
   async openModal() {
     const modal = await this.modalController.create({
@@ -106,7 +109,11 @@ export class AddItemPage implements OnInit {
   }
 
   close() {
-    this.modalController.dismiss()
+    this.modalController.dismiss().then(() => {
+
+    }).catch(() => {
+      this.router.navigate(['home/dashboard'])
+    })
   }
 
   addItem() {
@@ -165,7 +172,7 @@ export class AddItemPage implements OnInit {
       this.msg = "Item added!";
       this.color = "success"
       this.presentToast();
-      
+
       this.modalController.dismiss(data);
     }
   }
