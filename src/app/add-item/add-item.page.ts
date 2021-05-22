@@ -75,6 +75,8 @@ export class AddItemPage implements OnInit {
     }
     if (window.localStorage.getItem('user')) {
       this.user = JSON.parse(window.localStorage.getItem('user'));
+    } else {
+      this.user = [];
     }
 
     if (window.localStorage.getItem('itemsToBeUploaded')) {
@@ -163,13 +165,7 @@ export class AddItemPage implements OnInit {
       this.msg = "Item added!";
       this.color = "success"
       this.presentToast();
-      this.firestore.collection('stores').doc(this.user.docID).update({
-        items: firebase.firestore.FieldValue.arrayUnion(data)
-      }).then(data=>console.log(data)).catch((err) => {
-        console.log(err);
-        this.itemsToBeUploaded.push(data);
-        window.localStorage.setItem('itemsToBeUploaded', JSON.stringify(this.itemsToBeUploaded));
-      })
+      
       this.modalController.dismiss(data);
     }
   }

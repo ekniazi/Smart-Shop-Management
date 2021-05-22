@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 import { LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-excel-import',
@@ -28,6 +30,7 @@ export class ExcelImportPage implements OnInit {
     private loadingController: LoadingController,
     public toastController: ToastController,
     public modalController: ModalController,
+    public firestore: AngularFirestore,
   ) { }
 
   csvData: any[] = [];
@@ -36,12 +39,14 @@ export class ExcelImportPage implements OnInit {
   fileTo: File;
   tempItems: any[] = [];
   items: any;
+  user:any;
+  itemsToBeUploaded: any;
 
   async presentToast() {
     const toast = await this.toastController.create({
-      message: this.tempItems.length+ ' items have been added to your inventory',
+      message: this.tempItems.length + ' items have been added to your inventory',
       duration: 4000,
-      color:'success',
+      color: 'success',
     });
     toast.present();
   }
@@ -52,7 +57,7 @@ export class ExcelImportPage implements OnInit {
       cssClass: 'my-custom-class',
       message: 'Please wait...',
       duration: 6000,
-      
+
     });
     await loading.present();
 
@@ -163,8 +168,16 @@ export class ExcelImportPage implements OnInit {
   addItems() {
     for (var i = 0; i < this.tempItems.length; i++) {
       this.items.push(this.tempItems[i])
+      let data = this.tempItems[i];
+      this.firestore.collection('stores').doc(this.user.docID).update({
+        items: firebase.firestore.FieldValue.arrayUnion(data)
+      }).then(data => console.log(data)).catch((err) => {
+        console.log(err);
+        this.itemsToBeUploaded.push(data);
+        window.localStorage.setItem('itemsToBeUploaded', JSON.stringify(this.itemsToBeUploaded));
+      })
     }
-    this.items = (window.localStorage.setItem('items',JSON.stringify(this.items)));
+    this.items = (window.localStorage.setItem('items', JSON.stringify(this.items)));
     this.presentToast();
     this.close();
   }
@@ -179,11 +192,20 @@ export class ExcelImportPage implements OnInit {
     } else {
       this.items = [];
     }
+    if (window.localStorage.getItem('user')) {
+      this.user = JSON.parse(window.localStorage.getItem('user'));
+    } else {
+      this.user = [];
+    }
+  }
+
+  ionViewWillEnter(){
+    this.getItems();
+    this.tempItems = [];
   }
 
   ngOnInit() {
     this.getItems();
   }
-
 
 }
