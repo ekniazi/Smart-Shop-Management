@@ -1,7 +1,9 @@
+
+import { TranslateConfigService } from './../../translate-config.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
-
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
@@ -26,9 +28,12 @@ export class SettingsPage implements OnInit {
     private callNumber: CallNumber,
     public modalController: ModalController,
     private router: Router,
+    private socialSharing: SocialSharing,
+    private TranslateConfigService: TranslateConfigService,
     private firestore: AngularFirestore,
+
   ) {
-    this.currentDiv = 'languages'
+    this.currentDiv = 'one'
   }
 
   items: any[];
@@ -51,6 +56,7 @@ export class SettingsPage implements OnInit {
   helpers: any;
   params: any;
   languagesAvailable: string[] = ['English', 'Gujrati', 'Hindi', 'Marathi', 'Bengali', 'Tamil', 'Malayalam', 'Telugu', 'Kannada']
+
   currentPage(name) {
     this.currentDiv = name
 
@@ -68,6 +74,67 @@ export class SettingsPage implements OnInit {
     await toast.present();
   }
 
+  selectedLanguage: string;
+
+  languageChanged(lang: string) {
+
+    this.selectedLanguage = lang
+    console.log('language=>', this.selectedLanguage);
+    this.TranslateConfigService.setLanguage(this.selectedLanguage);
+    this.updateLanguage(this.selectedLanguage)
+  }
+
+  updateLanguage(param: string) {
+    this.temp = JSON.parse(window.localStorage.getItem('user'))
+    this.temp.language = param;
+
+    window.localStorage.setItem('user', JSON.stringify(this.temp));
+  }
+
+  temp: any;
+  message: string;
+
+  async getHelp() {
+    const alert2 = await this.alertController.create({
+      subHeader: "What is your query?",
+      mode: 'ios',
+      backdropDismiss: false,
+      inputs: [
+        {
+          name: 'message',
+          id: 'message',
+          placeholder: "Enter the querry here..",
+        },
+
+      ],
+      buttons: [{
+        text: 'GET HELP',
+        handler: data => {
+
+
+          this.message = data.message;
+
+          const user = JSON.parse(window.localStorage.getItem('user'))
+          const text = 'Hi Smart Developers, My name is ' + user.name + ',I am facing following issue' + this.message
+          alert(text)
+          this.socialSharing.shareViaWhatsAppToPhone('+923168807850', text, "")
+        },
+      },
+      {
+        text: 'Cancel',
+        role: 'destructive',
+      }
+      ]
+    });
+    await alert2.present();
+  }
+
+  openPlaystore() {
+    console.log('method ');
+
+    window.open('https://play.google.com/store/apps/details?id=com.activision.callofduty.shooter')
+
+  }
 
   phone: number;
   name: string;
@@ -138,7 +205,10 @@ export class SettingsPage implements OnInit {
 
           }
         },
-      },
+      }, {
+        text: 'Cancel',
+        role: 'destructive',
+      }
       ]
     });
     await alert2.present();
@@ -250,7 +320,7 @@ export class SettingsPage implements OnInit {
 
   checkboxClick(e, value) {
     console.log(value);
-
+    this.languageChanged(value)
     var statement = true;
     if (statement) {
       e.checked = true;

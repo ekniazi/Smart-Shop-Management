@@ -38,10 +38,14 @@ export class AddSupplierPage implements OnInit {
     }
   }
 
+  a: string
   addSupplier() {
+
+
+
     let data = {
       name: this.name,
-      phone: this.phone,
+      phone: '+91' + this.phone,
       address: this.address,
     }
     this.suppliers.push(data);

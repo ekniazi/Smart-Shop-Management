@@ -42,12 +42,13 @@ export class ExcelImportPage implements OnInit {
   user: any;
   itemsToBeUploaded: any;
   params: any;
+  msg: string;
 
   async presentToast() {
     const toast = await this.toastController.create({
-      message: this.tempItems.length + ' items have been added to your inventory',
+      message: this.msg,
       duration: 4000,
-      color: 'success',
+      color: 'dark',
     });
     toast.present();
   }
@@ -71,7 +72,7 @@ export class ExcelImportPage implements OnInit {
   uploadFile(file: File): Observable<HttpEvent<{}>> {
     const formdata: FormData = new FormData();
     formdata.append('file', file);
-    const req = new HttpRequest('POST', 'https://www.exportportal.site/uploadimage.php', formdata, {
+    const req = new HttpRequest('POST', 'https://www.exportportal.site/excelupload.php', formdata, {
       reportProgress: true,
       responseType: 'text'
     });
@@ -83,7 +84,9 @@ export class ExcelImportPage implements OnInit {
   selectFile(event) {
     this.presentLoading();
     this.selectedFiles = event.target.files;
-    this.imageURL = 'https://www.exportportal.site/vendors/' + this.selectedFiles[0].name
+    this.imageURL = 'https://www.exportportal.site/excels/' + this.selectedFiles[0].name
+    console.log(this.imageURL);
+
     this.upload()
   }
 
@@ -104,13 +107,16 @@ export class ExcelImportPage implements OnInit {
       })
       .subscribe(
         data => this.extractData(data),
+
         err => alert('something went wrong: ' + JSON.stringify(err))
       );
   }
 
- 
+
 
   private extractData(res) {
+    console.log(res);
+
     let csvData = res || '';
 
     this.papa.parse(csvData, {
@@ -135,8 +141,22 @@ export class ExcelImportPage implements OnInit {
         CGST: this.csvData[i][7],
         HSN: this.csvData[i][8],
       }
-      if (data.name && data.rPrice && data.pPrice && data.stock && data.barcode) {
+      if (data.name && data.rPrice && data.pPrice && data.stock && data.barcode && data.SGST && data.IGST && data.HSN && data.CGST) {
+        console.log(data);
+        this.tada = true;
         this.tempItems.push(data);
+      }
+      else if (!data.name || !data.rPrice || !data.pPrice || !data.stock || !data.barcode || !data.SGST || !data.IGST || !data.HSN || !data.CGST) {
+
+
+        if (data.name || data.rPrice || data.pPrice || data.stock || data.barcode || data.SGST || data.IGST || data.HSN || data.CGST) {
+          this.tada = true;
+          this.tempItems.push(data);
+
+          this.msg = 'we found some missing fields you can add them later'
+          this.presentToast()
+
+        }
       }
     }
     this.loadingController.dismiss();
@@ -181,12 +201,18 @@ export class ExcelImportPage implements OnInit {
       })
     }
     this.items = (window.localStorage.setItem('items', JSON.stringify(this.items)));
+    this.msg = this.tempItems.length + ' items have been added to your inventory'
     this.presentToast();
     this.close();
   }
 
   close() {
-    this.modalController.dismiss();
+    this.modalController.dismiss().then(() => {
+
+    }).catch(() => {
+      this.router.navigate(['home/dashboard'])
+    });
+
   }
 
   getItems() {
@@ -205,10 +231,19 @@ export class ExcelImportPage implements OnInit {
   ionViewWillEnter() {
     this.getItems();
     this.tempItems = [];
+    console.log('temp', this.tempItems);
+
   }
 
+  tada: boolean;
   ngOnInit() {
     this.getItems();
+    if (this.tempItems.length < 1) {
+      this.tada = false;
+    }
+    else {
+      this.tada = true;
+    }
   }
 
 }

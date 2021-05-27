@@ -34,6 +34,9 @@
 
 </ion-content>
 
-<ion-footer>
-  <ion-button size="block" (click)="addItems()"> {{ 'UPLOADEXCEL.btn' | translate:params}}</ion-button>
+<ion-footer style="padding: 5px;">
+  <ion-button *ngIf="tada" mode='ios' size="block" (click)="addItems()"> {{ 'UPLOADEXCEL.btn' | translate:params}}
+  </ion-button>
+  <ion-button *ngIf="!tada" mode='ios' disabled='true' size="block"> {{ 'UPLOADEXCEL.btn' |
+    translate:params}}</ion-button>
 </ion-footer>

@@ -99,18 +99,80 @@ export class DashboardPage implements OnInit {
     }
     if (window.localStorage.getItem('user')) {
       this.user = JSON.parse(window.localStorage.getItem('user'));
+      this.getHelpers()
     } else {
       this.user = [];
     }
   }
 
+  helpers: any;
+
+  getHelpers() {
+    this.firestore.collection('helpers', q => q.where('docID', '==', this.user.docID)).valueChanges().subscribe(res => {
+      console.log(res);
+
+      if (res.length < 1) {
+
+      }
+      else {
+        this.helpers = res.length;
+
+      }
+
+    })
+  }
+
+
+  a: number = 0;
+  sub: number = 0;
+
+  calculateProfit(array) {
+    console.log(array);
+    for (var i = 0; i < array.length; i++) {
+      console.log('array[i]', array[i]);
+
+      this.sub = array[i] + this.a;
+      this.a = this.sub
+      console.log('calculated profit', this.a);
+
+    }
+
+  }
+
+  mDiscounts: any;
+  mRevenue: any;
+  mSales: any;
+
+  getMonthlyStats() {
+    let currentDate = new Date();
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    console.log('today is=>', monthNames[currentDate.getMonth()]);
+    this.firestore.collection('stores').doc(this.user.docID).collection('monthly').doc(monthNames[currentDate.getMonth()]).valueChanges().subscribe((res: any) => {
+      if (res == undefined) {
+
+      }
+      else {
+        this.mDiscounts = res.discounts;
+        this.mRevenue = res.revenue;
+        this.mSales = res.sales;
+      }
+
+    })
+  }
+
+  temparray: any[] = [];
+
   ngOnInit() {
     this.getItems();
+    this.getMonthlyStats()
     const date = new Date();
     const pathDate = this.datePipe.transform(date, 'ddMMyyyy');
     this.user = JSON.parse(window.localStorage.getItem('user'));
     console.log(this.user.language);
-  
+
     this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).valueChanges().subscribe(data => {
       this.statSales = data;
       this.revenue = 0;
@@ -122,9 +184,14 @@ export class DashboardPage implements OnInit {
           if (this.statSales.sales[i].recipt.length > 0) {
             for (var k = 0; k < this.statSales.sales[i].recipt.length; k++) {
               this.profit = (this.statSales.sales[i].recipt[k].rPrice * this.statSales.sales[i].recipt[k].quantity) - (this.statSales.sales[i].recipt[k].pPrice * this.statSales.sales[i].recipt[k].quantity);
+              console.log(this.profit);
+              this.temparray.push(this.profit)
             }
           }
         }
+        console.log('temp array is', this.temparray);
+
+        this.calculateProfit(this.temparray);
       }
     })
   }

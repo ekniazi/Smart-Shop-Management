@@ -5,10 +5,10 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Component } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { DatePipe } from '@angular/common';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Component({
   selector: 'app-root',
@@ -23,10 +23,10 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private oneSignal: OneSignal,
     public firestore: AngularFirestore,
     private datePipe: DatePipe,
     private translateConfigService: TranslateConfigService,
+    public oneSignal: OneSignal,
   ) {
     this.initializeApp();
   }
@@ -94,19 +94,7 @@ export class AppComponent {
     })
   }
 
-  setupPush() {
 
-    this.oneSignal.startInit('6d7af57e-6cca-497a-8434-fad4034ee6fb', '184492540467');
-
-    this.oneSignal.handleNotificationReceived().subscribe(data => {
-      let msg = data.payload.body;
-      let title = data.payload.title;
-      let additionalData = data.payload.additionalData;
-
-    });
-
-    this.oneSignal.endInit();
-  }
 
   itemsToBeUploaded: any[];
   salesToBeUpload: any[];
@@ -160,6 +148,21 @@ export class AppComponent {
   }
 
 
+  temp: any;
+
+  getUserLanguage() {
+    this.temp = JSON.parse(window.localStorage.getItem('user'))
+    if (!this.temp) {
+      console.log('no user found');
+
+    }
+    else {
+      console.log(this.temp);
+      this.languageChanged(this.temp.language)
+
+    }
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
       console.log('platform ready');
@@ -169,10 +172,19 @@ export class AppComponent {
       this.splashScreen.hide();
       this.checkLogin();
       this.checkUpload()
-      this.setupPush()
-      this.selectedLanguage = 'english'
-      this.languageChanged(this.selectedLanguage)
-    });
+      this.getUserLanguage()
+
+      if (this.platform.is('cordova')) {
+        if (this.platform.is('android')) {
+          this.oneSignal.startInit('onseSignalAppId', 'googleProjectId');
+        }
+        this.oneSignal.getIds().then(identity => {
+          alert(identity.pushToken + " It's Push Token");
+          alert(identity.userId + " It's Devices ID");
+        });
+      }
+    }
+    );
   }
 
 

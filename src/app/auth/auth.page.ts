@@ -43,7 +43,7 @@ export class AuthPage implements OnInit {
   }
   selectedLanguage: string;
   currentDiv: string;
-  languages: string[] = ["english", "TAMIL", "hindi"]
+  languages: string[] = ['English', 'Gujrati', 'Hindi', 'Marathi', 'Bengali', 'Tamil', 'Malayalam', 'Telugu', 'Kannada']
   msg: string;
   duration: number;
   color: string;
@@ -57,7 +57,7 @@ export class AuthPage implements OnInit {
   async presentAlertConfirm(err: string) {
     const alert = await this.alertController.create({
       header: 'Something went wrong!!',
-      message: err,
+      message: JSON.stringify(err),
       mode: 'ios',
       buttons: [
         {
@@ -193,7 +193,7 @@ export class AuthPage implements OnInit {
   }
 
   phone: any;
-  c_code: number = 92;
+  c_code: number = 91;
   num: number;
 
   merge() {

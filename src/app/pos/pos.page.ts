@@ -88,7 +88,11 @@ export class POSPage implements OnInit {
     }
     if (window.localStorage.getItem('lenders')) {
       this.lenders = JSON.parse(window.localStorage.getItem('lenders'));
+
+
     } else {
+
+
       this.lenders = [];
     }
     if (window.localStorage.getItem('user')) {
@@ -219,7 +223,7 @@ export class POSPage implements OnInit {
     const alert2 = await this.alertController.create({
       subHeader: "How much should be the discount?",
       mode: 'ios',
-      backdropDismiss: false,
+      backdropDismiss: true,
       inputs: [
         {
           name: 'input',
@@ -235,6 +239,12 @@ export class POSPage implements OnInit {
           this.discount = Number(data.input);
         },
       },
+      {
+        text: 'Cancel',
+        role: 'destructive'
+
+      }
+
       ]
     });
     await alert2.present();
@@ -260,10 +270,17 @@ export class POSPage implements OnInit {
         text: 'Next',
         handler: data => {
           this.paid = data.input;
-          if (this.paid > this.total) {
-            this.toReturn = this.paid - this.total;
+          if (!this.paid) {
+            this.msg = 'Cannot be blank'
+            this.presentToast()
+            this.getAmount()
           }
-          this.cName();
+          else {
+            if (this.paid > this.total) {
+              this.toReturn = this.paid - this.total;
+            }
+            this.cName();
+          }
         },
       },
       ]
@@ -276,7 +293,7 @@ export class POSPage implements OnInit {
     const alert2 = await this.alertController.create({
       header: "Customer's name?",
       subHeader: "To Return: " + this.toReturn,
-      message: "You can leave it blank if the customer doesn't want to share name.",
+      message: "Please add customer Name",
       mode: 'ios',
       backdropDismiss: false,
       inputs: [
@@ -292,7 +309,14 @@ export class POSPage implements OnInit {
         text: 'Next',
         handler: data => {
           this.cName2 = data.input;
-          this.cNumber();
+          if (!this.cName2) {
+            this.msg = 'Add customer Name'
+            this.presentToast()
+            this.cName()
+          }
+          else {
+            this.cNumber();
+          }
         },
       },
       ]
@@ -303,8 +327,8 @@ export class POSPage implements OnInit {
 
   async cNumber() {
     const alert2 = await this.alertController.create({
-      header: "Would you wish to enter the customer's number?",
-      subHeader: "If the customer is not paying full it is mandatory to enter the customer's number for future tracking of borrowed money.",
+      header: "Please Add Customer's Number",
+      subHeader: "Customer's number is must for future tracking",
       mode: 'ios',
       backdropDismiss: false,
       inputs: [
@@ -317,10 +341,28 @@ export class POSPage implements OnInit {
         },
       ],
       buttons: [{
-        text: 'Done',
+        text: 'FINISH SALE',
         handler: data => {
           this.cNum = data.input;
-          this.endSale2();
+
+          if (!this.cNum) {
+            this.cNumber()
+            this.msg = 'Add Customer Number'
+            this.presentToast()
+          }
+          else {
+            var str = this.cNum
+            var res = str.substring(0, 2)
+            if (res != '91') {
+
+              this.cNum = '+91' + this.cNum
+              this.endSale2()
+            }
+            else {
+              this.endSale2();
+            }
+          }
+
         },
       },
       ]
@@ -343,7 +385,7 @@ export class POSPage implements OnInit {
     window.localStorage.setItem('items', JSON.stringify(this.items));
     this.firestore.collection('stores').doc(this.user.docID).update({
       items: this.items,
-    }).then(data2 => console.log(data2))
+    }).then(data2 => console.log('data2'))
     const date = new Date();
     const pathDate = this.datePipe.transform(date, 'ddMMyyyy');
     let data = {
@@ -363,6 +405,7 @@ export class POSPage implements OnInit {
       window.localStorage.setItem('lenders', JSON.stringify(this.lenders));
     }
     this.sales.push(data);
+    this.monthlyStuff(this.sales)
     window.localStorage.setItem('sales', JSON.stringify(this.sales));
     this.msg = "Sale completed!";
     this.color = "success";
@@ -372,7 +415,7 @@ export class POSPage implements OnInit {
       if (data2.exists) {
         this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).update({
           sales: firebase.firestore.FieldValue.arrayUnion(sale)
-        }).then(data2 => console.log(data2)).catch((err) => {
+        }).then(data2 => console.log('data2')).catch((err) => {
           console.log(err);
           this.salesToBeUpload.push(data);
           window.localStorage.setItem('salesToBeUpload', JSON.stringify(this.salesToBeUpload));
@@ -382,7 +425,7 @@ export class POSPage implements OnInit {
       } else {
         this.firestore.collection('stores').doc(this.user.docID).collection('sales').doc(pathDate).set({
           sales: firebase.firestore.FieldValue.arrayUnion(sale)
-        }).then(data2 => console.log(data2)).catch((err) => {
+        }).then(data2 => console.log('data2')).catch((err) => {
           console.log(err);
           this.salesToBeUpload.push(data);
           window.localStorage.setItem('salesToBeUpload', JSON.stringify(this.salesToBeUpload));
@@ -391,18 +434,17 @@ export class POSPage implements OnInit {
         )
       }
     })
-
-    if (this.user.uType == 'Helper') {
-
-    }
-    else if (this.user.uType == 'Owner') {
-      this.back();
-    }
-
+    this.msg = 'Sale Completed'
+    this.presentToast()
 
   }
 
+  back() {
+    this.router.navigate(['home/dashboard']);
+  }
+
   statSales: any;
+  temparray: any[] = [];
 
   getSales() {
     const date = new Date();
@@ -418,16 +460,135 @@ export class POSPage implements OnInit {
           this.revenue = this.revenue + this.statSales.sales[i].total;
           if (this.statSales.sales[i].recipt.length > 0) {
             for (var k = 0; k < this.statSales.sales[i].recipt.length; k++) {
-              this.profit = (this.statSales.sales[i].recipt[k].rPrice * this.statSales.sales[i].recipt[k].quantity) - (this.statSales.sales[i].recipt[k].pPrice * this.statSales.sales[i].recipt[k].quantity);
+              this.profit =
+                (this.statSales.sales[i].recipt[k].rPrice * this.statSales.sales[i].recipt[k].quantity)
+                - (this.statSales.sales[i].recipt[k].pPrice * this.statSales.sales[i].recipt[k].quantity);
+
+              this.temparray.push(this.profit)
+
+
             }
+
           }
         }
+
+
+        this.calculateProfit(this.temparray);
+
       }
     })
+
+  }
+  a: number = 0;
+  sub: number = 0;
+
+  calculateProfit(array) {
+
+    for (var i = 0; i < array.length; i++) {
+
+
+      this.sub = array[i] + this.a;
+      this.a = this.sub
+
+
+    }
+
+  }
+  sal: number;
+  chk: number;
+  discounts: number[] = [];
+  reven: number[] = [];
+  lett: number = 0;
+  lets: number = 0;
+  discountsthismonth: number;
+  revenuethismonth: number;
+
+
+  monthlyStuff(sale) {
+    console.log('sale', sale);
+    for (var i = 0; i < sale.length; i++) {
+      this.sal = sale.length;
+      if (sale[i].discount) {
+
+        this.discounts.push(sale[i].discount)
+      }
+
+      if (sale[i].total) {
+
+        this.reven.push(sale[i].total)
+      }
+
+    }
+
+    console.log('discounts', this.discounts);
+    console.log('total', this.reven);
+    console.log('total sales', this.sal);
+
+    for (var i = 0; i < this.discounts.length; i++) {
+      this.lett = this.discounts[i] + this.lett
+      this.discountsthismonth = this.lett
+    }
+
+    for (var i = 0; i < this.reven.length; i++) {
+
+      this.lets = this.reven[i] + this.lets
+      this.revenuethismonth = this.lets
+
+    }
+
+    alert('Discounts this month is' + this.discountsthismonth + "- okey now lets check revenue " + this.revenuethismonth + "-sales check " + this.sal)
+    this.uploadToFirestore()
+
+
   }
 
-  back() {
-    this.router.navigate(['home/dashboard']);
+
+
+  uploadToFirestore() {
+    let currentDate = new Date();
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    console.log('today is=>', monthNames[currentDate.getMonth()]);
+    const discounts = this.discountsthismonth;
+    const sales = this.sal;
+    const revenue = this.revenuethismonth
+    this.firestore.collection('stores').doc(this.user.docID).collection('monthly').doc(monthNames[currentDate.getMonth()]).valueChanges().subscribe((res: any) => {
+
+      if (res == undefined) {
+        this.firestore.collection('stores').doc(this.user.docID).collection('monthly').doc(monthNames[currentDate.getMonth()]).set({
+          discounts,
+          sales,
+          revenue,
+        }).then(() => {
+          this.msg = 'Monthly stats updated'
+          this.presentToast()
+        }).catch(err => {
+
+          this.msg = JSON.stringify(err.message)
+          this.presentToast()
+
+        })
+      }
+      else {
+        this.firestore.collection('stores').doc(this.user.docID).collection('monthly').doc(monthNames[currentDate.getMonth()]).update({
+          discounts,
+          sales,
+          revenue,
+        }).then(() => {
+
+          this.msg = 'Monthly stats updated'
+          this.presentToast()
+        }).catch(err => {
+
+          this.msg = JSON.stringify(err.message)
+          this.presentToast()
+
+        })
+      }
+
+    })
   }
 
   ngOnInit() {
@@ -444,25 +605,25 @@ export class POSPage implements OnInit {
   }
 
   getcurentUsershop() {
-    console.log(this.user);
+
     this.firestore.collection('stores').doc(this.user.docID).valueChanges().subscribe((res: any) => {
-      console.log(res);
+
 
       if (res.items) {
 
         if (res.items.length < 1) {
-          console.log('lol but not');
+
 
         }
         else {
-          console.log(res.items);
+
 
           this.items = JSON.parse(window.localStorage.getItem('items'));
           console.log(this.items, 'item');
           this.items = res.items
           window.localStorage.setItem('items', JSON.stringify(this.items));
           this.items = JSON.parse(window.localStorage.getItem('items'));
-          console.log('updated items', this.items);
+
 
         }
       }

@@ -82,7 +82,8 @@
 
     <div class="cards">
       <div class="flexdisp centertext">
-        <h3 style="font-size:15px;font-weight: light;font-family: 'Secular One', sans-serif;color: black;">{{ 'INVENTORY.sales'
+        <h3 style="font-size:15px;font-weight: light;font-family: 'Secular One', sans-serif;color: black;">{{
+          'INVENTORY.sales'
           | translate:params}}</h3>
 
       </div>
@@ -94,7 +95,8 @@
 
     <div class="cards">
       <div class="flexdisp centertext">
-        <h3 style="font-size:15px;font-weight: light;font-family: 'Secular One', sans-serif;color: black;">{{ 'INVENTORY.hsi'
+        <h3 style="font-size:15px;font-weight: light;font-family: 'Secular One', sans-serif;color: black;">{{
+          'INVENTORY.hsi'
           | translate:params}}</h3>
 
       </div>
@@ -133,16 +135,16 @@
     </div>
 
     <div style="margin-top: 0.2em;display: flex;justify-content: center;">
-      <ion-chip mode='ios' color="primary" (click)="sortLowStock()">  {{ 'INVENTORY.lsf'
+      <ion-chip mode='ios' color="primary" (click)="sortLowStock()"> {{ 'INVENTORY.lsf'
         | translate:params}}<ion-icon name="arrow-down">
         </ion-icon>
       </ion-chip>
-      <ion-chip mode='ios' color="primary" (click)="sortAlpha()">  {{ 'INVENTORY.Alphabetical'
+      <ion-chip mode='ios' color="primary" (click)="sortAlpha()"> {{ 'INVENTORY.Alphabetical'
         | translate:params}}</ion-chip>
-      <ion-chip mode='ios' color="primary" (click)="sortPriceDown()">  {{ 'INVENTORY.Price'
+      <ion-chip mode='ios' color="primary" (click)="sortPriceDown()"> {{ 'INVENTORY.Price'
         | translate:params}}<ion-icon name="arrow-down"></ion-icon>
       </ion-chip>
-      <ion-chip mode='ios' color="primary" (click)="sortPriceUp()">  {{ 'INVENTORY.Price'
+      <ion-chip mode='ios' color="primary" (click)="sortPriceUp()"> {{ 'INVENTORY.Price'
         | translate:params}}<ion-icon name="arrow-up"></ion-icon>
       </ion-chip>
     </div>
@@ -208,12 +210,13 @@
       <div *ngIf="!item.supplier" style="display: flex;justify-content:flex-end;margin-top: 2px;padding-right: 10px;">
 
 
-        <ion-button (click)="addSupplier(item)" color="success" style="padding:2px" fill='clear' mode='ios'>
+        <ion-button (click)="addSupplier(item)" expand="block" color="primary" style="padding:2px" fill='outline'
+          mode='ios'>
           <p style="font-family: helvetica;font-size: 17px;margin-right: 2px;">
-            {{ 'INVENTORY.as'
+            {{ 'INVENTORY.cs'
             | translate:params}}
           </p>
-          <ion-icon style="font-size: 17px;" name="arrow-redo-outline"></ion-icon>
+          <ion-icon style="font-size: 17px;" name="add"></ion-icon>
         </ion-button>
 
       </div>

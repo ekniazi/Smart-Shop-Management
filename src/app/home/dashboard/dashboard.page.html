@@ -7,7 +7,7 @@
       <img style="height: 3em;object-fit: contain;" src="../../../assets/logo.png" alt="">
       <ion-title style="text-align: center;color: white;  font-family: 'Francois One', sans-serif;">SmartShop Management
       </ion-title>
-      <ion-icon style="position: relative;top: 0.8em;font-size: 20px;" name="ellipsis-vertical"></ion-icon>
+
     </div>
   </ion-toolbar>
 </ion-header>
@@ -32,7 +32,8 @@
               <ion-icon color="none" style="font-size: 30px;" name="albums"></ion-icon>
             </div>
             <ion-label class="cardtxt">
-              <span *ngIf="items">{{items.length}}</span><span *ngIf="!items">0</span>   {{ 'dashboardOne.prod' | translate:params}}
+              <span *ngIf="items">{{items.length}}</span><span *ngIf="!items">0</span> {{ 'dashboardOne.prod' |
+              translate:params}}
             </ion-label>
           </ion-card>
 
@@ -41,8 +42,8 @@
             <div style="color: greenyellow;">
               <ion-icon color="none" style="font-size: 30px;" name="accessibility"></ion-icon>
             </div>
-            <ion-label class="cardtxt">
-              26  {{ 'dashboardOne.help' | translate:params}}
+            <ion-label *ngIf="helpers" class="cardtxt">
+              {{helpers}} {{ 'dashboardOne.help' | translate:params}}
             </ion-label>
           </ion-card>
 
@@ -51,7 +52,8 @@
               <ion-icon color="none" style="font-size: 30px;" name="sparkles"></ion-icon>
             </div>
             <ion-label class="cardtxt">
-              <span *ngIf="suppliers">{{suppliers.length}}</span><span *ngIf="!suppliers">0</span>  {{ 'dashboardOne.rp' | translate:params}}
+              <span *ngIf="suppliers">{{suppliers.length}}</span><span *ngIf="!suppliers">0</span> {{ 'dashboardOne.rp'
+              | translate:params}}
             </ion-label>
           </ion-card>
 
@@ -61,7 +63,8 @@
               <ion-icon color="none" style="font-size: 30px;" name="cash"></ion-icon>
             </div>
             <ion-label class="cardtxt">
-              <span *ngIf="lenders">{{lenders.length}}</span><span *ngIf="!lenders">0</span> {{ 'dashboardOne.borr' | translate:params}}
+              <span *ngIf="lenders">{{lenders.length}}</span><span *ngIf="!lenders">0</span> {{ 'dashboardOne.borr' |
+              translate:params}}
             </ion-label>
           </ion-card>
 
@@ -131,7 +134,7 @@
               <div class="right"></div>
               <div class="left"></div>
               <div class="middle">
-                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">{{profit}}
+                <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">{{a}}
                   <br />
                 </p>
               </div>
@@ -193,6 +196,101 @@
       </ion-card>
 
 
+    </div>
+
+    <div style="display: flex;justify-content: center;margin-top: 0.3em;width: 100%;min-height: 15em;">
+      <div style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.082);border-radius:14px;margin-top: 4px;width: 96%;background: #9D50BB;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #6E48AA, #9D50BB);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #6E48AA, #9D50BB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      
+        ">
+        <div>
+          <ion-title style="color: white;font-size: 28px;" class="hello">
+            Monthly Statictics
+          </ion-title>
+          <div style="width: 110%;margin-top: 10px;" class="flex">
+
+            <div class="circlewwrap">
+
+              <div class="right"></div>
+              <div class="left"></div>
+              <div class="middle">
+                <div *ngIf="mSales">
+                  <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">
+                    {{mSales}} <br />
+                  </p>
+                  <p *ngIf="!mSales"
+                    style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">
+                    0 <br />
+                  </p>
+                </div>
+
+                <div *ngIf="!mSales">
+                  <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">
+                    0 <br />
+                  </p>
+                </div>
+              </div>
+              <ion-label
+                style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1.3em;font-size: 18px;padding-bottom: 10px;">
+                {{ 'dashboardOne.sales' | translate:params}}</ion-label>
+
+
+            </div>
+
+            <div class="circlewwrap">
+
+              <div class="right"></div>
+              <div class="left"></div>
+              <div class="middle">
+                <p *ngIf="mRevenue"
+                  style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">{{mRevenue}}
+                  <br />
+                </p>
+
+                <p *ngIf="!mRevenue"
+                  style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">0
+                  <br />
+                </p>
+
+              </div>
+              <ion-label
+                style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1em;font-size: 18px;padding-bottom: 10px;">
+                {{ 'dashboardOne.rev' | translate:params}}</ion-label>
+
+
+            </div>
+
+            <div class="circlewwrap">
+
+              <div class="right"></div>
+              <div class="left"></div>
+              <div class="middle">
+                <p *ngIf="mDiscounts"
+                  style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">{{mDiscounts}}
+                  <br />
+                </p>
+
+                <p *ngIf="!mDiscounts"
+                  style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">0
+                  <br />
+                </p>
+
+              </div>
+              <ion-label
+                style="color: rgba(255, 255, 255, 0.959);position: relative;font-family: 'Hammersmith One', sans-serif;left: 1.6em;font-size: 18px;padding-bottom: 10px;">
+                Discounts</ion-label>
+
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+      </div>
     </div>
 
 

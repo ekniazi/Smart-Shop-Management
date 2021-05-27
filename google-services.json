@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "935392129637",
+    "project_id": "freelance-49e83",
+    "storage_bucket": "freelance-49e83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935392129637:android:cd3922a3270d4833a18c8c",
+        "android_client_info": {
+          "package_name": "com.ssm.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "935392129637-e7s2ku3lgep0b5lcssqrl13iukr741tc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHUiEQSFsgKyfvQl_pJW5KydIgu2V30Qc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "935392129637-e7s2ku3lgep0b5lcssqrl13iukr741tc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
