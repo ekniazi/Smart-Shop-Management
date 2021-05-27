@@ -1,3 +1,4 @@
+// import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { environment } from './../environments/environment';
@@ -11,7 +12,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
+
 /////////////////EKNIAZI IMPORTS/////////////////////////////
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
@@ -27,6 +28,8 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateConfigService } from './translate-config.service';
 import { SharedModule } from './shared/shared.module';
+// // import FCM
+// import { FCM } from '@ionic-native/fcm/ngx';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -44,6 +47,7 @@ export function LanguageLoader(http: HttpClient) {
     HttpClientModule,
     SharedModule,
     FormsModule,
+
     ReactiveFormsModule,
     PapaParseModule,
     TranslateModule.forRoot({
@@ -62,10 +66,11 @@ export function LanguageLoader(http: HttpClient) {
     TranslateConfigService,
     BarcodeScanner,
     SocialSharing,
+    // OneSignal,
     CallNumber,
     File,
+    // FCM,
     InAppPurchase,
-    OneSignal,
     FileChooser,
     FilePath,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }

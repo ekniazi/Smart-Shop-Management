@@ -1,3 +1,5 @@
+// import { OneSignal } from '@ionic-native/onesignal/ngx';
+// import { FCM } from '@ionic-native/fcm/ngx';
 import { TranslateConfigService } from './translate-config.service';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -8,7 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { DatePipe } from '@angular/common';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
+
 
 @Component({
   selector: 'app-root',
@@ -26,7 +28,9 @@ export class AppComponent {
     public firestore: AngularFirestore,
     private datePipe: DatePipe,
     private translateConfigService: TranslateConfigService,
-    public oneSignal: OneSignal,
+    // private fcm: FCM,
+    // private onesignal: OneSignal,
+
   ) {
     this.initializeApp();
   }
@@ -174,15 +178,12 @@ export class AppComponent {
       this.checkUpload()
       this.getUserLanguage()
 
-      if (this.platform.is('cordova')) {
-        if (this.platform.is('android')) {
-          this.oneSignal.startInit('onseSignalAppId', 'googleProjectId');
-        }
-        this.oneSignal.getIds().then(identity => {
-          alert(identity.pushToken + " It's Push Token");
-          alert(identity.userId + " It's Devices ID");
-        });
-      }
+      // this.onesignal.startInit('svs', 'dssd')
+
+      // this.fcm.getToken().then(t => {
+      //   console.log(t);
+
+      // })
     }
     );
   }
