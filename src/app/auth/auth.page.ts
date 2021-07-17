@@ -362,7 +362,7 @@ export class AuthPage implements OnInit {
       this.toastCreater()
     }))
   }
-
+//lidh
 
   checkAuth(uid: string) {
     this.firestore.collection('shopowners').doc(uid).valueChanges().subscribe((res: any) => {
