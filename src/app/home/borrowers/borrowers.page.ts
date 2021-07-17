@@ -1,3 +1,4 @@
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Component, OnInit } from '@angular/core';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
@@ -10,6 +11,7 @@ export class BorrowersPage implements OnInit {
 
   constructor(
     private socialSharing: SocialSharing,
+    private firebaseauth: AngularFireAuth
   ) { }
 
   lenders: any[];
@@ -22,11 +24,11 @@ export class BorrowersPage implements OnInit {
   }
 
   whatsappMsg(lender) {
-
+    const auth = this.firebaseauth.auth.currentUser.phoneNumber
     if (lender.cNum[0] == '0') {
-      lender.cNum = "92" + lender.cNum;
+      lender.cNum = "91" + lender.cNum;
     }
-    this.socialSharing.shareViaWhatsAppToPhone(lender.cNum, "You have a pending payment of " + (lender.total - lender.paid).toString(), "")
+    this.socialSharing.shareViaWhatsAppToPhone(lender.cNum, "You have a pending payment of you can pay this amount through google pay on this number" + auth + (lender.total - lender.paid).toString(), "")
   }
 
   ngOnInit() {

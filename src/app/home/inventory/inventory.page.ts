@@ -1,3 +1,4 @@
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
@@ -8,6 +9,7 @@ import { ModalController } from '@ionic/angular';
 import { AddItemPage } from 'src/app/add-item/add-item.page';
 import { AddSupplierPage } from 'src/app/add-supplier/add-supplier.page';
 import { SelectSupplierPage } from 'src/app/select-supplier/select-supplier.page';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-inventory',
@@ -23,6 +25,7 @@ export class InventoryPage implements OnInit {
     public alertController: AlertController,
     private callNumber: CallNumber,
     public modalController: ModalController,
+    private firestore: AngularFirestore,
   ) { }
 
   items: any[];
@@ -42,8 +45,8 @@ export class InventoryPage implements OnInit {
   ModalPage: any;
   returnDat: any;
 
-  params:any;
-  
+  params: any;
+
   async openModal() {
     const modal = await this.modalController.create({
       component: this.ModalPage,
@@ -81,6 +84,8 @@ export class InventoryPage implements OnInit {
 
 
   async addSupplier(item) {
+    console.log(item);
+
     const modal = await this.modalController.create({
       component: SelectSupplierPage,
       cssClass: 'color-modal',
@@ -91,12 +96,23 @@ export class InventoryPage implements OnInit {
         this.getItems();
         if (event['data']) {
           item.supplier = event['data'];
+
           window.localStorage.setItem('items', JSON.stringify(this.items));
+          console.log('supplier added');
+          console.log(item.supplier);
+          this.getItems();
+
+        }
+        else {
+          alert('ah')
         }
       });
 
     return await modal.present();
   }
+
+
+
 
   async editPurchase(item) {
     const alert2 = await this.alertController.create({
@@ -231,21 +247,25 @@ export class InventoryPage implements OnInit {
         text: 'Edit purchase price',
         handler: () => {
           this.editPurchase(item);
+          this.gotoFirebase(item)
         }
       }, {
         text: 'Edit retail price',
         handler: () => {
           this.editRetail(item);
+          this.gotoFirebase(item)
         }
       }, {
         text: 'Add Stock',
         handler: () => {
           this.addStock(item);
+          this.gotoFirebase(item)
         }
       }, {
         text: 'Change Stock',
         handler: () => {
           this.changeStock(item);
+          this.gotoFirebase(item)
         }
       }, {
         text: 'Cancel',
@@ -259,6 +279,23 @@ export class InventoryPage implements OnInit {
     await actionSheet.present();
     actionSheet.onDidDismiss().then(() => {
       this.getInfo();
+    })
+  }
+  user: any;
+
+  gotoFirebase(item) {
+    console.log(item);
+    this.firestore.collection('stores').doc(this.user.docID).update({
+
+      items: item
+
+    }).then(() => {
+      this.msg = 'updated'
+      this.presentToast()
+    }).catch(err => {
+
+      this.msg = JSON.stringify(err.message)
+      this.presentToast
     })
   }
 
@@ -305,6 +342,8 @@ export class InventoryPage implements OnInit {
       }
     }
     this.toShow = this.searchFound;
+
+
   }
 
   call(boi) {
@@ -364,6 +403,10 @@ export class InventoryPage implements OnInit {
   getItems() {
     if (window.localStorage.getItem('items')) {
       this.items = JSON.parse(window.localStorage.getItem('items'));
+      console.log(this.items, 'items');
+
+
+
     } else {
       this.items = [];
     }
@@ -384,7 +427,13 @@ export class InventoryPage implements OnInit {
     }
     if (window.localStorage.getItem('sales')) {
       this.sales = JSON.parse(window.localStorage.getItem('sales'));
-    } else {
+    }
+    if (window.localStorage.getItem('user')) {
+      this.user = JSON.parse(window.localStorage.getItem('user'));
+
+    }
+
+    else {
       this.sales = [];
     }
     setTimeout(() => {
@@ -395,5 +444,6 @@ export class InventoryPage implements OnInit {
   ionViewWillEnter() {
     this.getItems();
   }
+
 
 }

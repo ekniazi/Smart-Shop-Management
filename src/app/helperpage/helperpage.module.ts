@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { HelperpagePageRoutingModule } from './helperpage-routing.module';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { HelperpagePage } from './helperpage.page';
 
 @NgModule({
@@ -13,8 +13,9 @@ import { HelperpagePage } from './helperpage.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    HelperpagePageRoutingModule
+    HelperpagePageRoutingModule,
+    TranslateModule,
   ],
   declarations: [HelperpagePage]
 })
-export class HelperpagePageModule {}
+export class HelperpagePageModule { }

@@ -1,3 +1,4 @@
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController, Platform } from '@ionic/angular';
@@ -34,7 +35,7 @@ export class AuthPage implements OnInit {
     private translateConfigService: TranslateConfigService,
     private platform: Platform,
     public alertController: AlertController,
-
+    private onesignal: OneSignal,
 
   ) {
     this.selectedLanguage = 'hindi'
@@ -289,10 +290,21 @@ export class AuthPage implements OnInit {
 
 
   saveData() {
+    if (this.phone.length < 10) {
+      this.msg = 'invalid number'
+      this.toastCreater()
+    }
 
-
-    if (!this.selectedUser) {
+    else if (!this.selectedUser) {
       this.msg = 'User Type cannot be left blank'
+      this.toastCreater()
+    }
+    else if (!this.adress) {
+      this.msg = 'Adress cannot be left blank'
+      this.toastCreater()
+    }
+    else if (!this.name) {
+      this.msg = 'name cannot be left blank'
       this.toastCreater()
     }
     else {
@@ -304,42 +316,56 @@ export class AuthPage implements OnInit {
         adress: this.adress,
         uType: this.selectedUser,
         referal: this.referal,
+        playerId: this.playerID
       }
-      this.gotoPage()
+
       window.localStorage.setItem('user', JSON.stringify(userData))
 
+      const authsub = this.firebaseauth.authState.subscribe(user => {
+        if (user && user.uid) {
+          const userID = user.uid;
+          const timeJoined = new Date();
+          const phone = '+' + this.phone;
+          const name = this.name;
+          const userType = this.selectedUser
+          const language = this.selectedLanguage;
+          const adress = this.adress;
+          const referal = this.referal;
+          const playerId = this.playerID
+          this.firestore.collection(this.selectedUser).doc(user.uid).set({
+            name, adress, language,
+            phone, userID, timeJoined, userType,
+            referal, playerId
+          }).then(() => {
+            this.msg = 'Welcome to SMARTSHOP Management'
+            this.toastCreater()
+            this.gotoPage();
+          }).catch(e => {
+            this.msg = JSON.stringify(e.message)
+            this.toastCreater()
+          })
+        }
+      })
     }
 
   }
+  playerID: string;
 
-  // const authsub = this.firebaseauth.authState.subscribe(user => {
-  //   if (user && user.uid) {
-  //     const userID = user.uid;
-  //     const timeJoined = new Date();
-  //     const phone = this.phone;
-  //     const name = this.name;
-  //     const userType = this.selectedUser
-  //     const language = this.selectedLanguage;
-  //     const adress = this.adress;
-  //     const referal = this.referal;
-  //     this.firestore.collection('users').doc(user.uid).set({
-  //       name, adress, language,
-  //       phone, userID, timeJoined, userType,
-  //       referals: firebase.firestore.FieldValue.arrayUnion({
-  //         referal
-  //       })
-  //     }).then(() => {
-  //       this.gotoPage();
+  getOnesignalKey() {
 
-  //     }).catch(e => {
-  //       this.msg = JSON.stringify(e.message)
-  //       this.toastCreater()
-  //     })
-  //   }
-  //  })
+
+    this.onesignal.getIds().then(user => {
+      this.playerID = user.userId
+      console.log('device id=>', this.playerID);
+    }).catch((err => {
+      this.msg = JSON.stringify(err.message)
+      this.toastCreater()
+    }))
+  }
+
 
   checkAuth(uid: string) {
-    this.firestore.collection('users').doc(uid).valueChanges().subscribe((res: any) => {
+    this.firestore.collection('shopowners').doc(uid).valueChanges().subscribe((res: any) => {
       if (res == undefined) {
 
       }
@@ -394,6 +420,7 @@ export class AuthPage implements OnInit {
   d: number;
   e: number;
   f: number;
+
   processSMS(data) {
     const message = data.body;
     if (message) {
@@ -415,6 +442,11 @@ export class AuthPage implements OnInit {
 
 
   ngOnInit() {
+
+    this.platform.ready().then(() => {
+      this.getOnesignalKey()
+    })
+
     this.windowRef = this.win.windowRef
     this.windowRef.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { 'size': 'invisible' });
     this.windowRef.recaptchaVerifier.render()

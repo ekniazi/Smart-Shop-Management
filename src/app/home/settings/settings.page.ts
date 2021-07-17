@@ -10,7 +10,7 @@ import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { ModalController } from '@ionic/angular';
-
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Component({
   selector: 'app-settings',
@@ -31,7 +31,7 @@ export class SettingsPage implements OnInit {
     private socialSharing: SocialSharing,
     private TranslateConfigService: TranslateConfigService,
     private firestore: AngularFirestore,
-
+    private http: HttpClient,
   ) {
     this.currentDiv = 'one'
   }
@@ -136,8 +136,9 @@ export class SettingsPage implements OnInit {
 
   }
 
-  phone: number;
+  phone: string;
   name: string;
+
   async addNote() {
     const alert2 = await this.alertController.create({
       subHeader: "please add a phone number with 913568878952 format",
@@ -162,9 +163,20 @@ export class SettingsPage implements OnInit {
 
           this.phone = data.phone;
           this.name = data.name;
+          const string = data.phone;
 
           if (!this.name || !this.phone) {
             this.msg = 'Fields cannot be left blank'
+            this.toastCreater()
+            this.addNote()
+          }
+          else if (data.phone.length < 10) {
+            this.msg = 'invalid format'
+            this.toastCreater()
+            this.addNote()
+          }
+          else if (!string.includes('91')) {
+            this.msg = 'please add 91 as a country code'
             this.toastCreater()
             this.addNote()
           }
@@ -174,7 +186,7 @@ export class SettingsPage implements OnInit {
             const phone = '+' + this.phone
             const name = this.name
             const timestamp = new Date()
-            this.firestore.collection('helpers', q => q.where('phone', '==', phone)).valueChanges().subscribe((res: any) => {
+            this.firestore.collection('Helper', q => q.where('phone', '==', phone)).valueChanges().subscribe((res: any) => {
               console.log('lkaho', res[0].userID + 'phone' + phone);
 
               if (res.length < 1) {
@@ -184,7 +196,7 @@ export class SettingsPage implements OnInit {
               }
               else {
                 const requestStatus = 'recieved'
-                this.firestore.collection('helpers').doc(res[0].userID).update({
+                this.firestore.collection('Helper').doc(res[0].userID).update({
                   docID,
                   name,
                   phone,
@@ -194,6 +206,8 @@ export class SettingsPage implements OnInit {
 
                   this.msg = 'helper invitation sent successfully'
                   this.toastCreater()
+                  const content = res[0].name + " you are invited to join as a helper"
+                  this.sendNotification(content, res[0].playerId)
                 }).catch(err => {
 
                   this.msg = JSON.stringify(err.message)
@@ -218,7 +232,7 @@ export class SettingsPage implements OnInit {
   checkRequests() {
     this.currentPage('two')
     console.log('check req', this.storeInfo);
-    this.firestore.collection('helpers', q => q.where('ownerPhone', '==', this.storeInfo.owner).where('requestStatus', '==', 'pending')).valueChanges().subscribe((data: any) => {
+    this.firestore.collection('Helper', q => q.where('ownerPhone', '==', this.storeInfo.owner).where('requestStatus', '==', 'pending')).valueChanges().subscribe((data: any) => {
       console.log(data);
       if (data == undefined) {
         this.msg = 'NO new requests at the moment'
@@ -227,6 +241,9 @@ export class SettingsPage implements OnInit {
       }
       else {
         this.helpers = data
+        console.log('helper data', this.helpers);
+
+
 
       }
 
@@ -235,18 +252,50 @@ export class SettingsPage implements OnInit {
   }
 
 
-  accept(id: string) {
+  accept(id: string, playerID: string, name: string) {
+    console.log('id=', id + 'playerID=', playerID + ' name=' + name);
+
     const requestStatus = 'approved'
     const docID = this.storeInfo.docID
-    this.firestore.collection('helpers').doc(id).update({
+    this.firestore.collection('Helper').doc(id).update({
       docID,
       requestStatus,
     }).then(() => {
-      alert('PERMITED')
+      const content = "Hi " + name + "!Your request to join shop as a helper has been accepted."
+      this.sendNotification(content, playerID)
+      this.msg = 'Request accepted!'
+      this.toastCreater()
       this.currentDiv = 'one'
     })
 
   }
+
+  sendNotification(content, playerID) {
+
+    var header = new HttpHeaders();
+    header.append("Content-Type", "application/json");
+
+
+    return this.http
+      .post(
+        "https://exportportal.site/ssmpushes.php",
+        {
+          message: content,
+          playerID: playerID,
+        },
+        { headers: header, responseType: "text" }
+      )
+      .subscribe(
+        (resp) => {
+          console.log(resp);
+          this.msg = 'Notified helper'
+          this.toastCreater()
+        },
+        (error) => { }
+      );
+
+  }
+
 
   logout() {
     this.firebaseauth.auth.signOut();
@@ -330,14 +379,35 @@ export class SettingsPage implements OnInit {
     this.currentDiv = 'one'
 
   }
+  rhelpers: any;
 
+  remove(helper) {
+    console.log(helper);
+    this.firestore.collection('Helper').doc(helper.userID).delete().then(() => {
+      this.msg = 'Helper removed'
+      this.toastCreater()
+    })
+  }
+
+  gethelpers() {
+    const auth = this.firebaseauth.auth.currentUser.phoneNumber
+    console.log('lkdsf', auth);
+
+    this.firestore.collection('Helper', q => q.where('ownerPhone', '==', auth)).valueChanges().subscribe(u => {
+      console.log(u);
+      this.rhelpers = u
+    })
+  }
 
   ngOnInit() {
-
+    
   }
 
   ionViewWillEnter() {
     this.getItems();
+    setTimeout(() => {
+      this.gethelpers()
+    }, 2000);
   }
 
 }

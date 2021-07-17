@@ -1,4 +1,4 @@
-// import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { environment } from './../environments/environment';
@@ -66,7 +66,7 @@ export function LanguageLoader(http: HttpClient) {
     TranslateConfigService,
     BarcodeScanner,
     SocialSharing,
-    // OneSignal,
+    OneSignal,
     CallNumber,
     File,
     // FCM,

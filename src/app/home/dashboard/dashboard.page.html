@@ -45,6 +45,11 @@
             <ion-label *ngIf="helpers" class="cardtxt">
               {{helpers}} {{ 'dashboardOne.help' | translate:params}}
             </ion-label>
+
+            <ion-label *ngIf="!helpers" class="cardtxt">
+              0 {{ 'dashboardOne.help' | translate:params}}
+            </ion-label>
+
           </ion-card>
 
           <ion-card style="background: white;" class="card" (click)="gotTotPage('home/suppliers')">
@@ -89,19 +94,13 @@
               <div class="right"></div>
               <div class="left"></div>
               <div class="middle">
-                <div *ngIf="statSales">
-                  <p *ngIf="statSales.sales"
+                <div>
+                  <p *ngIf="statSales"
                     style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">
                     {{statSales.sales.length}} <br />
                   </p>
-                  <p *ngIf="!statSales.sales"
+                  <p *ngIf="!statSales"
                     style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">
-                    0 <br />
-                  </p>
-                </div>
-
-                <div *ngIf="!statSales">
-                  <p style=" font-family: 'Hammersmith One', sans-serif;text-align: center;font-size: 42px;">
                     0 <br />
                   </p>
                 </div>

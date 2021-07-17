@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Component({
   selector: 'app-helperpage',
@@ -17,7 +18,7 @@ export class HelperpagePage implements OnInit {
     private router: Router,
     private toast: ToastController,
     private loading: LoadingController,
-
+    private http: HttpClient,
   ) {
     this.currentDiv = 'one'
   }
@@ -28,6 +29,7 @@ export class HelperpagePage implements OnInit {
   msg: string;
   color: string;
   currentDiv: string;
+  params: any;
 
   async presentToast() {
     const toast = await this.toast.create({
@@ -57,28 +59,44 @@ export class HelperpagePage implements OnInit {
   }
 
   checkRequestsSent(userID: string) {
-    this.firestore.collection('helpers').doc(userID).valueChanges().subscribe((data: any) => {
+    this.firestore.collection('Helper').doc(userID).valueChanges().subscribe((data: any) => {
       console.log('just to chekc', data);
 
       if (data == undefined) {
         console.log('no user found on firebase');
-        this.loading.dismiss('load')
+        this.loading.getTop().then(v => {
+          if (v != null) {
+            this.loading.dismiss('load')
+          }
+        })
       }
       else if (data.requestStatus) {
         if (data.requestStatus == 'pending') {
 
           this.currentDiv = 'two'
           console.log('request sent and is pending');
-          this.loading.dismiss('load')
+          this.loading.getTop().then(v => {
+            if (v != null) {
+              this.loading.dismiss('load')
+            }
+          })
 
         }
         else if (data.requestStatus == 'recieved') {
           this.currentDiv = 'three'
-          this.loading.dismiss('load')
+          this.loading.getTop().then(v => {
+            if (v != null) {
+              this.loading.dismiss('load')
+            }
+          })
 
         }
         else if (data.requestStatus == 'approved') {
-          this.loading.dismiss('load')
+          this.loading.getTop().then(v => {
+            if (v != null) {
+              this.loading.dismiss('load')
+            }
+          })
           this.router.navigate(['pos'])
         }
       }
@@ -86,7 +104,11 @@ export class HelperpagePage implements OnInit {
 
         console.log('na request sent na recienved');
         this.currentDiv = 'one'
-        this.loading.dismiss('load')
+        this.loading.getTop().then(v => {
+          if (v != null) {
+            this.loading.dismiss('load')
+          }
+        })
       }
     })
   }
@@ -95,7 +117,7 @@ export class HelperpagePage implements OnInit {
 
   withdrawRequest() {
     const requestStatus = ''
-    this.firestore.collection('helpers').doc(this.userID).update({
+    this.firestore.collection('Helper').doc(this.userID).update({
       requestStatus,
     }).then(() => {
       this.msg = 'request removed'
@@ -106,7 +128,7 @@ export class HelperpagePage implements OnInit {
   acceptReq() {
     console.log(this.user);
     const uid = this.auth.auth.currentUser.uid
-    this.firestore.collection('helpers').doc(uid).get().subscribe((u: any) => {
+    this.firestore.collection('Helper').doc(uid).get().subscribe((u: any) => {
       console.log(u);
       if (u.exists) {
         this.user = JSON.parse(window.localStorage.getItem('user'));
@@ -142,14 +164,14 @@ export class HelperpagePage implements OnInit {
     else {
       const ownerPhone = '+' + this.code + this.phone;
       const requestStatus = 'pending'
-      this.firestore.collection('helpers').doc(this.userID).update({
+      this.firestore.collection('Helper').doc(this.userID).update({
         ownerPhone,
         requestStatus,
       }).then(() => {
 
-        this.msg = 'request to shopOwner'
+        this.msg = 'requesting owner.'
         this.presentToast()
-        this.checkRequestsSent(this.userID)
+        this.getOwnerPlayerID()
       }).catch(err => {
 
         this.msg = JSON.stringify(err.message)
@@ -159,17 +181,73 @@ export class HelperpagePage implements OnInit {
     }
   }
 
-  getuserdata(uid) {
-    this.firestore.collection('helpers').doc(uid).valueChanges().subscribe((res: any) => {
-      if (res == undefined) {
+  ownerPlayerID: string;
 
+
+  getOwnerPlayerID() {
+    const ownerPhone = '+' + this.code + this.phone;
+    console.log(ownerPhone);
+
+    this.firestore.collection('Owner', q => q.where('phone', '==', ownerPhone)).valueChanges().subscribe((Res: any) => {
+      if (Res.length < 1) {
+
+        this.msg = 'No owner of shop found on this number'
+        this.presentToast()
+      }
+      else {
+        console.log('Owner details', Res[0].playerId);
+        this.ownerPlayerID = Res[0].playerId
+        const message = this.user.name + " has requested to join you as a helper"
+        this.sendNotification(message, this.ownerPlayerID)
+      }
+    })
+  }
+
+  sendNotification(content, playerID) {
+
+    var header = new HttpHeaders();
+    header.append("Content-Type", "application/json");
+
+
+    return this.http
+      .post(
+        "https://exportportal.site/ssmpushes.php",
+        {
+          message: content,
+          playerID: playerID,
+        },
+        { headers: header, responseType: "text" }
+      )
+      .subscribe(
+        (resp) => {
+          console.log(resp);
+          this.checkRequestsSent(this.userID)
+        },
+        (error) => { }
+      );
+
+  }
+
+
+  getuserdata(uid) {
+
+  
+    this.firestore.collection('Helper').doc(uid).valueChanges().subscribe((res: any) => {
+   
+
+      if (res == undefined) {
+        alert('null')
       }
       else if (res.docID) {
         this.user.docID = res.docID
         window.localStorage.setItem('user', JSON.stringify(this.user));
+        alert('user' + this.user);
+
       }
     })
   }
+
+
 
   ngOnInit() {
 
@@ -185,7 +263,7 @@ export class HelperpagePage implements OnInit {
       this.userID = u.uid
       console.log(this.userID);
       this.getuserdata(u.uid)
-      this.firestore.collection('helpers').doc(this.userID).valueChanges().subscribe((res: any) => {
+      this.firestore.collection('Helper').doc(this.userID).valueChanges().subscribe((res: any) => {
 
 
         if (res == undefined) {
@@ -195,7 +273,7 @@ export class HelperpagePage implements OnInit {
           const userDetails = this.user
           const name = this.user.name
           const phone = this.user.phone
-          this.firestore.collection('helpers').doc(this.userID).set({
+          this.firestore.collection('Helper').doc(this.userID).set({
             timestamp,
             userID,
             userDetails,
@@ -211,7 +289,7 @@ export class HelperpagePage implements OnInit {
 
           if (!res.userDetails) {
             const userDetails = this.user
-            this.firestore.collection('helpers').doc(this.userID).update({
+            this.firestore.collection('Helper').doc(this.userID).update({
               userDetails,
 
             })

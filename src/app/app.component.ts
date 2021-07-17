@@ -1,4 +1,4 @@
-// import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 // import { FCM } from '@ionic-native/fcm/ngx';
 import { TranslateConfigService } from './translate-config.service';
 import { Platform } from '@ionic/angular';
@@ -29,7 +29,7 @@ export class AppComponent {
     private datePipe: DatePipe,
     private translateConfigService: TranslateConfigService,
     // private fcm: FCM,
-    // private onesignal: OneSignal,
+    private onesignal: OneSignal,
 
   ) {
     this.initializeApp();
@@ -69,8 +69,8 @@ export class AppComponent {
   }
 
   checkRequestsSent(userID: string) {
-    this.firestore.collection('helpers').doc(userID).valueChanges().subscribe((data: any) => {
-      console.log('just to chekc', data);
+    this.firestore.collection('Helper').doc(userID).valueChanges().subscribe((data: any) => {
+     
 
       if (data == undefined) {
         console.log('no user found on firebase');
@@ -178,14 +178,15 @@ export class AppComponent {
       this.checkUpload()
       this.getUserLanguage()
 
-      // this.onesignal.startInit('svs', 'dssd')
+      this.onesignal.startInit('493d92dc-dc92-429f-bbd5-4574bda77623', '935392129637');
 
-      // this.fcm.getToken().then(t => {
-      //   console.log(t);
+    
 
-      // })
-    }
-    );
+      this.onesignal.endInit();
+    
+    });
+
+
   }
 
 

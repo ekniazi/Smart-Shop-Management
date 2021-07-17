@@ -8,7 +8,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { Platform } from "@ionic/angular";
 import { AngularFireAuth } from '@angular/fire/auth';
-
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Component({
   selector: 'app-pos',
@@ -26,6 +26,7 @@ export class POSPage implements OnInit {
     private datePipe: DatePipe,
     public firestore: AngularFirestore,
     private platform: Platform,
+    private http: HttpClient,
     private auth: AngularFireAuth,
   ) { }
 
@@ -133,6 +134,31 @@ export class POSPage implements OnInit {
       alert(err);
     });
   }
+  lowStock: number = 0;
+  stockValue: any;
+
+  getInfo() {
+
+    this.lowStock = 0;
+    if (this.items) {
+      for (var i = 0; i < this.items.length; i++) {
+        this.items[i].index = i;
+        this.stockValue = this.stockValue + (this.items[i].stock * this.items[i].pPrice);
+        if (this.items[i].stock < 10) {
+          this.lowStock = this.lowStock + 1;
+          console.log(this.items[i], 'lhdfoweg');
+          const content = this.items[i].name + " is reaching on low stock,available stock is less than 10"
+        }
+
+      }
+    }
+    else {
+      const content = "you donnot have any items in your shop"
+      this.sendNotification(content)
+    }
+
+  }
+
 
   calculateTotal() {
     this.total = 0;
@@ -345,9 +371,9 @@ export class POSPage implements OnInit {
         handler: data => {
           this.cNum = data.input;
 
-          if (!this.cNum) {
+          if (!this.cNum || this.cNum.length < 10) {
             this.cNumber()
-            this.msg = 'Add Customer Number'
+            this.msg = 'Add a valid  Customer Number'
             this.presentToast()
           }
           else {
@@ -436,6 +462,33 @@ export class POSPage implements OnInit {
     })
     this.msg = 'Sale Completed'
     this.presentToast()
+    const content = "Sale done by " + this.user.name + " total discount was " + this.discount + " total bill was " + this.total + " customer paid " + this.paid
+    this.sendNotification(content)
+  }
+
+  sendNotification(content) {
+    console.log(content);
+
+    var header = new HttpHeaders();
+    header.append("Content-Type", "application/json");
+
+
+    return this.http
+      .post(
+        "https://exportportal.site/ssmpushes.php",
+        {
+          message: content,
+          playerID: this.shopOwnerPlayerID,
+        },
+        { headers: header, responseType: "text" }
+      )
+      .subscribe(
+        (resp) => {
+          console.log(resp);
+
+        },
+        (error) => { }
+      );
 
   }
 
@@ -454,28 +507,32 @@ export class POSPage implements OnInit {
       this.statSales = data;
       this.revenue = 0;
       this.profit = 0;
-      if (this.statSales.sales) {
-        for (var i = 0; i < this.statSales.sales.length; i++) {
-          this.statSales.sales[i] = JSON.parse(this.statSales.sales[i]);
-          this.revenue = this.revenue + this.statSales.sales[i].total;
-          if (this.statSales.sales[i].recipt.length > 0) {
-            for (var k = 0; k < this.statSales.sales[i].recipt.length; k++) {
-              this.profit =
-                (this.statSales.sales[i].recipt[k].rPrice * this.statSales.sales[i].recipt[k].quantity)
-                - (this.statSales.sales[i].recipt[k].pPrice * this.statSales.sales[i].recipt[k].quantity);
 
-              this.temparray.push(this.profit)
+      if (this.statSales) {
+        if (this.statSales.sales) {
+          for (var i = 0; i < this.statSales.sales.length; i++) {
+            this.statSales.sales[i] = JSON.parse(this.statSales.sales[i]);
+            this.revenue = this.revenue + this.statSales.sales[i].total;
+            if (this.statSales.sales[i].recipt.length > 0) {
+              for (var k = 0; k < this.statSales.sales[i].recipt.length; k++) {
+                this.profit =
+                  (this.statSales.sales[i].recipt[k].rPrice * this.statSales.sales[i].recipt[k].quantity)
+                  - (this.statSales.sales[i].recipt[k].pPrice * this.statSales.sales[i].recipt[k].quantity);
 
+                this.temparray.push(this.profit)
+
+
+              }
 
             }
-
           }
+
+
+          this.calculateProfit(this.temparray);
+
         }
-
-
-        this.calculateProfit(this.temparray);
-
       }
+
     })
 
   }
@@ -494,14 +551,14 @@ export class POSPage implements OnInit {
     }
 
   }
-  sal: number;
+  sal: number = 0;
   chk: number;
   discounts: number[] = [];
   reven: number[] = [];
   lett: number = 0;
   lets: number = 0;
-  discountsthismonth: number;
-  revenuethismonth: number;
+  discountsthismonth: number = 0;
+  revenuethismonth: number = 0;
 
 
   monthlyStuff(sale) {
@@ -551,6 +608,8 @@ export class POSPage implements OnInit {
     ];
 
     console.log('today is=>', monthNames[currentDate.getMonth()]);
+    console.log('discounts', this.discountsthismonth, 'sales', this.sal, 'revenue', this.revenuethismonth);
+
     const discounts = this.discountsthismonth;
     const sales = this.sal;
     const revenue = this.revenuethismonth
@@ -593,8 +652,11 @@ export class POSPage implements OnInit {
 
   ngOnInit() {
     this.getSales();
+
     this.getcurentUsershop()
+    this.getShopOwnerID()
   }
+
 
   ionViewWillEnter() {
     this.getItems();
@@ -604,30 +666,63 @@ export class POSPage implements OnInit {
     this.recipt = [];
   }
 
-  getcurentUsershop() {
 
-    this.firestore.collection('stores').doc(this.user.docID).valueChanges().subscribe((res: any) => {
+  shopOwnerPlayerID: string;
 
+  getShopOwnerID() {
 
-      if (res.items) {
-
-        if (res.items.length < 1) {
-
+    const auth = this.auth.authState.subscribe(user => {
+      this.firestore.collection('Helper').doc(user.uid).valueChanges().subscribe((cu: any) => {
+        if (cu == undefined) {
 
         }
         else {
 
-
-          this.items = JSON.parse(window.localStorage.getItem('items'));
-          console.log(this.items, 'item');
-          this.items = res.items
-          window.localStorage.setItem('items', JSON.stringify(this.items));
-          this.items = JSON.parse(window.localStorage.getItem('items'));
-
+          this.firestore.collection('Owner', q => q.where('phone', '==', cu.ownerPhone)).valueChanges().subscribe((r: any) => {
+            console.log('lkdbvo', r);
+            this.shopOwnerPlayerID = r[0].playerId
+            this.getInfo()
+          })
 
         }
-      }
+      })
+    })
 
+  }
+
+
+
+  getcurentUsershop() {
+
+    console.log(this.user);
+
+    this.firestore.collection('stores').doc(this.user.docID).valueChanges().subscribe((res: any) => {
+
+
+      if (res != undefined) {
+
+        if (res.items) {
+
+          if (res.items.length < 1) {
+
+
+          }
+          else {
+
+
+            this.items = JSON.parse(window.localStorage.getItem('items'));
+            console.log(this.items, 'item');
+            this.items = res.items
+            window.localStorage.setItem('items', JSON.stringify(this.items));
+            this.items = JSON.parse(window.localStorage.getItem('items'));
+
+
+          }
+        }
+      }
+      else {
+
+      }
     })
   }
 

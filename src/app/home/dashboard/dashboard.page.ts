@@ -108,7 +108,7 @@ export class DashboardPage implements OnInit {
   helpers: any;
 
   getHelpers() {
-    this.firestore.collection('helpers', q => q.where('docID', '==', this.user.docID)).valueChanges().subscribe(res => {
+    this.firestore.collection('Helper', q => q.where('docID', '==', this.user.docID)).valueChanges().subscribe(res => {
       console.log(res);
 
       if (res.length < 1) {
@@ -177,21 +177,23 @@ export class DashboardPage implements OnInit {
       this.statSales = data;
       this.revenue = 0;
       this.profit = 0;
-      if (this.statSales.sales) {
-        for (var i = 0; i < this.statSales.sales.length; i++) {
-          this.statSales.sales[i] = JSON.parse(this.statSales.sales[i]);
-          this.revenue = this.revenue + this.statSales.sales[i].total;
-          if (this.statSales.sales[i].recipt.length > 0) {
-            for (var k = 0; k < this.statSales.sales[i].recipt.length; k++) {
-              this.profit = (this.statSales.sales[i].recipt[k].rPrice * this.statSales.sales[i].recipt[k].quantity) - (this.statSales.sales[i].recipt[k].pPrice * this.statSales.sales[i].recipt[k].quantity);
-              console.log(this.profit);
-              this.temparray.push(this.profit)
+      if (this.statSales) {
+        if (this.statSales.sales) {
+          for (var i = 0; i < this.statSales.sales.length; i++) {
+            this.statSales.sales[i] = JSON.parse(this.statSales.sales[i]);
+            this.revenue = this.revenue + this.statSales.sales[i].total;
+            if (this.statSales.sales[i].recipt.length > 0) {
+              for (var k = 0; k < this.statSales.sales[i].recipt.length; k++) {
+                this.profit = (this.statSales.sales[i].recipt[k].rPrice * this.statSales.sales[i].recipt[k].quantity) - (this.statSales.sales[i].recipt[k].pPrice * this.statSales.sales[i].recipt[k].quantity);
+                console.log(this.profit);
+                this.temparray.push(this.profit)
+              }
             }
           }
-        }
-        console.log('temp array is', this.temparray);
+          console.log('temp array is', this.temparray);
 
-        this.calculateProfit(this.temparray);
+          this.calculateProfit(this.temparray);
+        }
       }
     })
   }

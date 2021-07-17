@@ -41,17 +41,22 @@ export class AddSupplierPage implements OnInit {
   a: string
   addSupplier() {
 
-
-
-    let data = {
-      name: this.name,
-      phone: '+91' + this.phone,
-      address: this.address,
+    if (this.phone.length < 10) {
+      alert('invalid number')
     }
-    this.suppliers.push(data);
-    window.localStorage.setItem('suppliers', JSON.stringify(this.suppliers));
-    this.presentToast();
-    this.modalCtrl.dismiss(data);
+    else {
+
+
+      let data = {
+        name: this.name,
+        phone: '+91' + this.phone,
+        address: this.address,
+      }
+      this.suppliers.push(data);
+      window.localStorage.setItem('suppliers', JSON.stringify(this.suppliers));
+      this.presentToast();
+      this.modalCtrl.dismiss(data);
+    }
   }
 
   close() {

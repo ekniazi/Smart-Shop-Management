@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { AddSupplierPage } from '../add-supplier/add-supplier.page';
 
 @Component({
@@ -11,11 +11,12 @@ export class SelectSupplierPage implements OnInit {
 
   constructor(
     public modalController: ModalController,
+    public alertController: AlertController,
   ) { }
 
   suppliers: any[];
   ModalPage: any;
-  returnDat:any;
+  returnDat: any;
 
   async openModal() {
     const modal = await this.modalController.create({
@@ -27,9 +28,9 @@ export class SelectSupplierPage implements OnInit {
       .then((event: any) => {
         if (event['data']) {
           this.returnDat = event['data'];
-          setTimeout(()=>{
+          setTimeout(() => {
             this.selectSupplier(this.returnDat);
-          },600)
+          }, 600)
         }
       });
 
@@ -44,12 +45,14 @@ export class SelectSupplierPage implements OnInit {
     }
   }
 
-  addSupplier(){
+
+
+  addSupplier() {
     this.ModalPage = AddSupplierPage;
     this.openModal();
   }
 
-  selectSupplier(boi){
+  selectSupplier(boi) {
     this.modalController.dismiss(boi);
   }
 

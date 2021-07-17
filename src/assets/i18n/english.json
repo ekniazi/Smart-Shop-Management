@@ -89,8 +89,14 @@
     "ADDITEM": {
         "ins": "Fill out the fields to list a new supplier. All the fields are mandatory make sure to fill out all.After adding the information re-check it and press continue to proceed.",
         "ai": "ADD ITEM",
-        "or":"OR",
-        "ub":"USING BARCODE",
-        "m":"MANUALLY"
+        "or": "OR",
+        "ub": "USING BARCODE",
+        "m": "MANUALLY"
+    },
+    "Helper": {
+        "preone": "JOIN AS A HELPER",
+        "one": "Enter Shop Owner Number To  Request Joining As A Helper.",
+        "aa": "AWAITING ACCEPTANCE",
+        "bb":"An Owner Invited You To His Shop"
     }
 }

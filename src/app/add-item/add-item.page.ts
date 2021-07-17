@@ -6,6 +6,7 @@ import { SelectSupplierPage } from '../select-supplier/select-supplier.page';
 import { ToastController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Component({
   selector: 'app-add-item',
@@ -20,10 +21,12 @@ export class AddItemPage implements OnInit {
     public toastController: ToastController,
     public firestore: AngularFirestore,
     private router: Router,
+    private http: HttpClient,
+
   ) { }
 
   ModalPage: any;
-  items: any[];
+  items: any;
   name: string;
   rPrice: number;
   pPrice: number;
@@ -37,7 +40,7 @@ export class AddItemPage implements OnInit {
   CGST: number;
   HSN: string = "";
   params: any;
-
+  units: string[] = ['kg', 'meters', 'liters', 'centimeter', 'tons']
   async openModal() {
     const modal = await this.modalController.create({
       component: this.ModalPage,
@@ -78,6 +81,8 @@ export class AddItemPage implements OnInit {
     }
     if (window.localStorage.getItem('user')) {
       this.user = JSON.parse(window.localStorage.getItem('user'));
+      console.log(this.user);
+
     } else {
       this.user = [];
     }
@@ -87,9 +92,56 @@ export class AddItemPage implements OnInit {
     } else {
       this.itemsToBeUploaded = [];
     }
+
   }
 
-  barcode: string;
+  barcode: string = "nun";
+
+  getShopHelpers() {
+    console.log(this.user.phone);
+
+    this.firestore.collection('Helper', q => q.where('ownerPhone', '==', "+" + this.user.phone)).valueChanges().subscribe((helper: any) => {
+      if (helper.length < 1) {
+        console.log('No helpers for shop');
+
+      }
+      else {
+        console.log('helpers', helper);
+
+        for (var i = 0; i < helper.length; i++) {
+          const content = 'hello! ' + helper[i].name + ' your shop owner added some new items'
+          this.sendNotification(content, helper[i].playerId)
+        }
+
+      }
+    })
+  }
+
+  sendNotification(content, playerID) {
+
+    var header = new HttpHeaders();
+    header.append("Content-Type", "application/json");
+
+
+    return this.http
+      .post(
+        "https://exportportal.site/ssmpushes.php",
+        {
+          message: content,
+          playerID: playerID,
+        },
+        { headers: header, responseType: "text" }
+      )
+      .subscribe(
+        (resp) => {
+          console.log(resp);
+          this.msg = 'Notified helpers'
+          this.presentToast()
+        },
+        (error) => { }
+      );
+
+  }
 
   scanBarcode() {
     this.barcodeScanner.scan().then(barcodeData => {
@@ -116,6 +168,7 @@ export class AddItemPage implements OnInit {
     })
   }
 
+
   addItem() {
     if (!this.name || this.name.length == 0) {
       this.msg = "Invalid name!";
@@ -141,11 +194,8 @@ export class AddItemPage implements OnInit {
       this.color = "warning"
       this.presentToast();
 
-    } else if (!this.barcode || this.barcode.length == 0) {
-      this.msg = "Invalid barcode!";
-      this.color = "warning"
-      this.presentToast();
-    } else {
+    }
+    else {
       if (!this.SGST) {
         this.SGST = 0
       }
@@ -161,7 +211,6 @@ export class AddItemPage implements OnInit {
         pPrice: this.pPrice,
         stock: this.stock,
         supplier: this.supplier,
-        barcode: this.barcode,
         SGST: this.SGST,
         IGST: this.IGST,
         CGST: this.CGST,
@@ -169,14 +218,23 @@ export class AddItemPage implements OnInit {
       }
       this.items.push(data);
       window.localStorage.setItem('items', JSON.stringify(this.items));
-      this.msg = "Item added!";
-      this.color = "success"
-      this.presentToast();
+      this.uploadtofirestore(data)
+      // this.msg = "Item added!";
+      // this.color = "success"
+      // this.presentToast();
 
       this.modalController.dismiss(data);
     }
   }
 
+  uploadtofirestore(data) {
+    this.firestore.collection('stores').doc(this.user.docID).update({
+      items: firebase.firestore.FieldValue.arrayUnion(data)
+    }).then(data => console.log(data)).catch((err) => {
+      console.log(err);
+
+    })
+  }
   ngOnInit() {
     this.getItems();
   }

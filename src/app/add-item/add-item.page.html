@@ -212,7 +212,14 @@
         <div *ngIf="supplier">{{supplier.name}}</div>
       </ion-item>
 
+      
+        <ion-item style="margin-top: 15px;" lines="none">
+          <ion-select style="margin-top: 1em;" placeholder="Select scale" interface="popover">
+            <ion-select-option *ngFor="let item of units" value="{{item}}">{{item}}</ion-select-option>
 
+          </ion-select>
+        </ion-item>
+  
 
       <div style="margin-top: 25px;width: 60%;">
         <ion-button (click)="addItem()" class="shadow-red" color="none" style="background: #2b5876;  /* fallback for old browsers */
